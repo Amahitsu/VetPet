@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tb_customers")
-public class Client{
+public class Customer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

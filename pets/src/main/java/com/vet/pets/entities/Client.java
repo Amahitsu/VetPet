@@ -11,17 +11,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_client")
+@Table(name = "tb_customers")
 public class Client{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 45, nullable = false)
     private String name;
+    @Column(length = 15, nullable = false)
+    private Long cpf;
+    @Column(name="phone_number", length = 14, nullable = false)
+    private String phone;
     @Column(length = 150, nullable = false)
     private String email;
-    @Column(length = 11, nullable = false)
-    private Long cpf;
-    @Column(length = 14, nullable = false)
-    private String phone;
 }

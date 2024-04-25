@@ -2,6 +2,7 @@ package com.vet.pets.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 

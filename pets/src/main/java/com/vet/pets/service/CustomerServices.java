@@ -5,6 +5,7 @@ import com.vet.pets.dto.CustomerCreateDTO;
 import com.vet.pets.entities.Customer;
 import com.vet.pets.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service

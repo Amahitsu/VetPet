@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,10 +20,10 @@ public class Customer{
     private Long id;
     @Column(length = 45, nullable = false)
     private String name;
-    @Column(length = 15, nullable = false)
-    private Long cpf;
-    @Column(name="phone_number", length = 14, nullable = false)
+    @Column(length = 15, nullable = false, unique = true)
+    private String cpf;
+    @Column(name="phone_number", length = 14, nullable = false, unique = true)
     private String phone;
-    @Column(length = 150, nullable = false)
+    @Column(length = 150, nullable = false, unique = true)
     private String email;
 }

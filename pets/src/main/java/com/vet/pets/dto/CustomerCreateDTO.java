@@ -1,4 +1,6 @@
 package com.vet.pets.dto;
 
-public record CustomerCreateDTO(String name, Long cpf, String phone, String email) {
+import java.math.BigInteger;
+
+public record CustomerCreateDTO(String name, String cpf, String phone, String email) {
 }

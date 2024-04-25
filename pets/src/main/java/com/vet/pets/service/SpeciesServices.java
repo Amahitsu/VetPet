@@ -1,23 +1,23 @@
 package com.vet.pets.service;
 
 import com.vet.pets.controller.ApiResponse;
-import com.vet.pets.dto.CustomerCreateDTO;
-import com.vet.pets.entities.Customer;
-import com.vet.pets.repository.CustomerRepository;
+import com.vet.pets.dto.CreateSpecieDTO;
+import com.vet.pets.entities.Species;
+import com.vet.pets.repository.SpeciesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerServices{
+public class SpeciesServices {
+
     @Autowired
-    private CustomerRepository customerRepository;
+    private SpeciesRepository speciesRepository;
 
     @Transactional
-    public ApiResponse createCustomer(CustomerCreateDTO dto){
+    public ApiResponse createSpecie(CreateSpecieDTO dto){
         try{
-            customerRepository.save(new Customer(null, dto.name(), dto.cpf(), dto.phone(), dto.email()));
+            speciesRepository.save(new Species(null, dto.name()));
             return new ApiResponse("Created!");
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());

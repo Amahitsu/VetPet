@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tb_workers")
-public class Workers{
+public class Worker{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,5 +27,6 @@ public class Workers{
     private String function;
     @Column(length = 2, nullable = false)
     private int userLevel;
-
+    @Column(length = 1, nullable = false)
+    private boolean active;
 }

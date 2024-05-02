@@ -4,6 +4,7 @@ import com.vet.pets.dto.CustomerCreateDTO;
 import com.vet.pets.dto.WorkerCreateDTO;
 import com.vet.pets.service.SpeciesServices;
 import com.vet.pets.service.WorkerServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/worker")
 public class WorkerController {
 
+    @Autowired
     private WorkerServices workerServices;
 
     @PostMapping

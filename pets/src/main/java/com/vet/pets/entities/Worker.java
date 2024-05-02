@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -27,12 +26,13 @@ public class Worker{
     private String address;
     @Column(length = 30, nullable = false)
     private String function;
+    @Column(length = 60, nullable = false)
+    private String username;
+    @Column(length = 100, nullable = false)
+    private String password;
     @Column(length = 2, nullable = false)
     private int userLevel;
     @Column(length = 1, nullable = false)
     private boolean active;
 
-    public Worker(String name, String cpf, String phone, String email, String address, String function, int i, boolean active) {
-
-    }
 }

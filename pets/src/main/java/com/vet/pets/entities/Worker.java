@@ -30,9 +30,7 @@ public class Worker{
     @Column(length = 2, nullable = false)
     private int userLevel;
     @Column(length = 1, nullable = false)
-    private boolean active;
+    private boolean active = true;
 
-    public Worker(String name, String cpf, String phone, String email, String address, String function, int i, boolean active) {
 
-    }
 }

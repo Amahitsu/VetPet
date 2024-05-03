@@ -14,7 +14,7 @@ public class WorkerServices {
     public ApiResponse createWorker(WorkerCreateDTO dto){
         try{
             workerRepository.save(new Worker(null, dto.name(), dto.cpf(),dto.phone(),
-                                                dto.email(), dto.address(), dto.function(),
+                                                dto.address(), dto.function(),
                                                 dto.userLevel(),dto.active()));
             return new ApiResponse("Created!");
         } catch (Exception e){

@@ -20,7 +20,7 @@ import com.vet.pets.entities.Customer;
 import com.vet.pets.service.CustomerServices;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     @Autowired

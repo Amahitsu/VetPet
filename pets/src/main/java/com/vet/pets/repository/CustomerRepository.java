@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.vet.pets.entities.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query("SELECT s FROM Customer c WHERE c.name = ?1")
+    @Query("SELECT c FROM Customer c WHERE c.name = ?1")
     Optional<Customer> findByName(String name);
 }

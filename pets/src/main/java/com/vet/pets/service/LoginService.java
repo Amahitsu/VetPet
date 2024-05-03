@@ -4,6 +4,8 @@ import com.vet.pets.controller.ApiResponse;
 import com.vet.pets.dto.WorkerLoggedDTO;
 import com.vet.pets.dto.WorkerLoginDTO;
 import com.vet.pets.entities.Worker;
+import com.vet.pets.exceptions.PasswordNotMatches;
+import com.vet.pets.exceptions.UsernameNotFound;
 import com.vet.pets.repository.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,10 +27,10 @@ public class LoginService {
             if(passwordEncoder.matches(dto.password(), workerOptional.get().getPassword())){
                 return new WorkerLoggedDTO(workerOptional.get().getUsername(), workerOptional.get().getFunction(), workerOptional.get().getUserLevel());
             } else{
-                throw new RuntimeException("The password: " + dto.password() + "don't match");
+                throw new PasswordNotMatches("The password provided is incorrect!");
             }
         } else{
-            throw new RuntimeException("The username: " + dto.username() + " not found!");
+            throw new UsernameNotFound("The username: " + dto.username() + " not found!");
         }
     }
 }

@@ -28,8 +28,11 @@
             </div>
 
             <!-- Submit button -->
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign
-                in</button>
+            <router-link to = "/">
+                <button type="button" data-mdb-button-init data-mdb-ripple-init
+                    class="btn btn-primary btn-block mb-4">Sign
+                    in</button>
+            </router-link>
         </form>
 
     </div>

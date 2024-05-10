@@ -1,4 +1,14 @@
 
+<script>
+  import Footer from './footer/footer.vue';
+
+  export default {
+    components: {
+      Footer,
+    },
+  }
+</script>
+
 <template>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -28,7 +38,9 @@
                                     class="btn btn-outline-dark btn-lg px-5" type="submit">
                                     Entrar
                                 </button>
+
                             </RouterLink>
+
 
                             </div>
                         </div>
@@ -36,6 +48,8 @@
                 </div>
             </div>
         </div>
+
+        <Footer />
 
     </section>
 </template>

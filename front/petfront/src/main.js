@@ -3,9 +3,10 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import { createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Login from './components/Login.vue'
 import PrincipalScreen from './components/PrincipalScreen.vue'
+import footer from './components/footer/footer.vue'
 import Day from './components/screenAgenda/Day.vue'
 import Month from './components/screenAgenda/Month.vue'
 import Week from './components/screenAgenda/Week.vue'
@@ -24,6 +25,9 @@ const routes = [
     
     //Registros de cadastro
     {path: '/Cadastro/Cliente', component:RegisterClient},
+
+    //Footer
+    {path: '/Footer', component:footer},
 
     
 ]

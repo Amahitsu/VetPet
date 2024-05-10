@@ -1,4 +1,15 @@
 
+<script>
+  // Importe o componente de footer corretamente
+  import Footer from './footer/footer.vue';
+
+  export default {
+    components: {
+      Footer, // Certifique-se de que o nome do componente corresponde ao importado
+    },
+  }
+</script>
+
 <template>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -27,13 +38,14 @@
                                     class="btn btn-outline-dark btn-lg px-5" type="submit">
                                     Entrar
                                 </button>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <Footer />  
 
     </section>
 </template>

@@ -26,4 +26,6 @@ public class Customer{
     private String phone;
     @Column(length = 150, nullable = false, unique = true)
     private String email;
+    @Column(length = 1, nullable = false)
+    private boolean active;
 }

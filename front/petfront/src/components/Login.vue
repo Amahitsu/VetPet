@@ -1,62 +1,40 @@
-<script setup>
 
-</script>
 <template>
-    HTML
-    <form>
-        <!-- Email input -->
-        <div data-mdb-input-init class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" />
-            <label class="form-label" for="form2Example1">Email address</label>
-        </div>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-info text-white" style="border-radius: 1rem">
+                        <div class="card-body p-5 text-center">
+                            <div class="mb-md-5 mt-md-4 pb-5">
+                                <h2 class="fw-bold mb-2">Bem vindo ao VetPet</h2>
+                                <p class="text-bold-50 mb-5">
+                                    Por favor, digite usuário e senha!
+                                </p>
 
-        <!-- Password input -->
-        <div data-mdb-input-init class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" />
-            <label class="form-label" for="form2Example2">Password</label>
-        </div>
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <label class="form-label" for="typeEmailX">Usuário</label>
+                                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
 
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-            <div class="col d-flex justify-content-center">
-                <!-- Checkbox -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                    <label class="form-check-label" for="form2Example31"> Remember me </label>
+                                </div>
+
+                                <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <label class="form-label" for="typePasswordX">Senha</label>
+                                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                                </div>
+
+                                <button data-mdb-button-init data-mdb-ripple-init
+                                    class="btn btn-outline-dark btn-lg px-5" type="submit">
+                                    Entrar
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col">
-                <!-- Simple link -->
-                <a href="#!">Forgot password?</a>
-            </div>
         </div>
 
-        <!-- Submit button -->
-        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign
-            in</button>
-
-        <!-- Register buttons -->
-        <div class="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-            <p>or sign up with:</p>
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-facebook-f"></i>
-            </button>
-
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-google"></i>
-            </button>
-
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-twitter"></i>
-            </button>
-
-            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-github"></i>
-            </button>
-        </div>
-    </form>
+    </section>
 </template>
 
-<style></style>

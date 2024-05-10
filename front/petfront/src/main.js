@@ -16,6 +16,8 @@ import RegisterPetClient from './components/screensRegister/RegisterPetClient.vu
 import RegisterRace from './components/screensRegister/RegisterRace.vue'
 import RegisterService from './components/screensRegister/RegisterService.vue'
 import RegisterClient from './components/screensRegister/RegisterClient.vue'
+import ListClient from './components/screenList/ListClient.vue'
+import ListPet from './components/screenList/ListPet.vue'
 
 
 
@@ -37,6 +39,10 @@ const routes = [
     {path: '/cadastro/petcliente', component:RegisterPetClient},
     {path: '/cadastro/raça', component:RegisterRace},
     {path: '/cadastro/serviço', component:RegisterService},
+    
+    //Visualizar Listas Existentes
+    {path: '/list/cliente', component:ListClient},
+    {path: '/list/pet', component:ListPet},
     
 ]
 const router = createRouter({

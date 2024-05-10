@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <script>
   // Importe o componente de footer corretamente
@@ -10,6 +11,9 @@
   }
 </script>
 
+=======
+<!-- eslint-disable vue/multi-word-component-names -->
+>>>>>>> affe984aa42fc7d59ca42be2607100c78d3e7e23
 <template>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -33,11 +37,20 @@
                                     <label class="form-label" for="typePasswordX">Senha</label>
                                     <input type="password" id="typePasswordX" class="form-control form-control-lg" />
                                 </div>
+                                <router-link to="/cadastro/cliente">
 
+<<<<<<< HEAD
                                 <button data-mdb-button-init data-mdb-ripple-init
                                     class="btn btn-outline-dark btn-lg px-5" type="submit">
                                     Entrar
                                 </button>
+=======
+                                    <button data-mdb-button-init data-mdb-ripple-init
+                                        class="btn btn-outline-dark btn-lg px-5" type="submit">
+                                        Entrar
+                                    </button>
+                                </router-link>
+>>>>>>> affe984aa42fc7d59ca42be2607100c78d3e7e23
                             </div>
                         </div>
                     </div>

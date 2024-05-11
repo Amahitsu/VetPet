@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vet.pets.dto.RaceDTO;
-import com.vet.pets.entities.Customer;
 import com.vet.pets.entities.Races;
 import com.vet.pets.service.RaceServices;
 
@@ -69,7 +68,7 @@ public class RaceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Raça não encontrada."));
         }
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse<Customer>("Updated", raceServices.updateRaceById(id, dto)));
+                .body(new ApiResponse<Races>("Updated", raceServices.updateRaceById(id, dto)));
     }
 
 }

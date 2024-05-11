@@ -17,6 +17,8 @@ import RegisterEmployee from './components/screensRegister/RegisterEmployee.vue'
 import RegisterPetClient from './components/screensRegister/RegisterPetClient.vue'
 import RegisterRace from './components/screensRegister/RegisterRace.vue'
 import RegisterService from './components/screensRegister/RegisterService.vue'
+import ListClient from './components/screenList/ListClient.vue'
+import ListPet from './components/screenList/ListPet.vue'
 
 
 
@@ -41,6 +43,10 @@ const routes = [
 
     //Footer
     {path: '/footer', component:footer}
+    
+    //Visualizar Listas Existentes
+    {path: '/list/cliente', component:ListClient},
+    {path: '/list/pet', component:ListPet},
     
 ]
 const router = createRouter({

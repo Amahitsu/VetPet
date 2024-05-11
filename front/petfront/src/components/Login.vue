@@ -1,4 +1,14 @@
-<!-- eslint-disable vue/multi-word-component-names -->
+
+<script>
+  import Footer from './footer/footer.vue';
+
+  export default {
+    components: {
+      Footer,
+    },
+  }
+</script>
+
 <template>
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
@@ -22,19 +32,24 @@
                                     <label class="form-label" for="typePasswordX">Senha</label>
                                     <input type="password" id="typePasswordX" class="form-control form-control-lg" />
                                 </div>
-                                <router-link to="/cadastro/cliente">
 
-                                    <button data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-outline-dark btn-lg px-5" type="submit">
-                                        Entrar
-                                    </button>
-                                </router-link>
+                                <RouterLink to = '/Cadastro/Cliente'>
+                                <button data-mdb-button-init data-mdb-ripple-init
+                                    class="btn btn-outline-dark btn-lg px-5" type="submit">
+                                    Entrar
+                                </button>
+
+                            </RouterLink>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <Footer />
 
     </section>
 </template>

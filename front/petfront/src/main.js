@@ -52,10 +52,8 @@ const routes = [
     { path: '/list/cliente', component: ListClient },
     { path: '/list/funcionario', component: ListEmployee },
     { path: '/list/petclient', component: ListPetClient },
-    { path: 'list/Race', component: ListRace},
+    { path: '/list/petclient', component: ListRace },
     { path: '/list/servico', component: ListService },
-
-
 ]
 const router = createRouter({
     history: createWebHistory(),

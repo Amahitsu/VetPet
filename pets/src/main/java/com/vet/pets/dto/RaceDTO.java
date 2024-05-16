@@ -1,5 +1,7 @@
 package com.vet.pets.dto;
 
-public record RaceDTO(String name, Long specieId) {
+import com.vet.pets.entities.Species;
+
+public record RaceDTO(String name, Species species) {
     
 }

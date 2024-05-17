@@ -18,7 +18,7 @@ const login = () => {
     .then(response => {
         if (response.status === 202) {
             saveDataInCache(response.data);
-            router.push('/principal');
+            router.push('/Cadastro/Cliente');
         } else {
             console.log(response);
         }
@@ -38,7 +38,6 @@ const login = () => {
 const saveDataInCache = (data) => {
     localStorage.setItem('user', JSON.stringify(data));
 };
-
 </script>
 
 <template>
@@ -77,7 +76,7 @@ const saveDataInCache = (data) => {
         </div>
     </section>
     <ModalWarning :modalText="modalMessage" id="modal"/>
-    <Footer />
+    <Footer/> <!-- Ensure the component name matches the import -->
 </template>
 
 <style scoped>

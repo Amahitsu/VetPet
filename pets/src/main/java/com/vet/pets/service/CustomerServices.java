@@ -20,7 +20,7 @@ public class CustomerServices{
     @Transactional
     public Customer createCustomer(CustomerCreateDTO dto){
         try{
-            Customer newCustomer = customerRepository.save(new Customer(null, dto.name(), dto.cpf(), dto.phone(), dto.email(), true));
+            Customer newCustomer = customerRepository.save(new Customer(null, dto.name(), dto.cpf(), dto.phone(), dto.email(), dto.address(), true));
             return newCustomer;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
@@ -74,7 +74,7 @@ public class CustomerServices{
             if(customer.isEmpty()) {
                 return null;
             }
-            Customer newCustomer = customerRepository.save(new Customer(id, dto.name(), dto.cpf(), dto.phone(), dto.email(), true));
+            Customer newCustomer = customerRepository.save(new Customer(id, dto.name(), dto.cpf(), dto.phone(), dto.email(), dto.address(), true));
             return newCustomer;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());

@@ -6,19 +6,11 @@
     <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top">
         <!-- Container wrapper -->
         <div class="container-fluid">
-            <!-- Toggle button -->
-            <button data-mdb-button-init class="navbar-toggler" type="button" data-mdb-collapse-init
-                data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
             <!-- Brand -->
             <a class="navbar-brand" href="#">
                 <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
                     loading="lazy" />
             </a>
-
             <!-- Right links -->
             <-- <ul class="navbar-nav ms-auto d-flex flex-row">
                 <!-- Nome do login -->
@@ -29,7 +21,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li>
-                            <a class="dropdown-item" href="#">Logout</a>
+                            <router-link to="/">
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </router-link>
                         </li>
                     </ul>
                 </li>

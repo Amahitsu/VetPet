@@ -13,20 +13,23 @@
                     <a>
                         <i class="fas fa-tachometer-alt fa-fw me-3"></i><span></span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Botão dropdown
+                    <!--Aba para acessar funcionalidades de cliente -->
+                    <a href="#" >
+                        <li class="dropdown">
+                            <button class="btn btn-white dropdown-toggle text-black" type="button"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Clientes
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Alguma ação</a>
-                                <a class="dropdown-item" href="#">Outra ação</a>
-                                <a class="dropdown-item" href="#">Alguma coisa aqui</a>
-                            </div>
-                        </div>
-                        <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <router-link to="/cadastro/cliente">
+                                        <a class="dropdown-item" href="#">Cadastro</a>
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </li>
                     </a>
+
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
@@ -62,7 +65,9 @@
 
 <style>
 .sidebar {
-    width: 250px;
+    width: 210px;
     height: 100vh;
+    margin-top: 3em;
 }
+li { list-style-type: none; }
 </style>

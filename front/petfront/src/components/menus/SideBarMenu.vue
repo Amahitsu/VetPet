@@ -16,7 +16,7 @@
                     <!--Aba para acessar funcionalidades de cliente -->
                     <a href="#" >
                         <li class="dropdown">
-                            <button class="btn btn-white dropdown-toggle text-black" type="button"
+                            <button class="btn btn-white dropdown-toggle text-black text-aling-center" type="button"
                                 id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Clientes
                             </button>
@@ -24,6 +24,11 @@
                                 <li>
                                     <router-link to="/cadastro/cliente">
                                         <a class="dropdown-item" href="#">Cadastro</a>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/list/cliente">
+                                        <a class="dropdown-item" href="#">Consultar</a>
                                     </router-link>
                                 </li>
                             </ul>
@@ -60,7 +65,6 @@
     <main style="margin-top: 58px;">
         <div class="container pt-4"></div>
     </main>
-    <!--Main layout-->
 </template>
 
 <style>
@@ -69,5 +73,6 @@
     height: 100vh;
     margin-top: 3em;
 }
-li { list-style-type: none; }
+
+li { list-style-type: none;}
 </style>

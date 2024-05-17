@@ -1,6 +1,6 @@
 
 <script>
-  import Footer from './footer/footer.vue';
+  import Footer from './footer/Footer.vue';
 
   export default {
     components: {
@@ -33,7 +33,7 @@
                                     <input type="password" id="typePasswordX" class="form-control form-control-lg" />
                                 </div>
 
-                                <RouterLink to = '/Cadastro/Cliente'>
+                                <RouterLink to = '/principal'>
                                 <button data-mdb-button-init data-mdb-ripple-init
                                     class="btn btn-outline-dark btn-lg px-5" type="submit">
                                     Entrar

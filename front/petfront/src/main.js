@@ -42,7 +42,7 @@ const routes = [
     { path: '/cadastro/funcionario', component: RegisterEmployee },
     { path: '/cadastro/petcliente', component: RegisterPetClient },
     { path: '/cadastro/raça', component: RegisterRace },
-    { path: '/cadastro/serviço', component: RegisterService },
+    { path: '/cadastro/servico', component: RegisterService },
 
     //Footer
     { path: '/footer', component: footer },

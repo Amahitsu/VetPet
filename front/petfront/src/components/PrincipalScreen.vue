@@ -1,16 +1,26 @@
-<script setup>
+<script>
+import Footer from './footer/Footer.vue';
+import SideMenu from './menus/SideBarMenu.vue';
+import NavTopBar from './header/NavTopBar.vue'
+
+export default {
+  components: {
+    Footer,
+    SideMenu,
+    NavTopBar,
+  },
+}
 </script>
 
 <template>
-    <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <div class="d-flex nav-item mx-3">
-        
-      </div>
-    </a>
-    </div>
+    <NavTopBar />
+    <SideMenu />
+    <Footer />
 </template>
 
 <style>
+.container {
+  display: flex;
+  flex-direction: column;
+}
 </style>
-

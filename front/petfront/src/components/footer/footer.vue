@@ -13,7 +13,7 @@
     <footer class="colorFooter text-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <h6>Contato</h6>
                     <ul class="list-unstyled">
                         <li><p>E-mail: suporte@vetpet.com</p></li>
@@ -49,5 +49,6 @@
 <style>
 .colorFooter{
     background-color: #1e2627;
+    bottom: 0%;
 }
 </style>

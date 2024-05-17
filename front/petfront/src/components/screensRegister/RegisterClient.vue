@@ -161,8 +161,4 @@ const createCustomer = () => {
               <button type="button" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-  </section>
 </template>

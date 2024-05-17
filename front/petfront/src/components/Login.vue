@@ -76,7 +76,7 @@ const saveDataInCache = (data) => {
         </div>
     </section>
     <ModalWarning :modalText="modalMessage" id="modal"/>
-    <Footer/> <!-- Ensure the component name matches the import -->
+    <Footer/>
 </template>
 
 <style scoped>

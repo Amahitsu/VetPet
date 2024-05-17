@@ -24,27 +24,27 @@ import com.vet.pets.service.RaceServices;
 public class RaceController {
     
     @Autowired
-    private RaceServices raceServices;
+    private RaceServices raceService;
 
     @PostMapping
     public ResponseEntity<ApiResponse> createRace(@RequestBody RaceDTO dto) {
-        Optional<Races> race = raceServices.findRaceByName(dto.name());
+        Optional<Races> race = raceService.findRaceByName(dto.name());
         if (race.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse("Raça já cadastrada."));
         }
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<Races>("Created", raceServices.createRace(dto)));
+                .body(new ApiResponse<Races>("Created", raceService.createRace(dto)));
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Races>>> listRace() {
-        List<Races> listRace = raceServices.listRace();
+        List<Races> listRace = raceService.listRace();
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<List<Races>>("Ok", listRace));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Races>> findRace(@PathVariable Long id) {
-        Races race = raceServices.findRace(id);
+        Races race = raceService.findRace(id);
         if (race == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -53,22 +53,22 @@ public class RaceController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteRace(@PathVariable Long id) {
-        Races race = raceServices.findRace(id);
+        Races race = raceService.findRace(id);
         if (race == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        raceServices.deleteRace(id);
+        raceService.deleteRace(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Deleted"));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse> updateRace(@PathVariable Long id, @RequestBody RaceDTO dto) {
-        Races race = raceServices.findRace(id);
+        Races race = raceService.findRace(id);
         if (race == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Raça não encontrada."));
         }
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse<Races>("Updated", raceServices.updateRaceById(id, dto)));
+                .body(new ApiResponse<Races>("Updated", raceService.updateRaceById(id, dto)));
     }
 
 }

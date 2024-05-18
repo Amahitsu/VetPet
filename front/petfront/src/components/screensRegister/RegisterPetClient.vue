@@ -46,7 +46,7 @@
 
                     <div class="col-md-2">
                         <label for="speciesSelect" class="form-label">Espécie</label>
-                        <select class="form-select" v-model="selectedSpecies" @change="loadBreeds">
+                        <select class="form-select" v-model="selectedSpecie" @change="loadBreeds">
                             <option value="" disabled>Selecione</option>
                             <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}</option>
                         </select>
@@ -54,7 +54,7 @@
 
                     <div class="col-md-2">
                         <label for="breedSelect" class="form-label">Raça</label>
-                        <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecies">
+                        <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecie">
                             <option value="" disabled>Selecione</option>
                             <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                         </select> 
@@ -76,7 +76,7 @@ export default {
         return {
             speciesList: [],
             breedList: [],
-            selectedSpecies: '',
+            selectedSpecie: '',
             selectedBreed: '',
         };
     },
@@ -94,8 +94,8 @@ export default {
                 .catch(error => console.error('Erro ao carregar espécies:', error));
         },
         loadBreeds() {
-            if (this.selectedSpecies) {
-                fetch(`http://localhost:8080/api/v1/races`) // Substitua com a URL real da sua API
+            if (this.selectedSpecie) {
+                fetch(`http://localhost:8080/api/v1/races?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
                     .then(response => response.json())
                     .then(({data}) => {
                         console.log(data);

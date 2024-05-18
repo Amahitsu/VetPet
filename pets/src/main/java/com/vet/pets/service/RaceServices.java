@@ -46,10 +46,15 @@ public class RaceServices {
         }
     }
 
-    public List<Races> listRace(){
+    public List<Races> listRace(Optional<Long> id_specie){
         try{
-            List<Races> race = raceRepository.findAll();
-            return race;
+            if(id_specie.isPresent()) {
+                List<Races> races = raceRepository.findRacesBySpecieId(id_specie.get());
+                return races;
+            }
+
+            List<Races> races = raceRepository.findAll();
+            return races;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

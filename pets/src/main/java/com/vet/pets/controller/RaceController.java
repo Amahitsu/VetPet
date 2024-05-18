@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vet.pets.dto.RaceDTO;
@@ -37,8 +38,8 @@ public class RaceController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Races>>> listRace() {
-        List<Races> listRace = raceService.listRace();
+    public ResponseEntity<ApiResponse<List<Races>>> listRace(@RequestParam("id_specie") Optional<Long> id_specie) {
+        List<Races> listRace = raceService.listRace(id_specie);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<List<Races>>("Ok", listRace));
     }
 

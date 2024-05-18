@@ -11,7 +11,9 @@ import com.vet.pets.entities.Races;
 import com.vet.pets.repository.RaceRepository;
 
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RaceServices {
 
     @Autowired
@@ -20,7 +22,7 @@ public class RaceServices {
     @Transactional
     public Races createRace(RaceDTO dto){
         try{
-            Races newRace = raceRepository.save(new Races(null, dto.name(), dto.specieId());
+            Races newRace = raceRepository.save(new Races(null, dto.name(), dto.species()));
             return newRace;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
@@ -74,7 +76,7 @@ public class RaceServices {
             if(race.isEmpty()) {
                 return null;
             }
-            Customer newRace = raceRepository.save(new Races(id, dto.name(), dto.specieId() ));
+            Races newRace = raceRepository.save(new Races(id, dto.name(), dto.species()));
             return newRace;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());

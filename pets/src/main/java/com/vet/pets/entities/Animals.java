@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,21 +18,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_customers")
-public class Customer{
+@Table(name = "tb_animals")
+public class Animals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 45, nullable = false)
+    @Column(length = 45, unique = true, nullable = false)
     private String name;
-    @Column(length = 15, nullable = false, unique = true)
-    private String cpf;
-    @Column(name="phone_number", length = 15, nullable = false, unique = true)
-    private String phone;
-    @Column(length = 150, nullable = false, unique = true)
-    private String email;
     @Column(nullable = false)
-    private String address;
-    @Column(length = 1, nullable = false)
-    private boolean active = true;
+    private Integer age;
+    @Column(nullable = false)
+    private Float weight;
+    @ManyToOne
+    @JoinColumn(name = "id_customers", nullable = false)
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "id_races", nullable = false)
+    private Races race;
 }

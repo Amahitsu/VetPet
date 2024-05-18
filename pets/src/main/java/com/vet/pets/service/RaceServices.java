@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vet.pets.dto.RaceDTO;
 import com.vet.pets.entities.Customer;
 import com.vet.pets.entities.Races;
+import com.vet.pets.entities.Species;
 import com.vet.pets.repository.RaceRepository;
+import com.vet.pets.repository.SpeciesRepository;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,16 @@ public class RaceServices {
 
     @Autowired
     private RaceRepository raceRepository;
+    @Autowired
+    private SpeciesRepository specieRepository;
 
     @Transactional
     public Races createRace(RaceDTO dto){
         try{
-            Races newRace = raceRepository.save(new Races(null, dto.name(), dto.species()));
+            Species specie = specieRepository.findById(dto.id_specie())
+            .orElseThrow(() -> new RuntimeException("Espécie não encontrada com o ID: " + dto.id_specie()));
+
+            Races newRace = raceRepository.save(new Races(null, dto.name(), specie));
             return newRace;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
@@ -70,13 +77,19 @@ public class RaceServices {
          }
     }
 
+
     public Races updateRaceById(Long id, RaceDTO dto){
+
+        Species specie = specieRepository.findById(dto.id_specie())
+        .orElseThrow(() -> new RuntimeException("Espécie não encontrada com o ID: " + dto.id_specie()));
+
         try{
             Optional<Races> race = raceRepository.findById(id);
             if(race.isEmpty()) {
                 return null;
             }
-            Races newRace = raceRepository.save(new Races(id, dto.name(), dto.species()));
+          
+            Races newRace = raceRepository.save(new Races(id, dto.name(), specie));
             return newRace;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());

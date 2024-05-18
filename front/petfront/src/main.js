@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
-import Footer from './components/footer/Footer.vue'
+import Footer from './components/footer/footer.vue'
 import Login from './components/Login.vue'
 import PrincipalScreen from './components/PrincipalScreen.vue'
 import Day from './components/screenAgenda/Day.vue'
@@ -42,7 +42,7 @@ const routes = [
     { path: '/cadastro/agenda', component: RegisterAgenda },
     { path: '/cadastro/funcionario', component: RegisterEmployee },
     { path: '/cadastro/petcliente', component: RegisterPetClient },
-    { path: '/cadastro/raça', component: RegisterRace },
+    { path: '/cadastro/race', component: RegisterRace },
     { path: '/cadastro/servico', component: RegisterService },
     { path: '/cadastro/especie', component: RegisterSpecie},
 

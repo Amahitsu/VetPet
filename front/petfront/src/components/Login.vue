@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import ModalWarning from './screenMessage/ModalWarning.vue';
-import footer from './footer/footer.vue';
+// import footer from './footer/footer.vue';
 
 const username = ref('');
 const password = ref('');

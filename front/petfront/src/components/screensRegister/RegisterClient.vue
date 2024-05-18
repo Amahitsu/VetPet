@@ -5,7 +5,7 @@ import { getAddressByCep } from '../../services/getAddressByCep.vue';
 
 const name = ref('');
 const cpf = ref('');
-const date_born = ref('');
+// const date_born = ref('');
 const email = ref('');
 const phone = ref('');
 const cep = ref('');
@@ -161,4 +161,8 @@ const createCustomer = () => {
               <button type="button" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
+        </div>
+      </form>
+    </div>
+  </section>
 </template>

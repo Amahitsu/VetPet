@@ -1,11 +1,11 @@
 <script>
-import Footer from './footer/Footer.vue';
+import FooterComponent from './footer/footer.vue';
 import SideMenu from './menus/SideBarMenu.vue';
 import NavTopBar from './header/NavTopBar.vue'
 
 export default {
   components: {
-    Footer,
+    FooterComponent,
     SideMenu,
     NavTopBar,
   },
@@ -15,7 +15,7 @@ export default {
 <template>
     <NavTopBar />
     <SideMenu />
-    <Footer />
+    <FooterComponent />
 </template>
 
 <style>

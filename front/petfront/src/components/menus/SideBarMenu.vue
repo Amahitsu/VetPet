@@ -10,50 +10,75 @@
         <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
             <div class="position-sticky">
                 <div class="list-group list-group-flush mx-3 mt-4">
-                    <a>
-                        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span></span>
-                    </a>
-                    <!--Aba para acessar funcionalidades de cliente -->
-                    <a href="#" >
-                        <li class="dropdown">
-                            <button class="btn btn-white dropdown-toggle text-black text-aling-center" type="button"
-                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Clientes
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li>
-                                    <router-link to="/cadastro/cliente">
-                                        <a class="dropdown-item" href="#">Cadastro</a>
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/list/cliente">
-                                        <a class="dropdown-item" href="#">Consultar</a>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </li>
-                    </a>
+                    <div id=" imagem-sidebar">
+                        <img>
+                    </div>
+                    <!--Acesso funcionalidades de cliente -->
 
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                        <i class="fas fa-chart-pie fa-fw me-3"></i><span>SEO</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-globe fa-fw me-3"></i><span>International</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-building fa-fw me-3"></i><span>Partners</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
+                    <li class="dropdown list-group-item ">
+                        <button class="btn btn-white dropdown-toggle text-black text-aling-center" type="button"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Clientes
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Cadastro</a>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/list/cliente">
+                                    <a class="dropdown-item" href="#">Consultar</a>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <!--Acessar pagina da agenda-->
+                    <li class="dropdown list-group-item">
+                        <button class="btn btn-white dropdown-toggle text-black text-aling-center" type="button"
+                            id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Agenda Geral
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Agenda</a>
+                                </router-link>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <!--Acessar pagina cadastros gerais-->
+                    <li class="dropdown list-group-item">
+                        <button class="btn btn-white dropdown-toggle text-black text-aling-center" type="button"
+                            id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cadastros Gerais
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Espécie</a>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Funcionário</a>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Raça</a>
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link to="/cadastro/cliente">
+                                    <a class="dropdown-item" href="#">Serviço</a>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
                 </div>
             </div>
         </nav>
@@ -71,8 +96,20 @@
 .sidebar {
     width: 210px;
     height: 100vh;
-    margin-top: 3em;
+    margin-top: 11rem;
 }
 
-li { list-style-type: none;}
+;
+
+.imagem-sidebar {
+    max-width: 150px;
+    max-height: 150px;
+    border: 
+}
+
+;
+
+li {
+    list-style-type: none;
+}
 </style>

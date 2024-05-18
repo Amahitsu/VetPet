@@ -2,7 +2,7 @@
     <section class="vh-70 gradient-custom d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
-                <form class="row g-3">
+                <form class="row g-3" @submit.prevent="handleSubmit">
                     <h1>Cadastro de Pet</h1>
                     <div class="row g-4 align-items-center">
                         <div class="col-md-6">
@@ -45,16 +45,18 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label for="inputZip" class="form-label">Espécie</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Selecione</option>
-                        </select> 
+                        <label for="speciesSelect" class="form-label">Espécie</label>
+                        <select class="form-select" v-model="selectedSpecies" @change="loadBreeds">
+                            <option value="" disabled>Selecione</option>
+                            <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}</option>
+                        </select>
                     </div> 
 
                     <div class="col-md-2">
-                        <label for="inputSex" class="form-label">Raça</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Selecione</option>
+                        <label for="breedSelect" class="form-label">Raça</label>
+                        <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecies">
+                            <option value="" disabled>Selecione</option>
+                            <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                         </select> 
                     </div> 
 
@@ -67,3 +69,51 @@
         </div>
     </section>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            speciesList: [],
+            breedList: [],
+            selectedSpecies: '',
+            selectedBreed: '',
+        };
+    },
+    created() {
+        this.loadSpecies();
+    },
+    methods: {
+        loadSpecies() {
+            fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
+                .then(response => response.json())
+                .then(({data}) => {
+                    console.log(data)
+                    this.speciesList = data;
+                })
+                .catch(error => console.error('Erro ao carregar espécies:', error));
+        },
+        loadBreeds() {
+            if (this.selectedSpecies) {
+                fetch(`http://localhost:8080/api/v1/races`) // Substitua com a URL real da sua API
+                    .then(response => response.json())
+                    .then(({data}) => {
+                        console.log(data);
+                        this.breedList = data;
+                    })
+                    .catch(error => console.error('Erro ao carregar raças:', error));
+            } else {
+                this.breedList = [];
+            }
+        },
+        handleSubmit() {
+            // Implementar lógica para enviar o formulário
+            console.log('Formulário enviado');
+        }
+    }
+};
+</script>
+
+<style>
+/* Adicione seus estilos aqui */
+</style>

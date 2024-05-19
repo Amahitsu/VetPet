@@ -52,6 +52,16 @@ const routes = [
     { path: '/agenda/month', component: Month },
     { path: '/agenda/week', component: Week },
 
+    //Registros de cadastro
+    { path: '/cliente/cadastro', component: RegisterClient },
+    { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
+    { path: '/atividade/cadastro', component: RegisterActivity },
+    { path: '/agenda/cadastro', component: RegisterAgenda },
+    { path: '/funcionario/cadastro', component: RegisterEmployee },
+    { path: '/race/cadastro', component: RegisterRace },
+    { path: '/servico/cadastro', component: RegisterService },
+    { path: '/especie/cadastro', component: RegisterSpecie},
+
     //Footer
     { path: '/footer', component: Footer },
 

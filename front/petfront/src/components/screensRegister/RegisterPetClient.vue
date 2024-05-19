@@ -6,7 +6,7 @@
                 <div class="col-md-6">
                     <label for="inputName" class="form-label">Nome do Tutor (Cliente)</label>
                     <input type="text" class="form-control" placeholder="Digite Nome Completo"
-                        aria-label="Nome Completo">
+                        aria-label="Nome Completo" v-model="customer.name" disabled>
                 </div>
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="form-check me-3">
@@ -60,19 +60,21 @@
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                    <button type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
         </form>
-    </section>
+        </section>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -80,11 +82,14 @@ export default {
             breedList: [],
             selectedSpecie: '',
             selectedBreed: '',
+            customer: {},
         };
     },
     created() {
         this.loadSpecies();
+        this.loadCustomerById(this.$route.params.customerId);
     },
+
     methods: {
         loadSpecies() {
             fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
@@ -107,6 +112,22 @@ export default {
             } else {
                 this.breedList = [];
             }
+        },
+        loadCustomerById(id) {
+            axios({
+                method: "GET",
+                url: `http://localhost:8080/api/v1/customers/${id}`,
+            })
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.customer = response.data.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        alert('Cliente não encontrado');
+                    }
+                    console.error('Erro ao listar o cliente:', error);
+                });
         },
         handleSubmit() {
             // Implementar lógica para enviar o formulário

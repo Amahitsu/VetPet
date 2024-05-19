@@ -17,6 +17,7 @@ import RegisterEmployee from './components/screensRegister/RegisterEmployee.vue'
 import RegisterPetClient from './components/screensRegister/RegisterPetClient.vue'
 import RegisterRace from './components/screensRegister/RegisterRace.vue'
 import RegisterService from './components/screensRegister/RegisterService.vue'
+import RegisterServiceType from './components/screensRegister/RegisterServiceType.vue'
 import RegisterSpecie from './components/screensRegister/RegisterSpecie.vue'
 import ListSpecie from './components/screenList/ListSpecie.vue'
 import ListClient from './components/screenList/ListClient.vue'
@@ -29,22 +30,27 @@ import ListRace from './components/screenList/ListRace.vue'
 const routes = [
     //pagina inicial options | login
     { path: '/', component: Login },
-    { path: '/principal', component: PrincipalScreen },
+    { 
+        path: '/principal',
+        component: PrincipalScreen,
+        children: [
+            { path: '', component: RegisterAgenda },
+            { path: 'cadastro/cliente', component: RegisterClient },
+            { path: 'cadastro/atividade', component: RegisterActivity },
+            { path: 'cadastro/agenda', component: RegisterAgenda },
+            { path: 'cadastro/funcionario', component: RegisterEmployee },
+            { path: 'cadastro/petcliente', component: RegisterPetClient },
+            { path: 'cadastro/raca', component: RegisterRace },
+            { path: 'cadastro/atendimento', component: RegisterService },
+            { path: 'cadastro/servicotipo', component: RegisterServiceType },
+            { path: 'cadastro/especie', component: RegisterSpecie},
+        ]
+     },
 
     //rotas de agenda
     { path: '/agenda/day', component: Day },
     { path: '/agenda/month', component: Month },
     { path: '/agenda/week', component: Week },
-
-    //Registros de cadastro
-    { path: '/cadastro/cliente', component: RegisterClient },
-    { path: '/cadastro/atividade', component: RegisterActivity },
-    { path: '/cadastro/agenda', component: RegisterAgenda },
-    { path: '/cadastro/funcionario', component: RegisterEmployee },
-    { path: '/cadastro/petcliente', component: RegisterPetClient },
-    { path: '/cadastro/race', component: RegisterRace },
-    { path: '/cadastro/servico', component: RegisterService },
-    { path: '/cadastro/especie', component: RegisterSpecie},
 
     //Footer
     { path: '/footer', component: Footer },

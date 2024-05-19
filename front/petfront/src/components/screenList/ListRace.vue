@@ -1,11 +1,13 @@
 <template>
+    <RegisterRace />
     <div class="d-flex justify-content-between">
         <h2>Raças</h2>
         <div class="d-flex align-items-center">
-            <router-link to="/raca/cadastro" class="btn btn-primary btn-sm">Adicionar raça</router-link>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalRace">
+                Adicionar raça
+            </button>
         </div>
     </div>
-
 
     <table class="table">
         <thead>
@@ -34,7 +36,12 @@
 </template>
 
 <script>
+import RegisterRace from '../screensRegister/RegisterRace.vue';
+
 export default {
+    components: {
+        RegisterRace
+    },
     data() {
         return {
             races: [],
@@ -54,5 +61,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

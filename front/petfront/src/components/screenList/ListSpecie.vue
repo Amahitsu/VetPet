@@ -1,8 +1,11 @@
 <template>
+    <RegisterSpecie />
     <div class="d-flex justify-content-between">
         <h2>Espécies</h2>
         <div class="d-flex align-items-center">
-            <router-link to="/especie/cadastro" class="btn btn-primary btn-sm">Adicionar espécie</router-link>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalSpecie">
+                Adicionar espécie
+            </button>
         </div>
     </div>
 
@@ -32,7 +35,12 @@
 </template>
 
 <script>
+import RegisterSpecie from '../screensRegister/RegisterSpecie.vue';
+
 export default {
+    components: {
+        RegisterSpecie
+    },
     data() {
         return {
             species: [],

@@ -1,8 +1,11 @@
 <template>
+    <RegisterServiceType />
     <div class="d-flex justify-content-between">
         <h2>Serviços</h2>
         <div class="d-flex align-items-center">
-            <router-link to="/servico/cadastro" class="btn btn-primary btn-sm">Adicionar serviço</router-link>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalService">
+                Adicionar serviço
+            </button>
         </div>
     </div>
 
@@ -34,7 +37,12 @@
 </template>
 
 <script>
+import RegisterServiceType from '../screensRegister/RegisterServiceType.vue';
+
 export default {
+    components: {
+        RegisterServiceType
+    },
     data() {
         return {
             services: [],

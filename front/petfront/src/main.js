@@ -21,7 +21,7 @@ import RegisterServiceType from './components/screensRegister/RegisterServiceTyp
 import RegisterSpecie from './components/screensRegister/RegisterSpecie.vue'
 import ListSpecie from './components/screenList/ListSpecie.vue'
 import ListClient from './components/screenList/ListClient.vue'
-import ListService from './components/screenList/ListService.vue'
+import ListServiceType from './components/screenList/ListServiceType.vue'
 import ListEmployee from './components/screenList/ListEmployee.vue'
 import ListPetClient from './components/screenList/ListPetClient.vue'
 import ListRace from './components/screenList/ListRace.vue'
@@ -51,7 +51,7 @@ const routes = [
             { path: '/funcionarios', component: ListEmployee },
             { path: '/petsClientes', component: ListPetClient },
             { path: '/racas', component: ListRace },
-            { path: '/servicos', component: ListService },
+            { path: '/servicos', component: ListServiceType },
             { path: '/especies', component: ListSpecie},
 
             //rotas de agenda

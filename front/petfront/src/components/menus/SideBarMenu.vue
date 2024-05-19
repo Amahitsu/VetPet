@@ -33,44 +33,33 @@
                     </li>
                 </a>-->
 
-                
                 <router-link 
-                    to="/principal/cadastro/agenda"
+                    to="/agenda/cadastro"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Agenda
                 </router-link>
                 <router-link 
-                    to="/principal/cadastro/atendimento"
-                    class="list-group-item list-group-item-action py-2 ripple">
-                    Atendimento
-                </router-link>
-                <router-link 
-                    to="/principal/cadastro/cliente"
+                    to="/clientes"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Clientes
                 </router-link>
                 <router-link 
-                    to="/principal/cadastro/petcliente"
-                    class="list-group-item list-group-item-action py-2 ripple">
-                    Pets
-                </router-link>
-                <router-link 
-                    to="/principal/cadastro/especie"
+                    to="/especies"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Espécies
                 </router-link>
                 <router-link 
-                    to="/principal/cadastro/raca"
+                    to="/racas"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Raças
                 </router-link>
                 <router-link 
-                    to="/principal/cadastro/servicotipo"
+                    to="/servicos"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Serviço
                 </router-link>
                 <router-link 
-                    to="/principal/cadastro/funcionario"
+                    to="/funcionarios"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Funcionários
                 </router-link>

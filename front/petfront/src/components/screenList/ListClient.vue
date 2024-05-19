@@ -1,4 +1,12 @@
 <template>
+    <div class="d-flex justify-content-between">
+        <h2>Clientes</h2>
+        <div class="d-flex align-items-center">
+            <router-link to="/cliente/cadastro" class="btn btn-primary btn-sm">Adicionar cliente</router-link>
+        </div>
+    </div>
+
+
     <table class="table">
         <thead>
             <tr>
@@ -6,7 +14,7 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Status</th>
-                <th>Ações</th>
+                <th width="150">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -14,10 +22,10 @@
                 <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone }}</td>
-                <td>{{ customer.active ? "Ativo" : "Inativo"}}</td>
+                <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
                 <td>
-                    <button class="btn btn-primary" @click="goToAddAnimalPage(customer.id)">Add animal</button>
-                    <button class="btn btn-danger" @click="deletarCliente(customer)">Deletar</button>
+                    <button class="btn btn-sm btn-primary" @click="goToAddAnimalPage(customer.id)">Add animal</button>
+                    <button class="btn btn-sm btn-danger" @click="deletarCliente(customer)">Deletar</button>
                 </td>
             </tr>
         </tbody>
@@ -42,7 +50,7 @@ export default {
                 method: "GET",
                 url: "http://localhost:8080/api/v1/customers",
             })
-                .then((response ) => {
+                .then((response) => {
                     console.log(response.data.data)
                     this.customers = response.data.data;
                 })
@@ -51,7 +59,7 @@ export default {
                 });
         },
         goToAddAnimalPage(id) {
-            this.$router.push({ path:`/cliente/${id}/adicionar-pet`});
+            this.$router.push({ path: `/cliente/${id}/adicionar-pet` });
         },
     }
 }

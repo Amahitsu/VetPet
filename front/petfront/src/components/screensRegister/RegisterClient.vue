@@ -1,7 +1,7 @@
 <template>
     <section>
         <form @submit.prevent="createCustomer">
-            <h1>Cadastro de Cliente</h1>
+            <h2>Cadastro de Cliente</h2>
             <div class="row mt-3">
                 <div class="col-md-8">
                     <label for="inputName" class="form-label">Nome Completo</label>
@@ -69,8 +69,8 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                    <a class="btn btn-primary me-2">Salvar</a>
+                    <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>

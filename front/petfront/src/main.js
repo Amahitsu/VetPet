@@ -34,44 +34,33 @@ const routes = [
         path: '/principal',
         component: PrincipalScreen,
         children: [
-            { path: '', component: RegisterAgenda },
-            { path: 'cadastro/cliente', component: RegisterClient },
-            { path: 'cadastro/atividade', component: RegisterActivity },
-            { path: 'cadastro/agenda', component: RegisterAgenda },
-            { path: 'cadastro/funcionario', component: RegisterEmployee },
-            { path: 'cadastro/petcliente', component: RegisterPetClient },
-            { path: 'cadastro/raca', component: RegisterRace },
-            { path: 'cadastro/atendimento', component: RegisterService },
-            { path: 'cadastro/servicotipo', component: RegisterServiceType },
-            { path: 'cadastro/especie', component: RegisterSpecie},
+            { path: '', component: ListClient },
+            { path: '/cliente/cadastro', component: RegisterClient },
+            { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
+            { path: '/atividade/cadastro', component: RegisterActivity },
+            { path: '/agenda/cadastro', component: RegisterAgenda },
+            { path: '/petCliente/cadastro', component: RegisterPetClient },
+            { path: '/raca/cadastro', component: RegisterRace },
+            { path: '/especie/cadastro', component: RegisterSpecie},
+            { path: '/atendimento/cadastro', component: RegisterService },
+            { path: '/servico/cadastro', component: RegisterServiceType },
+            { path: '/funcionario/cadastro', component: RegisterEmployee },
+
+            //Lista de cadastros
+            { path: '/clientes', component: ListClient },
+            { path: '/funcionarios', component: ListEmployee },
+            { path: '/petsClientes', component: ListPetClient },
+            { path: '/racas', component: ListRace },
+            { path: '/servicos', component: ListService },
+            { path: '/especies', component: ListSpecie},
+
+            //rotas de agenda
+            { path: '/agenda/day', component: Day },
+            { path: '/agenda/month', component: Month },
+            { path: '/agenda/week', component: Week }
         ]
      },
-
-    //rotas de agenda
-    { path: '/agenda/day', component: Day },
-    { path: '/agenda/month', component: Month },
-    { path: '/agenda/week', component: Week },
-
-    //Registros de cadastro
-    { path: '/cliente/cadastro', component: RegisterClient },
-    { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
-    { path: '/atividade/cadastro', component: RegisterActivity },
-    { path: '/agenda/cadastro', component: RegisterAgenda },
-    { path: '/funcionario/cadastro', component: RegisterEmployee },
-    { path: '/race/cadastro', component: RegisterRace },
-    { path: '/servico/cadastro', component: RegisterService },
-    { path: '/especie/cadastro', component: RegisterSpecie},
-
-    //Footer
-    { path: '/footer', component: Footer },
-
-    //Lista de cadastros
-    { path: '/list/cliente', component: ListClient },
-    { path: '/list/funcionario', component: ListEmployee },
-    { path: '/list/petclient', component: ListPetClient },
-    { path: '/list/petclient', component: ListRace },
-    { path: '/list/servico', component: ListService },
-    { path: '/list/specie', component: ListSpecie}
+    
 ]
 const router = createRouter({
     history: createWebHistory(),

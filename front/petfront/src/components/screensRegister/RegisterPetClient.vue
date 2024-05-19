@@ -7,7 +7,8 @@
                     <div class="row g-4 align-items-center">
                         <div class="col-md-6">
                             <label for="inputName" class="form-label">Nome do Tutor (Cliente)</label>
-                            <input type="text" class="form-control" placeholder="Digite Nome Completo" aria-label="Nome Completo">
+                            <input type="text" class="form-control" placeholder="Digite Nome Completo"
+                                aria-label="Nome Completo" v-model="customer.name" disabled>
                         </div>
                         <div class="col-md-6 d-flex align-items-center">
                             <div class="form-check me-3">
@@ -48,17 +49,19 @@
                         <label for="speciesSelect" class="form-label">Espécie</label>
                         <select class="form-select" v-model="selectedSpecie" @change="loadBreeds">
                             <option value="" disabled>Selecione</option>
-                            <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}</option>
+                            <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name
+                                }}</option>
                         </select>
-                    </div> 
+                    </div>
 
                     <div class="col-md-2">
                         <label for="breedSelect" class="form-label">Raça</label>
                         <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecie">
                             <option value="" disabled>Selecione</option>
-                            <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
-                        </select> 
-                    </div> 
+                            <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}
+                            </option>
+                        </select>
+                    </div>
 
                     <div class="col-12 d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary me-2">Salvar</button>
@@ -71,6 +74,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -78,16 +83,19 @@ export default {
             breedList: [],
             selectedSpecie: '',
             selectedBreed: '',
+            customer: {},
         };
     },
     created() {
         this.loadSpecies();
+        this.loadCustomerById(this.$route.params.customerId);
     },
+
     methods: {
         loadSpecies() {
             fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
                 .then(response => response.json())
-                .then(({data}) => {
+                .then(({ data }) => {
                     console.log(data)
                     this.speciesList = data;
                 })
@@ -97,7 +105,7 @@ export default {
             if (this.selectedSpecie) {
                 fetch(`http://localhost:8080/api/v1/races?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
                     .then(response => response.json())
-                    .then(({data}) => {
+                    .then(({ data }) => {
                         console.log(data);
                         this.breedList = data;
                     })
@@ -105,6 +113,22 @@ export default {
             } else {
                 this.breedList = [];
             }
+        },
+        loadCustomerById(id) {
+            axios({
+                method: "GET",
+                url: `http://localhost:8080/api/v1/customers/${id}`,
+            })
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.customer = response.data.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        alert('Cliente não encontrado');
+                    }
+                    console.error('Erro ao listar o cliente:', error);
+                });
         },
         handleSubmit() {
             // Implementar lógica para enviar o formulário

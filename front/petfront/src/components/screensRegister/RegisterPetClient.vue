@@ -60,16 +60,15 @@
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                     </select>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-end mt-4">
-                        <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                    </div>
-                </div>
+            </div>
         </form>
-        </section>
+    </section>
 </template>
 
 <script>

@@ -34,7 +34,6 @@ const routes = [
         path: '/principal',
         component: PrincipalScreen,
         children: [
-            { path: '', component: ListClient },
             { path: '/cliente/cadastro', component: RegisterClient },
             { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
             { path: '/atividade/cadastro', component: RegisterActivity },

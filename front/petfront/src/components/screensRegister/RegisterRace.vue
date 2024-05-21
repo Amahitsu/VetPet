@@ -1,4 +1,6 @@
 <script setup>
+import axios from 'axios';
+
 </script>
 
 <template>
@@ -13,25 +15,62 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="inputName" class="form-label">Nome da Raça</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="raceName">
                         </div>
                         <div class="col-md-6">
-                            <label for="inputZip" class="form-label">Espécie</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Selecione</option>
-                                <option value="1">Macho</option>
-                                <option value="2">Fêmea</option>
+                            <label for="inputSpecies" class="form-label">Espécie</label>
+                            <select class="form-select" aria-label="Default select example" v-model="selectedSpecieId">
+                                <option value="" selected>Selecione</option>
+                                <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary me-2">Salvar</button>
+                    <button type="button" class="btn btn-primary me-2" @click="saveRace">Salvar</button>
                     <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            raceName: '',
+            selectedSpecieId: '',
+            speciesList: [],
+        };
+    },
+    created() {
+        this.loadSpecies();
+    },
+    methods: {
+        loadSpecies() {
+            axios.get("http://localhost:8080/api/v1/species")
+                .then(response => {
+                    this.speciesList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar as espécies:', error);
+                });
+        },
+        saveRace() {
+            axios.post("http://localhost:8080/api/v1/races", {
+                name: this.raceName,
+                id_specie: this.selectedSpecieId
+            })
+            .then(response => {
+                console.log('Raça criada com sucesso:', response.data);
+            })
+            .catch(error => {
+                console.error('Erro ao criar raça:', error);
+            });
+        }
+    }
+}
+</script>
 
 <style></style>

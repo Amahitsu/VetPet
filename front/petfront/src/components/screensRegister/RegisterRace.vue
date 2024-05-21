@@ -19,7 +19,7 @@ import axios from 'axios';
                         </div>
                         <div class="col-md-6">
                             <label for="inputSpecies" class="form-label">Espécie</label>
-                            <select class="form-select" aria-label="Default select example" v-model="selectedSpeciesId">
+                            <select class="form-select" aria-label="Default select example" v-model="selectedSpecieId">
                                 <option value="" selected>Selecione</option>
                                 <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}</option>
                             </select>
@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             raceName: '',
-            selectedSpeciesId: '',
+            selectedSpecieId: '',
             speciesList: [],
         };
     },
@@ -60,11 +60,10 @@ export default {
         saveRace() {
             axios.post("http://localhost:8080/api/v1/races", {
                 name: this.raceName,
-                id_specie: this.selectedSpeciesId
+                id_specie: this.selectedSpecieId
             })
             .then(response => {
                 console.log('Raça criada com sucesso:', response.data);
-                // Lógica para notificar o usuário ou atualizar a lista de raças, se necessário
             })
             .catch(error => {
                 console.error('Erro ao criar raça:', error);

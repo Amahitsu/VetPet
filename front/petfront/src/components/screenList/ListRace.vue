@@ -25,7 +25,7 @@
                 <td>{{ race.specie.name }}</td>
                 <td>
                     <button class="btn btn-sm btn-primary">Editar</button>
-                    <button class="btn btn-sm btn-danger">Deletar</button>
+                    <button class="btn btn-sm btn-danger" @click="confirmDelete(race.id)">Deletar</button>
                 </td>
             </tr>
         </tbody>
@@ -74,6 +74,20 @@ export default {
                 })
                 .catch(error => console.error('Erro ao carregar espécies:', error));
         },
+        confirmDelete(id) {
+            if (confirm("Tem certeza que deseja excluir esta raça?")) {
+                this.deleteRace(id);
+            }
+        },
+        deleteRace(id) {
+            axios.delete(`http://localhost:8080/api/v1/races/${id}`)
+                .then(response => {
+                    console.log('Raça excluída com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao excluir raça:', error);
+                });
+        }
     }
 }
 </script>

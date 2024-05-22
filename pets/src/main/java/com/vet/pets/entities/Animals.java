@@ -33,6 +33,6 @@ public class Animals {
     @JoinColumn(name = "id_customers", nullable = false)
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "id_races", nullable = false)
-    private Races race;
+    @JoinColumn(name = "id_breeds", nullable = false)
+    private Breeds race;
 }

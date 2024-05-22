@@ -17,59 +17,59 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vet.pets.dto.RaceDTO;
-import com.vet.pets.entities.Races;
+import com.vet.pets.entities.Breeds;
 import com.vet.pets.service.RaceServices;
 
 @RestController
-@RequestMapping("/api/v1/races")
+@RequestMapping("/api/v1/breeds")
 public class RaceController {
     
     @Autowired
     private RaceServices raceService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createRace(@RequestBody RaceDTO dto) {
-        Optional<Races> race = raceService.findRaceByName(dto.name());
-        if (race.isPresent()) {
+    public ResponseEntity<ApiResponse> createBreed(@RequestBody RaceDTO dto) {
+        Optional<Breeds> breed = raceService.findBreedByName(dto.name());
+        if (breed.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse("Raça já cadastrada."));
         }
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<Races>("Created", raceService.createRace(dto)));
+                .body(new ApiResponse<Breeds>("Created", raceService.createBreed(dto)));
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Races>>> listRace(@RequestParam("id_specie") Optional<Long> id_specie) {
-        List<Races> listRace = raceService.listRace(id_specie);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<List<Races>>("Ok", listRace));
+    public ResponseEntity<ApiResponse<List<Breeds>>> listBreed(@RequestParam("id_specie") Optional<Long> id_specie) {
+        List<Breeds> listBreed = raceService.listBreed(id_specie);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<List<Breeds>>("Ok", listBreed));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Races>> findRace(@PathVariable Long id) {
-        Races race = raceService.findRace(id);
-        if (race == null) {
+    public ResponseEntity<ApiResponse<Breeds>> findBreed(@PathVariable Long id) {
+        Breeds breed = raceService.findBreed(id);
+        if (breed == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<Races>("Ok", race));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<Breeds>("Ok", breed));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteRace(@PathVariable Long id) {
-        Races race = raceService.findRace(id);
-        if (race == null) {
+    public ResponseEntity<ApiResponse> deleteBreed(@PathVariable Long id) {
+        Breeds breed = raceService.findBreed(id);
+        if (breed == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        raceService.deleteRace(id);
+        raceService.deleteBreed(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Deleted"));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateRace(@PathVariable Long id, @RequestBody RaceDTO dto) {
-        Races race = raceService.findRace(id);
-        if (race == null) {
+    public ResponseEntity<ApiResponse> updateBreed(@PathVariable Long id, @RequestBody RaceDTO dto) {
+        Breeds breed = raceService.findBreed(id);
+        if (breed == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Raça não encontrada."));
         }
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse<Races>("Updated", raceService.updateRaceById(id, dto)));
+                .body(new ApiResponse<Breeds>("Updated", raceService.updateBreedById(id, dto)));
     }
 
 }

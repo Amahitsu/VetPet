@@ -4,98 +4,97 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vet.pets.dto.RaceDTO;
-import com.vet.pets.entities.Customer;
-import com.vet.pets.entities.Races;
+import com.vet.pets.entities.Breeds;
 import com.vet.pets.entities.Species;
 import com.vet.pets.repository.RaceRepository;
 import com.vet.pets.repository.SpeciesRepository;
 
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
 @Service
 public class RaceServices {
 
     @Autowired
-    private RaceRepository raceRepository;
+    private RaceRepository breedRepository;
     @Autowired
     private SpeciesRepository specieRepository;
 
     @Transactional
-    public Races createRace(RaceDTO dto){
+    public Breeds createBreed(RaceDTO dto){
         try{
             Species specie = specieRepository.findById(dto.id_specie())
             .orElseThrow(() -> new RuntimeException("Espécie não encontrada com o ID: " + dto.id_specie()));
 
-            Races newRace = raceRepository.save(new Races(null, dto.name(), specie));
-            return newRace;
+            Breeds newBreed = breedRepository.save(new Breeds(null, dto.name(), specie));
+            return newBreed;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public  Optional<Races> findRaceByName(String name){
+    public  Optional<Breeds> findBreedByName(String name){
         try{
-            Optional<Races> race = raceRepository.findByName(name);
-            return race;
+            Optional<Breeds> breed = breedRepository.findByName(name);
+            return breed;
 
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public List<Races> listRace(Optional<Long> id_specie){
+    public List<Breeds> listBreed(Optional<Long> id_specie){
         try{
             if(id_specie.isPresent()) {
-                List<Races> races = raceRepository.findRacesBySpecieId(id_specie.get());
-                return races;
+                List<Breeds> breeds = breedRepository.findRaceBySpecieId(id_specie.get());
+                return breeds;
             }
 
-            List<Races> races = raceRepository.findAll();
-            return races;
+            List<Breeds> breeds = breedRepository.findAll();
+            return breeds;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public Races findRace(Long id){
+    public Breeds findBreed(Long id){
         try{
-            Optional<Races> race = raceRepository.findById(id);
-            if(race.isEmpty()) {
+            Optional<Breeds> breed = breedRepository.findById(id);
+            if(breed.isEmpty()) {
                 return null;
             }
 
-            return race.get();
+            return breed.get();
 
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void deleteRace(Long id){
+    public void deleteBreed(Long id){
         try{
-            raceRepository.deleteById(id);
+            breedRepository.deleteById(id);
          } catch (Exception e){
              throw new RuntimeException(e.getMessage());
          }
     }
 
 
-    public Races updateRaceById(Long id, RaceDTO dto){
+    public Breeds updateBreedById(Long id, RaceDTO dto){
 
         Species specie = specieRepository.findById(dto.id_specie())
         .orElseThrow(() -> new RuntimeException("Espécie não encontrada com o ID: " + dto.id_specie()));
 
         try{
-            Optional<Races> race = raceRepository.findById(id);
-            if(race.isEmpty()) {
+            Optional<Breeds> breed = breedRepository.findById(id);
+            if(breed.isEmpty()) {
                 return null;
             }
           
-            Races newRace = raceRepository.save(new Races(id, dto.name(), specie));
-            return newRace;
+            Breeds newBreed = breedRepository.save(new Breeds(id, dto.name(), specie));
+            return newBreed;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

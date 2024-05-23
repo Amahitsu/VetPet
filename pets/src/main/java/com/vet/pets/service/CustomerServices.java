@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.vet.pets.dto.CustomerCreateDTO;
 import com.vet.pets.entities.Customer;
+import com.vet.pets.repository.AnimalRepository;
+import com.vet.pets.repository.AppointmentRepository;
 import com.vet.pets.repository.CustomerRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,6 +18,10 @@ import jakarta.transaction.Transactional;
 public class CustomerServices{
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private AnimalRepository animalRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @Transactional
     public Customer createCustomer(CustomerCreateDTO dto){
@@ -60,8 +66,11 @@ public class CustomerServices{
         }
     }
 
+    @Transactional
     public void deleteCustomer(Long id){
         try{
+            appointmentRepository.deleteAppointmentsByAnimalId(id);
+            animalRepository.deleteAnimalsByCustomerId(id);
             customerRepository.deleteById(id);
          } catch (Exception e){
              throw new RuntimeException(e.getMessage());

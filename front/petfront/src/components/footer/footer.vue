@@ -1,24 +1,19 @@
-<script setup>
-</script>
-
 <template>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer com Bootstrap</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-</head>
-<body>
-
     <footer class="colorFooter text-light py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
                     <h6>Contato</h6>
                     <ul class="list-unstyled">
-                        <li><p>E-mail: suporte@vetpet.com</p></li>
-                        <li><p>Telefone: (47) 99263-3887</p></li>
-                        <li><p>Endereço: Av. Brasil, 610 - Ponta Aguda, Blumenau - SC, 89050-000</p></li>
+                        <li>
+                            <p>E-mail: suporte@vetpet.com</p>
+                        </li>
+                        <li>
+                            <p>Telefone: (47) 99263-3887</p>
+                        </li>
+                        <li>
+                            <p>Endereço: Av. Brasil, 610 - Ponta Aguda, Blumenau - SC, 89050-000</p>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -42,12 +37,16 @@
                 </div>
             </div>
         </div>
-    </footer>    
-    
-</body>
+    </footer>
 </template>
+<script>
+export default {
+    name: 'FooterComponent',
+}
+</script>
+
 <style>
-.colorFooter{
+.colorFooter {
     background-color: #1e2627;
     bottom: 0%;
 }

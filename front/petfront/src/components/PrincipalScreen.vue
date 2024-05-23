@@ -1,11 +1,15 @@
 <script>
+<<<<<<< HEAD
 import Footer from './footer/footer.vue';
+=======
+import FooterComponent from './footer/footer.vue';
+>>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
 import SideMenu from './menus/SideBarMenu.vue';
 import NavTopBar from './header/NavTopBar.vue'
 
 export default {
   components: {
-    Footer,
+    FooterComponent,
     SideMenu,
     NavTopBar,
   },
@@ -13,14 +17,20 @@ export default {
 </script>
 
 <template>
-    <NavTopBar />
+  <NavTopBar />
+
+  <div class="d-flex main">
     <SideMenu />
-    <Footer />
+    <div class="flex-grow-1 container">
+      <router-view></router-view>
+    </div>
+  </div>
+
+  <!--<FooterComponent />-->
 </template>
 
 <style>
-.container {
-  display: flex;
-  flex-direction: column;
+.main {
+  margin-top: 4.5rem;
 }
 </style>

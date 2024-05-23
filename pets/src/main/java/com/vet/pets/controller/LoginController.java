@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<WorkerLoggedDTO> login(@RequestBody WorkerLoginDTO dto){
+    public ResponseEntity<WorkerLoggedDTO> login2(@RequestBody WorkerLoginDTO dto){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginService.login(dto));
     }
 }

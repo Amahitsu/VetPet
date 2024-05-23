@@ -25,7 +25,7 @@ public class LoginService {
         Optional<Worker> workerOptional = Optional.ofNullable(workerRepository.findByUsername(dto.username()));
         if(workerOptional.isPresent()){
             if(passwordEncoder.matches(dto.password(), workerOptional.get().getPasswordd())){
-                return new WorkerLoggedDTO(workerOptional.get().getUsername(), workerOptional.get().getFunctionn(), workerOptional.get().getUserLevel());
+                return new WorkerLoggedDTO(workerOptional.get().getUsername(), workerOptional.get().getFunctionn(), workerOptional.get().getUserLevel(), workerOptional.get().getName());
             } else{
                 throw new PasswordNotMatches("The password provided is incorrect!");
             }

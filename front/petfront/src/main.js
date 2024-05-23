@@ -4,7 +4,10 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
+<<<<<<< HEAD
+=======
 import Footer from './components/footer/footer.vue'
+>>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
 import Login from './components/Login.vue'
 import PrincipalScreen from './components/PrincipalScreen.vue'
 import Day from './components/screenAgenda/Day.vue'
@@ -54,6 +57,26 @@ const routes = [
             { path: '/servicos', component: ListServiceType },
             { path: '/especies', component: ListSpecie},
 
+<<<<<<< HEAD
+    //Registros de cadastro
+    { path: '/cadastro/cliente', component: RegisterClient },
+    { path: '/cadastro/atividade', component: RegisterActivity },
+    { path: '/cadastro/agenda', component: RegisterAgenda },
+    { path: '/cadastro/funcionario', component: RegisterEmployee },
+    { path: '/cadastro/petcliente', component: RegisterPetClient },
+    { path: '/cadastro/raça', component: RegisterRace },
+    { path: '/cadastro/servico', component: RegisterService },
+    { path: '/cadastro/especie', component: RegisterSpecie},
+
+
+    //Lista de cadastros
+    { path: '/list/cliente', component: ListClient },
+    { path: '/list/funcionario', component: ListEmployee },
+    { path: '/list/petclient', component: ListPetClient },
+    { path: '/list/petclient', component: ListRace },
+    { path: '/list/servico', component: ListService },
+    { path: '/list/specie', component: ListSpecie}
+=======
             //rotas de agenda
             { path: '/agenda/day', component: Day },
             { path: '/agenda/month', component: Month },
@@ -61,6 +84,7 @@ const routes = [
         ]
      },
     
+>>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
 ]
 const router = createRouter({
     history: createWebHistory(),

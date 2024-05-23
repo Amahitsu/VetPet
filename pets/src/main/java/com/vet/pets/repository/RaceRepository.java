@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.vet.pets.entities.Breeds;
 
 public interface RaceRepository extends JpaRepository<Breeds , Long>{
-    @Query("SELECT r FROM breeds r WHERE r.name = ?1")
+    @Query("SELECT r FROM Breeds r WHERE r.name = ?1")
     Optional<Breeds> findByName(String name);
 
     List<Breeds> findRaceBySpecieId(Long specieId);

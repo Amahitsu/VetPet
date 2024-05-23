@@ -55,7 +55,7 @@ export default {
         loadBreeds() {
             axios({
                 method: "GET",
-                url: "http://localhost:8080/api/v1/races",
+                url: "http://localhost:8080/api/v1/breeds",
             })
                 .then((response) => {
                     console.log(response.data.data)
@@ -80,7 +80,7 @@ export default {
             }
         },
         deleteRace(id) {
-            axios.delete(`http://localhost:8080/api/v1/races/${id}`)
+            axios.delete(`http://localhost:8080/api/v1/breeds/${id}`)
                 .then(response => {
                     console.log('Raça excluída com sucesso:', response.data);
                 })

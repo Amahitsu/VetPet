@@ -58,7 +58,7 @@ export default {
                 });
         },
         saveRace() {
-            axios.post("http://localhost:8080/api/v1/races", {
+            axios.post("http://localhost:8080/api/v1/breeds", {
                 name: this.raceName,
                 id_specie: this.selectedSpecieId
             })

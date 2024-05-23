@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.vet.pets.dto.AnimalDTO;
 import com.vet.pets.entities.Animals;
 import com.vet.pets.entities.Customer;
-import com.vet.pets.entities.Races;
+import com.vet.pets.entities.Breeds;
 import com.vet.pets.repository.AnimalRepository;
 import com.vet.pets.repository.CustomerRepository;
 import com.vet.pets.repository.RaceRepository;
@@ -29,7 +29,7 @@ public class AnimalService {
     @Transactional
     public Animals createAnimal(AnimalDTO dto) {
         try {
-            Races races = raceRepository.findById(dto.id_races())
+            Breeds races = raceRepository.findById(dto.id_races())
                     .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_races()));
             Customer customer = customerRepository.findById(dto.id_customers())
                     .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + dto.id_customers()));
@@ -110,7 +110,7 @@ public class AnimalService {
                 existingAnimal.setWeight(dto.weight());
             }
             if (dto.id_races() != null) {
-                Races races = raceRepository.findById(dto.id_races())
+                Breeds races = raceRepository.findById(dto.id_races())
                         .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_races()));
                 existingAnimal.setRace(races);
             }

@@ -18,8 +18,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_races")
-public class Races {
+@Table(name = "tb_breeds")
+public class Breeds {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

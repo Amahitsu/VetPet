@@ -14,7 +14,7 @@ import com.vet.pets.dto.SlotDTO;
 import com.vet.pets.entities.Animals;
 import com.vet.pets.entities.Appointments;
 import com.vet.pets.entities.Customer;
-import com.vet.pets.entities.Races;
+import com.vet.pets.entities.Breeds;
 import com.vet.pets.entities.Worker;
 import com.vet.pets.repository.AnimalRepository;
 import com.vet.pets.repository.AppointmentRepository;

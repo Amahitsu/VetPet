@@ -101,7 +101,7 @@ export default {
         },
         loadBreeds() {
             if (this.selectedSpecie) {
-                fetch(`http://localhost:8080/api/v1/races?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
+                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
                     .then(response => response.json())
                     .then(({ data }) => {
                         console.log(data);

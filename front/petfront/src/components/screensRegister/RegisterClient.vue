@@ -16,11 +16,16 @@ const state = ref('');
 const city = ref('');
 const neighborhood = ref('');
 
-const getAddressData = (cepValue) => {
-  return getAddressByCep(cepValue.replace('-', ''));
+const getAddressData = async (cepValue) => {
+  try {
+    return await getAddressByCep(cepValue.replace('-', ''));
+  } catch (error) {
+    console.error('Erro ao buscar o endereço:', error);
+    return null;
+  }
 };
 
-const formatCep = (event) => {
+const formatCep = async (event) => {
   let cepValue = event.target.value.replace(/\D/g, '');
   if (cepValue.length > 5) {
     cepValue = cepValue.slice(0, 5) + '-' + cepValue.slice(5, 8);
@@ -28,16 +33,13 @@ const formatCep = (event) => {
   cep.value = cepValue;
 
   if (cep.value.length === 9) {
-    getAddressData(cep.value)
-      .then((address) => {
-        street.value = address.logradouro;
-        neighborhood.value = address.bairro;
-        city.value = address.localidade;
-        state.value = address.uf;
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar o endereço:', error);
-      });
+    const address = await getAddressData(cep.value);
+    if (address) {
+      street.value = address.logradouro;
+      neighborhood.value = address.bairro;
+      city.value = address.localidade;
+      state.value = address.uf;
+    }
   }
 };
 
@@ -55,7 +57,7 @@ const formatCpf = (event) => {
   }
 
   cpf.value = cpfValue;
-}
+};
 
 const formatPhone = (event) => {
   let phoneNumber = event.target.value.replace(/\D/g, '');
@@ -71,29 +73,24 @@ const formatPhone = (event) => {
   }
 
   phone.value = phoneNumber;
-}
+};
 
-const createCustomer = () => {
-  let address = `CEP: ${cep.value}, Rua: ${street.value}, Número: ${numberStreet.value}, Complemento: ${complement.value}, Bairro: ${neighborhood.value}, Cidade: ${city.value}, Estado: ${state.value}`;
+const createCustomer = async () => {
+  const address = `CEP: ${cep.value}, Rua: ${street.value}, Número: ${numberStreet.value}, Complemento: ${complement.value}, Bairro: ${neighborhood.value}, Cidade: ${city.value}, Estado: ${state.value}`;
   
-  axios({
-    method: "POST",
-    url: "http://localhost:8080/api/v1/customers",
-    data: {
+  try {
+    const response = await axios.post("http://localhost:8080/api/v1/customers", {
       name: name.value,
       cpf: cpf.value,
       phone: phone.value,
       email: email.value,
       address: address
-    }
-  })
-  .then(response => {
+    });
     console.log('Cliente criado com sucesso:', response.data);
-  })
-  .catch(error => {
+  } catch (error) {
     console.error('Erro ao criar o cliente:', error);
-  });
-}
+  }
+};
 </script>
 
 <template>
@@ -161,4 +158,8 @@ const createCustomer = () => {
               <button type="button" class="btn btn-secondary">Cancelar</button>
             </div>
           </div>
+        </div>
+      </form>
+    </div>
+  </section>
 </template>

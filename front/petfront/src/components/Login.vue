@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import ModalWarning from './screenMessage/ModalWarning.vue';
-import footer from './footer/footer.vue';
+import Footer from './footer/footer.vue';
 
 const username = ref('');
 const password = ref('');
@@ -18,7 +18,7 @@ const login = () => {
     .then(response => {
         if (response.status === 202) {
             saveDataInCache(response.data);
-            router.push('/Cadastro/Cliente');
+            router.push('/principal');
         } else {
             console.log(response);
         }

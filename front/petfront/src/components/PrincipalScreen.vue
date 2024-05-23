@@ -1,5 +1,5 @@
 <script>
-import Footer from './footer/Footer.vue';
+import Footer from './footer/footer.vue';
 import SideMenu from './menus/SideBarMenu.vue';
 import NavTopBar from './header/NavTopBar.vue'
 

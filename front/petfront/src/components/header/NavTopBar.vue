@@ -1,23 +1,31 @@
-<script>
+<script setup>
+import { ref } from 'vue';
+
+const nameWorker = ref('');
+
+const data = localStorage.getItem('user');
+if (data) {
+    try {
+        const parsedData = JSON.parse(data);
+        nameWorker.value = parsedData.name;
+    } catch (e) {
+        console.error('Error parsing user data from localStorage', e);
+    }
+}
 </script>
 
 <template>
-    <!-- Navbar -->
     <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top">
-        <!-- Container wrapper -->
         <div class="container-fluid">
-            <!-- Brand -->
             <a class="navbar-brand" href="#">
                 <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
                     loading="lazy" />
             </a>
-            <!-- Right links -->
-            <-- <ul class="navbar-nav ms-auto d-flex flex-row">
-                <!-- Nome do login -->
+            <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="dropdown">
                     <button class="btn btn-dark dropdown-toggle text-white" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Amanda Hirata Medeiros
+                        <label>{{ nameWorker }}</label>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li>
@@ -27,9 +35,8 @@
                         </li>
                     </ul>
                 </li>
-                </ul>
+            </ul>
         </div>
-        <!-- Container wrapper -->
     </nav>
 </template>
 

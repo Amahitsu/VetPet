@@ -4,7 +4,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
-import Footer from './components/footer/Footer.vue'
 import Login from './components/Login.vue'
 import PrincipalScreen from './components/PrincipalScreen.vue'
 import Day from './components/screenAgenda/Day.vue'
@@ -46,8 +45,6 @@ const routes = [
     { path: '/cadastro/servico', component: RegisterService },
     { path: '/cadastro/especie', component: RegisterSpecie},
 
-    //Footer
-    { path: '/footer', component: Footer },
 
     //Lista de cadastros
     { path: '/list/cliente', component: ListClient },

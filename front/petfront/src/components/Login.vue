@@ -3,11 +3,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import ModalWarning from './screenMessage/ModalWarning.vue';
-<<<<<<< HEAD
-import Footer from './footer/footer.vue';
-=======
-// import footer from './footer/footer.vue';
->>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
+
+
 
 const username = ref('');
 const password = ref('');
@@ -80,7 +77,7 @@ const saveDataInCache = (data) => {
         </div>
     </section>
     <ModalWarning :modalText="modalMessage" id="modal"/>
-    <Footer/>
+    
 </template>
 
 <style scoped>

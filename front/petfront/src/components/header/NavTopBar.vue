@@ -17,19 +17,11 @@ if (data) {
 <template>
     <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-<<<<<<< HEAD
             <a class="navbar-brand" href="#">
                 <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
                     loading="lazy" />
             </a>
             <ul class="navbar-nav ms-auto d-flex flex-row">
-=======
-            <!-- Brand -->
-            <router-link to="/principal" class="navbar-brand text-white" href="#">VetPet</router-link>
-            <!-- Right links -->
-            <-- <ul class="navbar-nav ms-auto d-flex flex-row">
-                <!-- Nome do login -->
->>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
                 <li class="dropdown">
                     <button class="btn btn-dark dropdown-toggle text-white" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">

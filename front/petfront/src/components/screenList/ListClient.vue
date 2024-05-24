@@ -25,7 +25,7 @@
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
                 <td>
                     <button class="btn btn-sm btn-primary" @click="goToAddAnimalPage(customer.id)">Add animal</button>
-                    <button class="btn btn-sm btn-danger" @click="deletarCliente(customer)">Deletar</button>
+                    <button class="btn btn-sm btn-danger" @click="confirmDelete(customer.id)">Deletar</button>
                 </td>
             </tr>
         </tbody>
@@ -61,6 +61,20 @@ export default {
         goToAddAnimalPage(id) {
             this.$router.push({ path: `/cliente/${id}/adicionar-pet` });
         },
+        confirmDelete(id) {
+            if (confirm("Tem certeza que deseja excluir este cliente?")) {
+                this.deleteCustomer(id);
+            }
+        },
+        deleteCustomer(id) {
+            axios.delete(`http://localhost:8080/api/v1/customers/${id}`)
+                .then(response => {
+                    console.log('Cliente excluído com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao excluir cliente:', error);
+                });
+        }
     }
 }
 </script>

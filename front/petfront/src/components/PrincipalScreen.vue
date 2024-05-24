@@ -1,15 +1,10 @@
 <script>
-<<<<<<< HEAD
-import Footer from './footer/footer.vue';
-=======
-import FooterComponent from './footer/footer.vue';
->>>>>>> 634757c441a44f0513fdceee428fd788b3975c80
+// import Footer from './footer/footer.vue';
 import SideMenu from './menus/SideBarMenu.vue';
 import NavTopBar from './header/NavTopBar.vue'
 
 export default {
   components: {
-    FooterComponent,
     SideMenu,
     NavTopBar,
   },

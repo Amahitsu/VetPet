@@ -32,7 +32,6 @@ public class ServiceServices {
         try{
             Optional<Services> service = serviceRepository.findByName(name);
             return service;
-
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

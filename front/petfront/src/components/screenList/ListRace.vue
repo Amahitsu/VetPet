@@ -1,9 +1,9 @@
 <template>
-    <RegisterRace />
+    <RegisterRace :id="raceId" @reloadBreeds="loadBreeds" />
     <div class="d-flex justify-content-between">
         <h2>Raças</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalRace">
+            <button type="button" class="btn btn-sm btn-primary" @click="addRace()">
                 Adicionar raça
             </button>
         </div>
@@ -24,7 +24,7 @@
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary">Editar</button>
+                    <button class="btn btn-sm btn-primary" @click="updateRace(race.id)">Editar</button>
                     <button class="btn btn-sm btn-danger" @click="confirmDelete(race.id)">Deletar</button>
                 </td>
             </tr>
@@ -43,8 +43,9 @@ export default {
     },
     data() {
         return {
+            raceId: null,
             breeds: [],
-            speciesList: [],
+            speciesList: []
         };
     },
     created() {
@@ -58,7 +59,6 @@ export default {
                 url: "http://localhost:8080/api/v1/breeds",
             })
                 .then((response) => {
-                    console.log(response.data.data)
                     this.breeds = response.data.data;
                 })
                 .catch(error => {
@@ -66,13 +66,24 @@ export default {
                 });
         },
         loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
+            fetch('http://localhost:8080/api/v1/species')
                 .then(response => response.json())
                 .then(({ data }) => {
-                    console.log(data)
                     this.speciesList = data;
                 })
                 .catch(error => console.error('Erro ao carregar espécies:', error));
+        },
+        addRace() {
+            this.raceId = null;
+            this.openModal();
+        },
+        updateRace(id) {
+            this.raceId = id;
+            this.openModal();
+        },
+        openModal() {
+            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRace"))
+            modal.show();
         },
         confirmDelete(id) {
             if (confirm("Tem certeza que deseja excluir esta raça?")) {
@@ -83,6 +94,7 @@ export default {
             axios.delete(`http://localhost:8080/api/v1/breeds/${id}`)
                 .then(response => {
                     console.log('Raça excluída com sucesso:', response.data);
+                    this.loadBreeds();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir raça:', error);

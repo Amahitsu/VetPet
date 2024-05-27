@@ -34,7 +34,7 @@
                 </a>-->
 
                 <router-link 
-                    to="/agenda/cadastro"
+                    to="/agenda"
                     class="list-group-item list-group-item-action py-2 ripple">
                     Agenda
                 </router-link>

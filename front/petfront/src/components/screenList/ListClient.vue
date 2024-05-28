@@ -14,7 +14,7 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Status</th>
-                <th width="150">Ações</th>
+                <th width="200">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,8 @@
                 <td>{{ customer.phone }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" @click="goToAddAnimalPage(customer.id)">Add animal</button>
+                    <button class="btn btn-sm btn-primary" @click="goToAddAnimalPage(customer.id)">Add pet</button>
+                    <button class="btn btn-sm btn-primary" @click="">Editar</button>
                     <button class="btn btn-sm btn-danger" @click="confirmDelete(customer.id)">Deletar</button>
                 </td>
             </tr>

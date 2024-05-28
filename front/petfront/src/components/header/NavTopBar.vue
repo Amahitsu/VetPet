@@ -17,10 +17,7 @@ if (data) {
 <template>
     <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
-                    loading="lazy" />
-            </a>
+            <router-link to="/principal" class="navbar-brand text-white" href="#">VetPet</router-link>
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="dropdown">
                     <button class="btn btn-dark dropdown-toggle text-white" type="button" id="dropdownMenuButton1"

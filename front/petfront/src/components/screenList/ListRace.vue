@@ -29,6 +29,25 @@
                 </td>
             </tr>
         </tbody>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza que deseja excluir esta raça?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" @click="confirmDeletion">Deletar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </table>
 
 </template>
@@ -45,7 +64,8 @@ export default {
         return {
             raceId: null,
             breeds: [],
-            speciesList: []
+            speciesList: [],
+            raceIdToDelete: null,
         };
     },
     created() {
@@ -86,9 +106,12 @@ export default {
             modal.show();
         },
         confirmDelete(id) {
-            if (confirm("Tem certeza que deseja excluir esta raça?")) {
-                this.deleteRace(id);
-            }
+            this.raceIdToDelete = id;
+            $('#deleteModal').modal('show');
+        },
+        confirmDeletion() {
+            this.deleteRace(this.raceIdToDelete);
+            $('#deleteModal').modal('hide');
         },
         deleteRace(id) {
             axios.delete(`http://localhost:8080/api/v1/breeds/${id}`)

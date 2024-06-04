@@ -128,6 +128,22 @@ export default {
                     console.error('Erro ao listar o cliente:', error);
                 });
         },
+        addRace() {
+            axios.post("http://localhost:8080/api/v1/animals", {
+                name: this.animalName,
+                gender: this.animalGender,
+                id_specie: this.selectedSpecieId
+                id_race: this.selectedRaceId
+            })
+                .then(response => {
+                    this.closeModal();
+                    this.$emit('reloadBreeds');
+                    console.log('Raça criada com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar raça:', error);
+                });
+            };
         handleSubmit() {
             // Implementar lógica para enviar o formulário
             console.log('Formulário enviado');

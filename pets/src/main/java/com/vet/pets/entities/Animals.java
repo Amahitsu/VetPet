@@ -26,6 +26,8 @@ public class Animals {
     @Column(length = 45, unique = true, nullable = false)
     private String name;
     @Column(nullable = false)
+    private String gender;
+    @Column(nullable = false)
     private Integer age;
     @Column(nullable = false)
     private Float weight;

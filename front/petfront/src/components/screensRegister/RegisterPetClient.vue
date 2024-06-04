@@ -132,7 +132,7 @@ export default {
             axios.post("http://localhost:8080/api/v1/animals", {
                 name: this.animalName,
                 gender: this.animalGender,
-                id_specie: this.selectedSpecieId
+                id_specie: this.selectedSpecieId,
                 id_race: this.selectedRaceId
             })
                 .then(response => {
@@ -143,7 +143,7 @@ export default {
                 .catch(error => {
                     console.error('Erro ao criar raça:', error);
                 });
-            };
+            },
         handleSubmit() {
             // Implementar lógica para enviar o formulário
             console.log('Formulário enviado');

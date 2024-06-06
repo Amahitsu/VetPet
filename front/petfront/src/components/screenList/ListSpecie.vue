@@ -39,7 +39,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Formulário de edição da espécie -->
                     <form @submit.prevent="editSpecie">
                         <div class="mb-3">
                             <label for="editSpecieName" class="form-label">Nome da Espécie</label>
@@ -109,7 +108,7 @@ export default {
                 });
         },
         openEditModal(specie) {
-            this.editedSpecie = { ...specie }; // Copia os detalhes da espécie para a espécie em edição
+            this.editedSpecie = { ...specie };
             $('#editSpecieModal').modal('show');
         },
         editSpecie() {
@@ -118,7 +117,7 @@ export default {
                 .then(response => {
                     console.log('Espécie editada com sucesso:', response.data);
                     $('#editSpecieModal').modal('hide');
-                    this.loadSpecies(); // Atualiza a lista de espécies após a edição
+                    this.loadSpecies();
                 })
                 .catch(error => {
                     console.error('Erro ao editar espécie:', error);
@@ -134,7 +133,7 @@ export default {
                 .then(response => {
                     console.log('Espécie excluída com sucesso:', response.data);
                     $('#deleteConfirmationModal').modal('hide');
-                    this.loadSpecies(); // Atualiza a lista de espécies após a exclusão
+                    this.loadSpecies();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir espécie:', error);

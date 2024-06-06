@@ -91,7 +91,7 @@ export default {
 
     methods: {
         loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
+            fetch('http://localhost:8080/api/v1/species')
                 .then(response => response.json())
                 .then(({ data }) => {
                     console.log(data)
@@ -101,7 +101,7 @@ export default {
         },
         loadBreeds() {
             if (this.selectedSpecie) {
-                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
+                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`)
                     .then(response => response.json())
                     .then(({ data }) => {
                         console.log(data);
@@ -129,7 +129,6 @@ export default {
                 });
         },
         handleSubmit() {
-            // Implementar lógica para enviar o formulário
             console.log('Formulário enviado');
         }
     }

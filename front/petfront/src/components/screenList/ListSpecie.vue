@@ -71,6 +71,7 @@ export default {
             axios.delete(`http://localhost:8080/api/v1/species/${id}`)
                 .then(response => {
                     console.log('Espécie excluída com sucesso:', response.data);
+                    location.reload();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir espécie:', error);

@@ -25,13 +25,8 @@ public class Animals {
     private Long id;
     @Column(length = 45, unique = true, nullable = false)
     private String name;
-    @Column(length = 45, unique = true, nullable = false)
-    private String gender;
-<<<<<<< HEAD
-=======
     @Column(nullable = false)
     private String gender;
->>>>>>> 9a684e8427c3a43ad4f186a3fe8d9ef33059f8fb
     @Column(nullable = false)
     private Integer age;
     @Column(nullable = false)

@@ -23,12 +23,35 @@
                 <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary">Editar</button>
+                    <button class="btn btn-sm btn-primary" @click="openEditModal(specie)">Editar</button>
                     <button class="btn btn-sm btn-danger" @click="confirmDelete(specie.id)">Deletar</button>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <div class="modal fade" id="editSpecieModal" tabindex="-1" aria-labelledby="editSpecieModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSpecieModalLabel">Editar Espécie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de edição da espécie -->
+                    <form @submit.prevent="editSpecie">
+                        <div class="mb-3">
+                            <label for="editSpecieName" class="form-label">Nome da Espécie</label>
+                            <input type="text" class="form-control" id="editSpecieName" v-model="editedSpecie.name">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
         aria-hidden="true">
@@ -62,6 +85,10 @@ export default {
     data() {
         return {
             species: [],
+            editedSpecie: {
+                id: null,
+                name: ''
+            }
         };
     },
     created() {
@@ -79,6 +106,22 @@ export default {
                 })
                 .catch(error => {
                     console.error('Erro ao listar as espécies:', error);
+                });
+        },
+        openEditModal(specie) {
+            this.editedSpecie = { ...specie }; // Copia os detalhes da espécie para a espécie em edição
+            $('#editSpecieModal').modal('show');
+        },
+        editSpecie() {
+            const id = this.editedSpecie.id;
+            axios.put(`http://localhost:8080/api/v1/species/${id}`, this.editedSpecie)
+                .then(response => {
+                    console.log('Espécie editada com sucesso:', response.data);
+                    $('#editSpecieModal').modal('hide');
+                    this.loadSpecies(); // Atualiza a lista de espécies após a edição
+                })
+                .catch(error => {
+                    console.error('Erro ao editar espécie:', error);
                 });
         },
         confirmDelete(id) {

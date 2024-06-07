@@ -21,7 +21,7 @@ export default {
                     this.animalsList = response.data.data;
                 })
                 .catch(error => {
-                    console.error('Erro ao listar os animais:', error);
+                    console.error('Erro ao listar os animaiss:', error);
                 });
         },
         loadWorkers() {

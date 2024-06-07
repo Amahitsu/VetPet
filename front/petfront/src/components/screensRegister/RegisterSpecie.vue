@@ -44,6 +44,7 @@ export default {
             })
             .then(response => {
                 console.log('Espécie criada com sucesso:', response.data);
+                location.reload();
             })
             .catch(error => {
                 console.error('Erro ao criar espécie:', error);

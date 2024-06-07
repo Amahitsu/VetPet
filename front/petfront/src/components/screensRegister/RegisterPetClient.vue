@@ -26,27 +26,27 @@
 
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <label for="inputName" class="form-label">Nome do Pet</label>
-                    <input type="text" class="form-control">
+                    <label for="inputPetName" class="form-label">Nome do Pet</label>
+                    <input type="text" class="form-control" v-model="animalName" id="inputPetName">
                 </div>
                 <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Sexo</label>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Selecione</option>
-                        <option value="1">Macho</option>
-                        <option value="2">Fêmea</option>
+                    <label for="inputGender" class="form-label">Sexo</label>
+                    <select class="form-select" v-model="animalGender" id="inputGender">
+                        <option value="" disabled>Selecione</option>
+                        <option value="Macho">Macho</option>
+                        <option value="Fêmea">Fêmea</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label for="dateInput" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="dateInput">
+                    <input type="date" class="form-control" id="dateInput" v-model="animalBirthdate">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="speciesSelect" class="form-label">Espécie</label>
-                    <select class="form-select" v-model="selectedSpecie" @change="loadBreeds">
+                    <select class="form-select" v-model="selectedSpecie" @change="loadBreeds" id="speciesSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}
                         </option>
@@ -55,7 +55,7 @@
 
                 <div class="col-md-3">
                     <label for="breedSelect" class="form-label">Raça</label>
-                    <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecie">
+                    <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecie" id="breedSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                     </select>
@@ -63,8 +63,8 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end mt-4">
-                    <a class="btn btn-primary me-2">Salvar</a>
-                    <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
+                    <button type="button" class="btn btn-primary me-2" @click="addAnimal">Salvar</button>
+                    <button type="button" @click="$router.go(-1)" class="btn btn-secondary">Cancelar</button>
                 </div>
             </div>
         </form>
@@ -82,6 +82,9 @@ export default {
             selectedSpecie: '',
             selectedBreed: '',
             customer: {},
+            animalName: '',
+            animalGender: '',
+            animalBirthdate: '',
         };
     },
     created() {
@@ -91,7 +94,7 @@ export default {
 
     methods: {
         loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species') // Substitua com a URL real da sua API
+            fetch('http://localhost:8080/api/v1/species')
                 .then(response => response.json())
                 .then(({ data }) => {
                     console.log(data)
@@ -101,7 +104,7 @@ export default {
         },
         loadBreeds() {
             if (this.selectedSpecie) {
-                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`) // Substitua com a URL real da sua API
+                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`)
                     .then(response => response.json())
                     .then(({ data }) => {
                         console.log(data);
@@ -128,7 +131,7 @@ export default {
                     console.error('Erro ao listar o cliente:', error);
                 });
         },
-        addRace() {
+        addAnimal() {
             axios.post("http://localhost:8080/api/v1/animals", {
                 name: this.animalName,
                 gender: this.animalGender,
@@ -139,14 +142,13 @@ export default {
                 .then(response => {
                     this.closeModal();
                     this.$emit('reloadBreeds');
-                    console.log('Raça criada com sucesso:', response.data);
+                    console.log('Animal criado com sucesso:', response.data);
                 })
                 .catch(error => {
-                    console.error('Erro ao criar raça:', error);
+                    console.error('Erro ao criar animal:', error);
                 });
             },
         handleSubmit() {
-            // Implementar lógica para enviar o formulário
             console.log('Formulário enviado');
         }
     }
@@ -154,5 +156,4 @@ export default {
 </script>
 
 <style>
-/* Adicione seus estilos aqui */
 </style>

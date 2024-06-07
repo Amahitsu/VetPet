@@ -43,7 +43,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" @click="confirmDeletion">Deletar</button>
+                        <button type="button" class="btn btn-danger" @click="confirmDeletion">Confirmar</button>
                     </div>
                 </div>
             </div>

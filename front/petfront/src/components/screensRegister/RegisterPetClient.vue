@@ -137,6 +137,7 @@ export default {
                 gender: this.animalGender,
                 id_specie: this.selectedSpecieId,
                 id_race: this.selectedRaceId
+
             })
                 .then(response => {
                     this.closeModal();

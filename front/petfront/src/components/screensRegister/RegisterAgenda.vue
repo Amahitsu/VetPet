@@ -7,14 +7,25 @@ export default {
             medicinesAppointments: false,
             vaccinesAppointments: false,
             dateAppointments: '',
-            animalAppointments: null,
-            workerAppointments: null,
+            customerAppointments: '',
+            animalAppointments: '',
+            workerAppointments: '',
+            servicesAppointments: '',
             observationAppointments: '',
         };
     },
     created() {
     },
     methods: {
+        loadCustomers() {
+            axios.get("http://localhost:8080/api/v1/customers")
+                .then(response => {
+                    this.customersList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os clientes:', error);
+                });
+        },
         loadAnimals() {
             axios.get("http://localhost:8080/api/v1/animals")
                 .then(response => {
@@ -33,6 +44,15 @@ export default {
                     console.error('Erro ao listar os funcionários:', error);
                 });
         },
+        loadServices() {
+            axios.get("http://localhost:8080/api/v1/services")
+                .then(response => {
+                    this.servicesList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os serviços:', error);
+                });
+        },
         createAppointments() {
             axios.post("http://localhost:8080/api/v1/appointments", {
                 start_time: this.start_timeAppointments,
@@ -40,8 +60,10 @@ export default {
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
                 date: this.dateAppointments,
-                id_animal: this.animalAppointments,
-                id_worker: this.workerAppointments,
+                id_cusomer: this.customerAppointments,
+                id_animals: this.animalAppointments,
+                id_workers: this.workerAppointments,
+                id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             })
                 .then(response => {
@@ -98,9 +120,19 @@ export default {
                 </div>
             </div>
             <div class="mb-3 row">
+                <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
+                <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments">
+                        <option value="" selected>Selecione</option>
+                        <option v-for="customers in customersList" :key="customers.id" :value="customers.id">{{
+                        customers.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="selectedAnimal">
+                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments" :disabled="!customerAppointments" required>
                         <option value="" selected>Selecione</option>
                         <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
                         animals.name }}</option>
@@ -110,11 +142,20 @@ export default {
             <div class="mb-3 row">
                 <label for="workerSelect" class="col-sm-2 col-form-label">Funcionário</label>
                 <div class="col-sm-10">
-                    <select class="form-select" id="workerSelect" v-model="workerAppointments" required>
-                        <option selected disabled>Selecione o Funcionário</option>
-                        <!-- Exemplo de opções, substitua com dados reais -->
-                        <option value="1">Dr. Smith</option>
-                        <option value="2">Dr. Jones</option>
+                    <select class="form-select" aria-label="Default select example" v-model="workerAppointments">
+                        <option value="" selected>Selecione</option>
+                        <option v-for="workers in workersList" :key="workers.id" :value="workers.id">{{
+                        workers.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="serviceSelect" class="col-sm-2 col-form-label">Serviços</label>
+                <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example" v-model="servicesAppointments">
+                        <option value="" selected>Selecione</option>
+                        <option v-for="services in servicesList" :key="services.id" :value="services.id">{{
+                        services.name }}</option>
                     </select>
                 </div>
             </div>

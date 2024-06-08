@@ -1,7 +1,6 @@
 package com.vet.pets.entities;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,11 +36,17 @@ public class Appointments {
     @Column(nullable = false)
     private Date date;
     @ManyToOne
+    @JoinColumn(name = "id_customers", nullable = false)
+    private Customer customer;
+    @ManyToOne
     @JoinColumn(name = "id_animals", nullable = false)
     private Animals animal;
     @ManyToOne
     @JoinColumn(name = "id_workers", nullable = false)
     private Worker worker;
+    @ManyToOne
+    @JoinColumn(name = "id_services", nullable = false)
+    private Services service;
     @Column(nullable = false)
     private String observation;
 }

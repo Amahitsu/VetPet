@@ -103,7 +103,7 @@ const createCustomer = async () => {
   }
 };
 
-const checkboxes = document.querySelectorAll('.single-checkbox');
+const checkboxes = document.querySelectorAll('.single-checkbox')
 document.addEventListener('DOMContentLoaded', function () {
 
   checkboxes.forEach((checkbox) => {

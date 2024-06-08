@@ -8,16 +8,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vet.pets.dto.AnimalDTO;
 import com.vet.pets.dto.AppointmentDTO;
 import com.vet.pets.dto.SlotDTO;
 import com.vet.pets.entities.Animals;
 import com.vet.pets.entities.Appointments;
 import com.vet.pets.entities.Customer;
-import com.vet.pets.entities.Breeds;
+import com.vet.pets.entities.Services;
 import com.vet.pets.entities.Worker;
 import com.vet.pets.repository.AnimalRepository;
 import com.vet.pets.repository.AppointmentRepository;
+import com.vet.pets.repository.CustomerRepository;
+import com.vet.pets.repository.ServiceRepository;
 import com.vet.pets.repository.WorkerRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,17 +29,25 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
     private AnimalRepository animalRepository;
     @Autowired
     private WorkerRepository workerRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @Transactional
     public Appointments createAppointment(AppointmentDTO dto){
         try{
+            Customer customer = customerRepository.findById(dto.id_customer())
+                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + dto.id_customer()));
             Animals animal = animalRepository.findById(dto.id_animals())
                     .orElseThrow(() -> new RuntimeException("Animal não encontrada com o ID: " + dto.id_animals()));
             Worker worker = workerRepository.findById(dto.id_workers())
                     .orElseThrow(() -> new RuntimeException("Trabalhador não encontrado com o ID: " + dto.id_workers()));
+            Services service = serviceRepository.findById(dto.id_services())
+                    .orElseThrow(() -> new RuntimeException("Serviço não encontrado com o ID: " + dto.id_services()));
 
             Appointments newAppointment = new Appointments();
             newAppointment.setStart_time(dto.start_time());
@@ -47,8 +56,10 @@ public class AppointmentService {
             newAppointment.setVaccines(dto.vaccines());
             newAppointment.setDate(dto.date());
             newAppointment.setObservation(dto.observation());
+            newAppointment.setCustomer(customer);
             newAppointment.setAnimal(animal);
             newAppointment.setWorker(worker);
+            newAppointment.setService(service);
 
             Appointments savedAppointment = appointmentRepository.save(newAppointment);
             
@@ -127,6 +138,11 @@ public class AppointmentService {
             if (dto.observation() != null) {
                 existingAppointment.setObservation(dto.observation());
             }
+            if (dto.id_customer() != null) {
+                Customer customer = customerRepository.findById(dto.id_customer())
+                        .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + dto.id_customer()));
+                existingAppointment.setCustomer(customer);
+            }
             if (dto.id_animals() != null) {
                 Animals animal = animalRepository.findById(dto.id_animals())
                         .orElseThrow(() -> new RuntimeException("Animal não encontrado com o ID: " + dto.id_animals()));
@@ -136,6 +152,11 @@ public class AppointmentService {
                 Worker worker = workerRepository.findById(dto.id_workers())
                         .orElseThrow(() -> new RuntimeException("Trabalhador não encontrado com o ID: " + dto.id_workers()));
                 existingAppointment.setWorker(worker);
+            }
+            if (dto.id_services() != null) {
+                Services service = serviceRepository.findById(dto.id_services())
+                        .orElseThrow(() -> new RuntimeException("Serviço não encontrado com o ID: " + dto.id_services()));
+                existingAppointment.setService(service);
             }
 
             Appointments updatedAppointment = appointmentRepository.save(existingAppointment);

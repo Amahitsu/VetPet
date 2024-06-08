@@ -143,10 +143,31 @@ document.addEventListener('DOMContentLoaded', function () {
 <template>
     <section>
         <form @submit.prevent="createWorker">
+        <form @submit.prevent="createWorker">
             <h2>Cadastro de Funcionário</h2>
             <div class="row mt-3">
                 <div class="col-md-9">
+                <div class="col-md-9">
                     <label for="inputName" class="form-label">Nome Completo</label>
+                    <div class="d-flex">
+                        <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
+                            aria-label="Nome Completo" v-model="name" required>
+                        <div class="col-md-3 d-flex align-itens-center gap-3">
+                            <div class="form-check md-3">
+                                <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                    id="flexCheckDefault" checked>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Ativo
+                                </label>
+                            </div>
+                            <div class="form-check md-3">
+                                <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                    id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Inativo
+                                </label>
+                            </div>
+                        </div>
                     <div class="d-flex">
                         <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
                             aria-label="Nome Completo" v-model="name" required>
@@ -171,15 +192,23 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="row mt-3  ">
                 <div class="col-md-4">
+            <div class="row mt-3  ">
+                <div class="col-md-4">
                     <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
+                        placeholder="xxx.xxx.xxx-xx" v-model="cpf">
                     <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
                         placeholder="xxx.xxx.xxx-xx" v-model="cpf">
                 </div>
                 <div class="col-md-8">
+                <div class="col-md-8">
                     <label for="inputEmail4" class="form-label">Email</label>
                     <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
                         placeholder="E-mail">
+                    <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
+                        placeholder="E-mail">
                 </div>
+                <div class="col-md-4">
                 <div class="col-md-4">
                     <label for="cel" class="form-label">Celular</label>
                     <input type="tel" class="form-control" id="cel" maxlength="15" required
@@ -199,13 +228,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
             <div class="row mt-3">
+            <div class="row mt-3">
                 <div class="col-md-4">
                     <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
+                        maxlength="9" @input="formatCep">
                     <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
                         maxlength="9" @input="formatCep">
                 </div>
                 <div class="col-md-8">
                     <label for="street" class="form-label">Rua</label>
+                    <input type="text" class="form-control" id="inputStreet" v-model="street" required>
                     <input type="text" class="form-control" id="inputStreet" v-model="street" required>
                 </div>
             </div>
@@ -213,9 +246,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="col-md-4">
                     <label for="inputState" class="form-label">Número</label>
                     <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+                    <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
                 </div>
                 <div class="col-md-8">
                     <label for="inputZip" class="form-label">Complemento</label>
+                    <input type="text" class="form-control" id="inputZip" v-model="complement">
                     <input type="text" class="form-control" id="inputZip" v-model="complement">
                 </div>
             </div>
@@ -223,11 +258,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="col-md-4">
                     <label for="inputCity" class="form-label">Estado</label>
                     <input type="text" class="form-control" id="inputCity" v-model="state" required>
+                    <input type="text" class="form-control" id="inputCity" v-model="state" required>
                 </div>
+                <div class="col-md-6">
                 <div class="col-md-6">
                     <label for="inputState" class="form-label">Cidade</label>
                     <input type="text" class="form-control" id="inputState" v-model="city" required>
+                    <input type="text" class="form-control" id="inputState" v-model="city" required>
                 </div>
+
+                <div class="col-md-2">
 
                 <div class="col-md-2">
                     <label for="inputZip" class="form-label">Bairro</label>
@@ -238,8 +278,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="col-md-4">
                     <label for="inputUserName" class="form-label">Usuário</label>
                     <input type="text" class="form-control" id="inputUserName" v-model="userName" required>
+                    <label for="inputUserName" class="form-label">Usuário</label>
+                    <input type="text" class="form-control" id="inputUserName" v-model="userName" required>
                 </div>
                 <div class="col-md-4">
+                    <label for="inputUserName" class="form-label">Senha</label>
+                    <input type="text" class="form-control" id="inputUserName" v-model="password" required>
                     <label for="inputUserName" class="form-label">Senha</label>
                     <input type="text" class="form-control" id="inputUserName" v-model="password" required>
                 </div>
@@ -254,12 +298,15 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
 
             <div class="row mt-3">
+            <div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
                     <button type="submit" class="btn btn-primary me-2">Salvar</button>
                     <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
     </section>
+    <ModalWarning :modalText="modalMessage" id="modal" />
     <ModalWarning :modalText="modalMessage" id="modal" />
 </template>

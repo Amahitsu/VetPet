@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
 import axios from 'axios';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { getAddressByCep } from '../../services/getAddressByCep.vue';
 import ModalWarning from '../screenMessage/ModalWarning.vue';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -81,7 +81,7 @@ const formatPhone = (event) => {
 
 const createCustomer = async () => {
   const address = `CEP: ${cep.value}, Rua: ${street.value}, Número: ${numberStreet.value}, Complemento: ${complement.value}, Bairro: ${neighborhood.value}, Cidade: ${city.value}, Estado: ${state.value}`;
-  
+
   try {
     const response = await axios.post("http://localhost:8080/api/v1/customers", {
       name: name.value,
@@ -95,91 +95,123 @@ const createCustomer = async () => {
     modal.style.display = 'block';
     modalMessage.value = 'Cliente cadastrado com sucesso!';
     setTimeout(() => {
-        router.push('/clientes')
+      router.push('/clientes')
     }, 2000);
 
   } catch (error) {
     console.error('Erro ao criar o cliente:', error);
   }
 };
+
+const checkboxes = document.querySelectorAll('.single-checkbox');
+document.addEventListener('DOMContentLoaded', function () {
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        checkboxes.forEach((cb) => {
+          if (cb !== this) {
+            cb.checked = false;
+          }
+        });
+      }
+    });
+  });
+});
 </script>
 
 <template>
-    <section>
-        <form @submit.prevent="createCustomer">
-            <h2>Cadastro de Cliente</h2>
-            <div class="row mt-3">
-                <div class="col-md-8">
-                    <label for="inputName" class="form-label">Nome Completo</label>
-                    <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
-                        aria-label="Nome Completo" v-model="name" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="cpf" class="form-label">CPF</label>
-                    <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
-                        placeholder="xxx.xxx.xxx-xx" v-model="cpf">
-                </div>
+  <section>
+    <form @submit.prevent="createCustomer">
+      <h2>Cadastro de Cliente</h2>
+      <div class="row mt-3">
+        <div class="col-md-9">
+          <label for="inputName" class="form-label">Nome Completo</label>
+          <div class="d-flex">
+            <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
+              aria-label="Nome Completo" v-model="name" required>
+            <div class="col-md-3 d-flex align-itens-center gap-3">
+              <div class="form-check md-3">
+                <input class="form-check-input single-checkbox" type="checkbox" value="" id="flexCheckDefault" checked>
+                <label class="form-check-label" for="flexCheckDefault">
+                  Ativo
+                </label>
+              </div>
+              <div class="form-check md-3">
+                <input class="form-check-input single-checkbox" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Inativo
+                </label>
+              </div>
             </div>
-            <div class="row mt-3  ">
-                <div class="col-md-8">
-                    <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
-                        placeholder="E-mail">
-                </div>
-                <div class="col-md-4">
-                    <label for="cel" class="form-label">Celular</label>
-                    <input type="tel" class="form-control" id="cel" maxlength="15" required
-                        placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <h4>Endereço</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
-                        maxlength="9" @input="formatCep">
-                </div>
-                <div class="col-md-8">
-                    <label for="street" class="form-label">Rua</label>
-                    <input type="text" class="form-control" id="inputStreet" v-model="street" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
-                </div>
-                <div class="col-md-8">
-                    <label for="inputZip" class="form-label">Complemento</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="complement">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <label for="inputCity" class="form-label">Estado</label>
-                    <input type="text" class="form-control" id="inputCity" v-model="state" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputState" class="form-label">Cidade</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="city" required>
-                </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3  ">
+        <div class="col-md-4">
+          <label for="cpf" class="form-label">CPF</label>
+          <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
+            placeholder="xxx.xxx.xxx-xx" v-model="cpf">
+        </div>
+        <div class="col-md-8">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
+            placeholder="E-mail">
+        </div>
+        <div class="col-md-4">
+          <label for="cel" class="form-label">Celular</label>
+          <input type="tel" class="form-control" id="cel" maxlength="15" required placeholder="(xx) xxxxx-xxxx"
+            v-model="phone" @input="formatPhone">
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-12">
+          <h4>Endereço</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="cep" class="form-label">CEP</label>
+          <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep" maxlength="9"
+            @input="formatCep">
+        </div>
+        <div class="col-md-8">
+          <label for="street" class="form-label">Rua</label>
+          <input type="text" class="form-control" id="inputStreet" v-model="street" required>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Número</label>
+          <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+        </div>
+        <div class="col-md-8">
+          <label for="inputZip" class="form-label">Complemento</label>
+          <input type="text" class="form-control" id="inputZip" v-model="complement">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label for="inputCity" class="form-label">Estado</label>
+          <input type="text" class="form-control" id="inputCity" v-model="state" required>
+        </div>
+        <div class="col-md-6">
+          <label for="inputState" class="form-label">Cidade</label>
+          <input type="text" class="form-control" id="inputZip" v-model="city" required>
+        </div>
 
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                    <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </div>
-        </form>
-    </section>
-    <ModalWarning :modalText="modalMessage" id="modal"/>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Bairro</label>
+          <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-primary me-2">Salvar</button>
+          <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </div>
+    </form>
+  </section>
+  <ModalWarning :modalText="modalMessage" id="modal" />
 </template>

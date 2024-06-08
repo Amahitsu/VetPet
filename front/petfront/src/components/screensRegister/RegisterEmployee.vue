@@ -107,7 +107,8 @@ const createWorker = async () => {
             cpf: cpf.value,
             phone: phone.value,
             email: email.value,
-            address: address
+            address: address,
+            function: functionWorker.value,
         });
 
         const modal = document.getElementById("modal");
@@ -184,6 +185,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     <input type="tel" class="form-control" id="cel" maxlength="15" required
                         placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
                 </div>
+                <div class="col-md-8">
+                    <label for="inputFunction"> Função </label>
+                    <input type="text" class="form-control" id="inputFuntion" v-model="functionWorker" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+
             </div>
             <div class="row mt-3">
                 <div class="col-12">
@@ -224,12 +232,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="col-md-2">
                     <label for="inputZip" class="form-label">Bairro</label>
                     <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-2">
-                    <label for="inputFunction"> Função </label>
-                    <input type="text" class="form-control" id="inputFuntion" v-model="functionWorker" required>
                 </div>
             </div>
             <div class="row mt-3">

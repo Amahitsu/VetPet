@@ -1,7 +1,4 @@
-<script setup>
-import axios from 'axios';
 
-</script>
 
 <template>
     <div class="modal fade" id="modalRace" tabindex="-1" aria-labelledby="modalRace" aria-hidden="true">
@@ -38,6 +35,8 @@ import axios from 'axios';
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     emits: ['reloadBreeds'],
     props: {
@@ -134,8 +133,6 @@ export default {
         }
     }
 }
-
-
 </script>
 
 <style></style>

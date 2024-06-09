@@ -9,3 +9,11 @@ td {
 .btn-icon {
     line-height: 100%;
 }
+
+.custom-card-bg{
+    background-color: #578EBE;
+}
+
+.custom-bg {
+    background-color: #DFDFDF;
+}

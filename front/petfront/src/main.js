@@ -42,7 +42,7 @@ const routes = [
       { path: '/funcionario/cadastro', component: RegisterEmployee },
 
       // Edições cadastros
-      { path: '/cliente/:customerId', component: RegisterClient, props: true },
+      { path: '/cliente/:customerId', component: RegisterClient },
 
       // Listas
       { path: '/clientes', component: ListClient },

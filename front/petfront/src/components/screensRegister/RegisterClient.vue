@@ -1,99 +1,109 @@
 <template>
     <section>
         <form>
-            <h2>Cadastro de Cliente</h2>
-            <div class="row mt-3">
-                <div class="col-md-9">
-                    <label for="inputName" class="form-label">Nome Completo</label>
-                    <div class="d-flex">
-                        <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
-                            aria-label="Nome Completo" v-model="name" required>
-                        <div class="col-md-3 d-flex align-itens-center gap-3">
-                            <div class="form-check md-3">
-                                <input class="form-check-input single-checkbox" type="checkbox" value=""
-                                    id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Ativo
-                                </label>
-                            </div>
-                            <div class="form-check md-3">
-                                <input class="form-check-input single-checkbox" type="checkbox" value=""
-                                    id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Inativo
-                                </label>
+            <h2 v-if="!customerId">Cadastro de Cliente</h2>
+            <h2 v-if="customerId">Edição de Cliente</h2>
+
+            <div class="row">
+                <div :class="[customerId ? 'col-md-6' : 'col-md-12']">
+                    <div class="row mt-3">
+                        <div class="col-md-9">
+                            <label for="inputName" class="form-label">Nome Completo</label>
+                            <div class="d-flex">
+                                <input type="text" class="form-control" placeholder="Digite Nome Completo"
+                                    maxlength="45" aria-label="Nome Completo" v-model="name" required>
+                                <div class="col-md-3 d-flex align-itens-center gap-3">
+                                    <div class="form-check md-3">
+                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                            id="flexCheckDefault" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Ativo
+                                        </label>
+                                    </div>
+                                    <div class="form-check md-3">
+                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                            id="flexCheckChecked">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Inativo
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-3  ">
-                <div class="col-md-4">
-                    <label for="cpf" class="form-label">CPF</label>
-                    <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
-                        placeholder="xxx.xxx.xxx-xx" v-model="cpf">
-                </div>
-                <div class="col-md-8">
-                    <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
-                        placeholder="E-mail">
-                </div>
-                <div class="col-md-4">
-                    <label for="cel" class="form-label">Celular</label>
-                    <input type="tel" class="form-control" id="cel" maxlength="15" required
-                        placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <h4>Endereço</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
-                        maxlength="9" @input="formatCep">
-                </div>
-                <div class="col-md-8">
-                    <label for="street" class="form-label">Rua</label>
-                    <input type="text" class="form-control" id="inputStreet" v-model="street" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
-                </div>
-                <div class="col-md-8">
-                    <label for="inputZip" class="form-label">Complemento</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="complement">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <label for="inputCity" class="form-label">Estado</label>
-                    <input type="text" class="form-control" id="inputCity" v-model="state" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputState" class="form-label">Cidade</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="city" required>
-                </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label for="cpf" class="form-label">CPF</label>
+                            <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
+                                placeholder="xxx.xxx.xxx-xx" v-model="cpf">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
+                                placeholder="E-mail">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="cel" class="form-label">Celular</label>
+                            <input type="tel" class="form-control" id="cel" maxlength="15" required
+                                placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4>Endereço</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx"
+                                v-model="cep" maxlength="9" @input="formatCep">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="street" class="form-label">Rua</label>
+                            <input type="text" class="form-control" id="inputStreet" v-model="street" required>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label for="inputState" class="form-label">Número</label>
+                            <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="inputZip" class="form-label">Complemento</label>
+                            <input type="text" class="form-control" id="inputZip" v-model="complement">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label for="inputCity" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="inputCity" v-model="state" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputState" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="inputZip" v-model="city" required>
+                        </div>
 
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
+                        <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Bairro</label>
+                            <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" v-if="customerId">
+                    <ListPetClient ref="listPetClient" />
                 </div>
             </div>
+
             <div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-secondary me-2" @click="$router.go(-1)">Cancelar</button>
+                    <button type="button" class="btn btn-secondary me-2" @click="goToList">Cancelar</button>
                     <button type="button" class="btn btn-primary" @click="saveCustomer">Salvar</button>
                 </div>
             </div>
         </form>
     </section>
-    <!--<ModalWarning :modalText="modalMessage" id="modal" />-->
+    <ModalWarning :modalText="modalMessage" id="modal" />
 </template>
 
 <script>
@@ -101,6 +111,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { getAddressByCep } from '../../services/getAddressByCep.vue';
 import ModalWarning from '../screenMessage/ModalWarning.vue';
+import ListPetClient from '../screenList/ListPetClient.vue';
 
 const checkboxes = document.querySelectorAll('.single-checkbox');
 document.addEventListener('DOMContentLoaded', function () {
@@ -119,6 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 export default {
+    components: {
+        ModalWarning,
+        ListPetClient
+    },
     props: {
         id: Number
     },
@@ -136,10 +151,11 @@ export default {
             state: '',
             city: '',
             neighborhood: '',
+            customerPets: [],
             modalMessage: ''
         };
     },
-    created() {
+    mounted() {
         this.customerId = this.$router.currentRoute.value.params.customerId;
         this.loadCustomer(this.customerId);
     },
@@ -208,8 +224,8 @@ export default {
                 email: this.email,
                 address: address
             };
-            
-            if(this.customerId)
+
+            if (this.customerId)
                 this.editCustomer(this.customerId, data)
             else
                 this.createCustomer(data)
@@ -217,23 +233,26 @@ export default {
         createCustomer(data) {
             axios.post("http://localhost:8080/api/v1/customers", data)
                 .then(response => {
-                    this.$router.push({ path: `/clientes` });
+                    this.goToList();
                 })
                 .catch(error => {
                     console.error('Erro ao criar cliente:', error);
                 });
         },
         editCustomer(customerId, data) {
-            if(!customerId)
+            if (!customerId)
                 return;
 
             axios.put(`http://localhost:8080/api/v1/customers/${customerId}`, data)
                 .then(response => {
-                    this.$router.push({ path: `/clientes` });
+                    this.goToList();
                 })
                 .catch(error => {
                     console.error('Erro ao editar cliente:', error);
                 });
+        },
+        goToList() {
+            this.$router.push({ path: `/clientes` });
         },
         loadCustomer(customerId) {
             if (!customerId)
@@ -248,7 +267,7 @@ export default {
                     this.cpf = data.cpf;
                     this.email = data.email;
                     this.phone = data.phone;
-                    
+
                     this.cep = address.cep;
                     this.street = address.rua;
                     this.numberStreet = address.numero;
@@ -256,11 +275,15 @@ export default {
                     this.state = address.estado;
                     this.city = address.cidade;
                     this.neighborhood = address.bairro;
+
+                    this.loadCustomerPets(this.customerId);
                 })
                 .catch(error => {
-                    alert('deu errado')
                     console.error('Erro ao criar cliente:', error);
                 });
+        },
+        loadCustomerPets(customerId) {
+            this.$refs.listPetClient.loadCustomerPets(customerId);
         },
         parseAddress(addressString) {
             const parts = addressString.split(', ');
@@ -270,7 +293,7 @@ export default {
             parts.forEach(part => {
                 const [key, value] = part.split(': ');
 
-                if(value)
+                if (value)
                     address[key.trim()] = value.trim();
             });
 

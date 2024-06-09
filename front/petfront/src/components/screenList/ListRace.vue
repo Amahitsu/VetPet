@@ -15,7 +15,7 @@
                 <th>ID</th>
                 <th>Raça</th>
                 <th>Espécie</th>
-                <th width="150">Ações</th>
+                <th width="96">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +23,13 @@
                 <td>{{ race.id }}</td>
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" @click="updateRace(race.id)">Editar</button>
-                    <button class="btn btn-sm btn-danger" @click="confirmDelete(race.id)">Deletar</button>
+                <td class="text-end">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateRace(race.id)">
+                        <span class="material-symbols-rounded">edit</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(race.id)">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
                 </td>
             </tr>
         </tbody>

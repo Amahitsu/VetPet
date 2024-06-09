@@ -14,16 +14,20 @@
             <tr>
                 <th>ID</th>
                 <th>Espécie</th>
-                <th width="150">Ações</th>
+                <th width="96">Ações</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="specie in species" :key="specie.id">
                 <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" @click="updateSpecie(specie.id)">Editar</button>
-                    <button class="btn btn-sm btn-danger" @click="confirmDelete(specie.id)">Deletar</button>
+                <td class="text-end">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateSpecie(specie.id)">
+                        <span class="material-symbols-rounded">edit</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(specie.id)">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
                 </td>
             </tr>
         </tbody>

@@ -5,7 +5,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalService" v-if="!serviceId">Cadastro de Serviço</h1>
                     <h1 class="modal-title fs-5" id="modalService" v-if="serviceId">Editar Serviço</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary" @click="closeModal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button>
                     <button type="button" class="btn btn-primary me-2" @click="saveService">Salvar</button>
                 </div>
             </div>

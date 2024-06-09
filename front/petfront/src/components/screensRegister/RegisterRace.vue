@@ -6,7 +6,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalRace" v-if="!raceId">Cadastro de Raça</h1>
                     <h1 class="modal-title fs-5" id="modalRace" v-if="raceId">Editar Raça</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">

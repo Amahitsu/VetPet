@@ -29,24 +29,27 @@
                 </td>
             </tr>
         </tbody>
-        <div class="modal fade" id="deleteRaceModal" tabindex="-1" role="dialog" aria-labelledby="deleteRaceModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteRaceModalLabel">Confirmar Exclusão</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeDeleteModal"></button>
-                    </div>
-                    <div class="modal-body">
-                        Tem certeza que deseja excluir esta raça?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" @click="deleteRace">Confirmar</button>
-                    </div>
+    </table>
+
+    <div class="modal fade" id="deleteRaceModal" tabindex="-1" role="dialog" aria-labelledby="deleteRaceModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteRaceModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="closeDeleteModal"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir esta raça?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @click="deleteRace">Confirmar</button>
                 </div>
             </div>
         </div>
-    </table>
+    </div>
 
 </template>
 
@@ -68,7 +71,6 @@ export default {
     },
     created() {
         this.loadBreeds();
-        this.loadSpecies();
     },
     methods: {
         loadBreeds() {
@@ -83,14 +85,6 @@ export default {
                     console.error('Erro ao listar as raças:', error);
                 });
         },
-        loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species')
-                .then(response => response.json())
-                .then(({ data }) => {
-                    this.speciesList = data;
-                })
-                .catch(error => console.error('Erro ao carregar espécies:', error));
-        },
         addRace() {
             this.raceId = null;
             this.openModal();
@@ -102,7 +96,7 @@ export default {
         openModal(raceId) {
             let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRace"))
 
-            if(raceId) {
+            if (raceId) {
                 this.$refs.modalRace.loadRace(raceId);
                 this.$refs.modalRace.raceId = raceId;
             }

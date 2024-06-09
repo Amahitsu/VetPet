@@ -88,7 +88,7 @@
             <div class="row mt-3">
                 <div class="col-12 d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-secondary me-2" @click="$router.go(-1)">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="createCustomer">Salvar</button>
+                    <button type="button" class="btn btn-primary" @click="saveCustomer">Salvar</button>
                 </div>
             </div>
         </form>
@@ -124,6 +124,7 @@ export default {
     },
     data() {
         return {
+            customerId: null,
             name: '',
             cpf: '',
             email: '',
@@ -139,10 +140,8 @@ export default {
         };
     },
     created() {
-        let customerId = this.$router.currentRoute.value.params.customerId;
-
-        if (customerId)
-            this.loadCustomer(customerId);
+        this.customerId = this.$router.currentRoute.value.params.customerId;
+        this.loadCustomer(this.customerId);
     },
     methods: {
         async getAddressData(cepValue) {
@@ -200,7 +199,7 @@ export default {
 
             this.phone = phoneNumber;
         },
-        createCustomer() {
+        saveCustomer() {
             const address = `cep: ${this.cep}, rua: ${this.street}, numero: ${this.numberStreet}, complemento: ${this.complement}, bairro: ${this.neighborhood}, cidade: ${this.city}, estado: ${this.state}`;
             const data = {
                 name: this.name,
@@ -209,13 +208,31 @@ export default {
                 email: this.email,
                 address: address
             };
-
+            
+            if(this.customerId)
+                this.editCustomer(this.customerId, data)
+            else
+                this.createCustomer(data)
+        },
+        createCustomer(data) {
             axios.post("http://localhost:8080/api/v1/customers", data)
                 .then(response => {
                     this.$router.push({ path: `/clientes` });
                 })
                 .catch(error => {
                     console.error('Erro ao criar cliente:', error);
+                });
+        },
+        editCustomer(customerId, data) {
+            if(!customerId)
+                return;
+
+            axios.put(`http://localhost:8080/api/v1/customers/${customerId}`, data)
+                .then(response => {
+                    this.$router.push({ path: `/clientes` });
+                })
+                .catch(error => {
+                    console.error('Erro ao editar cliente:', error);
                 });
         },
         loadCustomer(customerId) {

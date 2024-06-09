@@ -14,7 +14,7 @@
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Status</th>
-                <th width="200">Ações</th>
+                <th width="157">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -23,10 +23,17 @@
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" @click="addPet(customer.id)">Add pet</button>
-                    <button class="btn btn-sm btn-primary" @click="editCustomer(customer.id)">Editar</button>
-                    <button class="btn btn-sm btn-danger" @click="confirmDelete(customer.id)">Deletar</button>
+                <td class="text-end">
+                    <button class="btn btn-icon btn-sm btn-success me-1" @click="addPet(customer.id)">
+                        <span class="material-symbols-rounded">add_circle</span>
+                        <span class="material-symbols-rounded">pets</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="editCustomer(customer.id)">
+                        <span class="material-symbols-rounded">edit</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customer.id)">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
                 </td>
             </tr>
         </tbody>

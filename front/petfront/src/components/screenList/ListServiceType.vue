@@ -16,7 +16,7 @@
                 <th>ID</th>
                 <th>Serviço</th>
                 <th>Valor</th>
-                <th width="150">Ações</th>
+                <th width="96">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -24,9 +24,13 @@
                 <td>{{ service.id }}</td>
                 <td>{{ service.name }}</td>
                 <td>R$ {{ service.price }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" @click="updateService(service.id)">Editar</button>
-                    <button class="btn btn-sm btn-danger" @click="confirmDelete(service.id)">Deletar</button>
+                <td class="text-end">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateService(service.id)">
+                        <span class="material-symbols-rounded">edit</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(service.id)">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
                 </td>
             </tr>
         </tbody>

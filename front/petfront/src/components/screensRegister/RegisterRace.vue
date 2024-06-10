@@ -1,5 +1,4 @@
 
-
 <template>
     <div class="modal fade" id="modalRace" tabindex="-1" aria-labelledby="modalRace" aria-hidden="true">
         <div class="modal-dialog">
@@ -7,7 +6,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalRace" v-if="!raceId">Cadastro de Raça</h1>
                     <h1 class="modal-title fs-5" id="modalRace" v-if="raceId">Editar Raça</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -26,8 +25,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary me-2" @click="saveRace">Salvar</button>
                     <button type="button" class="btn btn-secondary" @click="closeModal">Cancelar</button>
+                    <button type="button" class="btn btn-primary me-2" @click="saveRace">Salvar</button>
                 </div>
             </div>
         </div>
@@ -39,9 +38,6 @@ import axios from 'axios';
 
 export default {
     emits: ['reloadBreeds'],
-    props: {
-        id: null
-    },
     data() {
         return {
             raceId: null,
@@ -124,12 +120,6 @@ export default {
             this.raceId = null;
             this.raceName = '';
             this.selectedSpecieId = '';
-        }
-    },
-    watch: {
-        id(id) {
-            this.raceId = id;
-            this.loadRace(id);
         }
     }
 }

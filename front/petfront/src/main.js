@@ -20,10 +20,7 @@ import RegisterAgenda from './components/screensRegister/RegisterAgenda.vue';
 import RegisterClient from './components/screensRegister/RegisterClient.vue';
 import RegisterEmployee from './components/screensRegister/RegisterEmployee.vue';
 import RegisterPetClient from './components/screensRegister/RegisterPetClient.vue';
-import RegisterRace from './components/screensRegister/RegisterRace.vue';
 import RegisterService from './components/screensRegister/RegisterService.vue';
-import RegisterServiceType from './components/screensRegister/RegisterServiceType.vue';
-import RegisterSpecie from './components/screensRegister/RegisterSpecie.vue';
 
 import VCalendar from 'v-calendar';
 import 'v-calendar/style.css';
@@ -35,41 +32,25 @@ const routes = [
     path: '/principal',
     component: PrincipalScreen,
     children: [
+      // Novos cadastros
       { path: '/cliente/cadastro', component: RegisterClient },
       { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
       { path: '/atividade/cadastro', component: RegisterActivity },
       { path: '/agenda/cadastro', component: RegisterAgenda },
       { path: '/petCliente/cadastro', component: RegisterPetClient },
-      { path: '/raca/cadastro', component: RegisterRace },
-      { path: '/especie/cadastro', component: RegisterSpecie },
       { path: '/atendimento/cadastro', component: RegisterService },
-      { path: '/servico/cadastro', component: RegisterServiceType },
       { path: '/funcionario/cadastro', component: RegisterEmployee },
 
-      // Lista de cadastros
+      // Edições cadastros
+      { path: '/cliente/:customerId', component: RegisterClient },
+
+      // Listas
       { path: '/clientes', component: ListClient },
       { path: '/funcionarios', component: ListEmployee },
       { path: '/petsClientes', component: ListPetClient },
       { path: '/racas', component: ListRace },
       { path: '/servicos', component: ListServiceType },
       { path: '/especies', component: ListSpecie },
-
-      // Registros de cadastro
-      { path: '/cadastro/cliente', component: RegisterClient },
-      { path: '/cadastro/atividade', component: RegisterActivity },
-      { path: '/cadastro/agenda', component: RegisterAgenda },
-      { path: '/cadastro/funcionario', component: RegisterEmployee },
-      { path: '/cadastro/petcliente', component: RegisterPetClient },
-      { path: '/cadastro/raça', component: RegisterRace },
-      { path: '/cadastro/servico', component: RegisterService },
-      { path: '/cadastro/especie', component: RegisterSpecie },
-
-      // Lista de cadastros
-      { path: '/list/cliente', component: ListClient },
-      { path: '/list/funcionario', component: ListEmployee },
-      { path: '/list/petclient', component: ListPetClient },
-      { path: '/list/race', component: ListRace },
-      { path: '/list/specie', component: ListSpecie },
 
       // Rotas de agenda
       { path: '/agenda/day', component: Day },

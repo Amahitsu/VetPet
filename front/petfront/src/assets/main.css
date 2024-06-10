@@ -1,0 +1,19 @@
+.material-symbols-rounded {
+    font-size: 20px;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+.btn-icon {
+    line-height: 100%;
+}
+
+.custom-card-bg{
+    background-color: #578EBE;
+}
+
+.custom-bg {
+    background-color: #DFDFDF;
+}

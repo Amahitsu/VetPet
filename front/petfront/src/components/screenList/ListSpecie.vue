@@ -1,5 +1,5 @@
 <template>
-    <RegisterSpecie />
+    <RegisterSpecie ref="modalSpecie" @reloadSpecies="loadSpecies" />
     <div class="d-flex justify-content-between">
         <h2>Espécies</h2>
         <div class="d-flex align-items-center">
@@ -14,57 +14,40 @@
             <tr>
                 <th>ID</th>
                 <th>Espécie</th>
-                <th width="150">Ações</th>
+                <th width="96">Ações</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="specie in species" :key="specie.id">
                 <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" @click="openEditModal(specie)">Editar</button>
-                    <button class="btn btn-sm btn-danger" @click="confirmDelete(specie.id)">Deletar</button>
+                <td class="text-end">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateSpecie(specie.id)">
+                        <span class="material-symbols-rounded">edit</span>
+                    </button>
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(specie.id)">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div class="modal fade" id="editSpecieModal" tabindex="-1" aria-labelledby="editSpecieModalLabel"
+    <div class="modal fade" id="deleteSpecieModal" tabindex="-1" aria-labelledby="deleteSpecieModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editSpecieModalLabel">Editar Espécie</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="deleteSpecieModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="closeDeleteModal"></button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="editSpecie">
-                        <div class="mb-3">
-                            <label for="editSpecieName" class="form-label">Nome da Espécie</label>
-                            <input type="text" class="form-control" id="editSpecieName" v-model="editedSpecie.name">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Tem certeza que deseja excluir esta espécie?</p>
+                    Tem certeza que deseja excluir esta espécie?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" @click="deleteSpecie(id)">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" @click="deleteSpecie">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -99,44 +82,49 @@ export default {
                 url: "http://localhost:8080/api/v1/species",
             })
                 .then((response) => {
-                    console.log(response.data.data)
                     this.species = response.data.data;
                 })
                 .catch(error => {
                     console.error('Erro ao listar as espécies:', error);
                 });
         },
-        openEditModal(specie) {
-            this.editedSpecie = { ...specie };
-            $('#editSpecieModal').modal('show');
+        addSpecie() {
+            this.specieId = null;
+            this.openModal();
         },
-        editSpecie() {
-            const id = this.editedSpecie.id;
-            axios.put(`http://localhost:8080/api/v1/species/${id}`, this.editedSpecie)
-                .then(response => {
-                    console.log('Espécie editada com sucesso:', response.data);
-                    $('#editSpecieModal').modal('hide');
-                    this.loadSpecies();
-                })
-                .catch(error => {
-                    console.error('Erro ao editar espécie:', error);
-                });
+        updateSpecie(specieId) {
+            this.specieId = specieId;
+            this.openModal(specieId);
         },
-        confirmDelete(id) {
-            this.selectedSpecie = id;
-            $('#deleteConfirmationModal').modal('show');
+        openModal(specieId) {
+            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalSpecie"))
+
+            if (specieId) {
+                this.$refs.modalSpecie.loadSpecie(specieId);
+                this.$refs.modalSpecie.specieId = specieId;
+            }
+
+            modal.show();
+        },
+        confirmDelete(specieId) {
+            this.selectedSpecie = specieId;
+            $('#deleteSpecieModal').modal('show');
         },
         deleteSpecie() {
-            const id = this.selectedSpecie;
-            axios.delete(`http://localhost:8080/api/v1/species/${id}`)
+            let specieId = this.selectedSpecie;
+
+            axios.delete(`http://localhost:8080/api/v1/species/${specieId}`)
                 .then(response => {
                     console.log('Espécie excluída com sucesso:', response.data);
-                    $('#deleteConfirmationModal').modal('hide');
+                    this.closeDeleteModal();
                     this.loadSpecies();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir espécie:', error);
                 });
+        },
+        closeDeleteModal() {
+            $('#deleteSpecieModal').modal('hide');
         }
     }
 }

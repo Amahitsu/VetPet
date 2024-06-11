@@ -25,6 +25,8 @@ public class Animals {
     private Long id;
     @Column(length = 45, unique = true, nullable = false)
     private String name;
+    @Column (length = 255, unique = true, nullable = false)
+    private String gender;
     @Column(nullable = false)
     private Integer age;
     @Column(nullable = false)

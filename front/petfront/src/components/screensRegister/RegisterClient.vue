@@ -113,7 +113,7 @@ import { getAddressByCep } from '../../services/getAddressByCep.vue';
 import ModalWarning from '../screenMessage/ModalWarning.vue';
 import ListPetClient from '../screenList/ListPetClient.vue';
 
-const checkboxes = document.querySelectorAll('.single-checkbox');
+const checkboxes = document.querySelectorAll('.single-checkbox')
 document.addEventListener('DOMContentLoaded', function () {
 
     checkboxes.forEach((checkbox) => {

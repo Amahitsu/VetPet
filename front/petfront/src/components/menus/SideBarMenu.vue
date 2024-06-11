@@ -1,11 +1,13 @@
 <script>
+
 </script>
 
 <template>
 
     <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white ">
         <div class="position-sticky">
+            <img src='../../assets/dog.png' alt="Logo PetVets" style="max-width: 150px;">
             <div class="list-group list-group-flush mx-3">
                 <!--Aba para acessar funcionalidades de cliente -->
                 <!--<a href="#" class="list-group-item list-group-item-action py-2 ripple">
@@ -56,7 +58,7 @@
                 <router-link 
                     to="/servicos"
                     class="list-group-item list-group-item-action py-2 ripple">
-                    Serviço
+                    Serviços
                 </router-link>
                 <router-link 
                     to="/funcionarios"

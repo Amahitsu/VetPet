@@ -15,19 +15,19 @@ if (data) {
 </script>
 
 <template>
-    <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid">
-            <router-link to="/principal" class="navbar-brand text-white" href="#">VetPet</router-link>
+    <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top custom ">
+        <div class="container-fluid custom-card-bg">
+            <router-link to="/principal" class="navbar-brand text-white font-weight-bold" href="#">VetPet</router-link>
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="dropdown">
-                    <button class="btn btn-dark dropdown-toggle text-white" type="button" id="dropdownMenuButton1"
+                    <button class="btn dropdown-toggle text-white custom-card-bg" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <label>{{ nameWorker }}</label>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li>
                             <router-link to="/">
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <a class="dropdown-item" href="#">Sair</a>
                             </router-link>
                         </li>
                     </ul>
@@ -39,7 +39,9 @@ if (data) {
 
 <style>
 .navbar {
-    background-color: #1e2627;
+    background-color: #578EBE;
     position: fixed;
 }
+
+
 </style>

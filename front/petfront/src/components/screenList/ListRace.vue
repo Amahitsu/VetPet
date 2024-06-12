@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
         <h2>Raças</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-sm btn-primary" @click="addRace()">
+            <button type="button" class="btn btn-m btn-primary" @click="addRace()">
                 Adicionar raça
             </button>
         </div>
@@ -24,10 +24,10 @@
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
                 <td class="text-end">
-                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateRace(race.id)">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" data-toggle="tooltip" data-placement="top" title="Editar" @click="updateRace(race.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>
-                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(race.id)">
+                    <button class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir" @click="confirmDelete(race.id)">
                         <span class="material-symbols-rounded">delete</span>
                     </button>
                 </td>

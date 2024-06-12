@@ -13,10 +13,10 @@ export default {
 
 <template>
   <NavTopBar />
-  <section class="vh-70 gradient-custom custom-bg"></section>
+
   <div class="d-flex main">
     <SideMenu />
-    <div class="flex-grow-1 container">
+    <div class="flex-grow-1 container ">
       <router-view></router-view>
     </div>
   </div>

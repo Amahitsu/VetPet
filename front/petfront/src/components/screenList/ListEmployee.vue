@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between">
             <h2>Funcionários</h2>
             <div class="d-flex align-items-center">
-                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-sm">Adicionar Funcionário</router-link>
+                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-m">Adicionar Funcionário</router-link>
             </div>
         </div>
 

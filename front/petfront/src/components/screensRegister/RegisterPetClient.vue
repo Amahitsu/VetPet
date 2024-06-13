@@ -46,7 +46,7 @@
 
                 <div class="col-md-3">
                     <label for="breedSelect" class="form-label">Raça</label>
-                    <select class="form-select" v-model="selectedBreed" :disabled="!selectedSpecie" id="breedSelect">
+                    <select class="form-select" v-model="selectedRaceId" :disabled="!selectedSpecie" id="breedSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                     </select>
@@ -70,8 +70,8 @@ export default {
         return {
             speciesList: [],
             breedList: [],
-            selectedSpecie: '',
-            selectedBreed: '',
+            selectedSpecieId: '',
+            selectedRaceId: '',
             customer: {},
             animalName: '',
             animalGender: '',
@@ -124,24 +124,23 @@ export default {
                 });
         },
         addAnimal() {
-            axios.post("http://localhost:8080/api/v1/animals", {
-                name: this.animalName,
-                gender: this.animalGender,
-                age: this.animalBirthdate,
-                weight: this.animalWeight,
-                id_specie: this.selectedSpecieId,
-                id_race: this.selectedRaceId
-
-            })
-                .then(response => {
-                    this.closeModal();
-                
-                    console.log('Animal criado com sucesso:', response.data);
-                })
-                .catch(error => {
-                    console.error('Erro ao criar animal:', error);
-                });
-            },
+    axios.post("http://localhost:8080/api/v1/animals", {
+        name: this.animalName,
+        gender: this.animalGender,
+        dateOfBirth: this.animalBirthdate,
+        weight: this.animalWeight,
+        id_specie: this.selectedSpecieId,
+        id_breeds: this.selectedRaceId,
+        id_customers: this.customer.id
+    })
+    .then(response => {
+        
+        console.log('Animal criado com sucesso:', response.data);
+    })
+    .catch(error => {
+        console.error('Erro ao criar animal:', error);
+    });
+},
         handleSubmit() {
             console.log('Formulário enviado');
         }

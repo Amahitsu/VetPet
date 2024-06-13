@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
         <h2>Clientes</h2>
         <div class="d-flex align-items-center">
-            <router-link to="/cliente/cadastro" class="btn btn-primary btn-sm">Adicionar cliente</router-link>
+            <router-link to="/cliente/cadastro" class="btn btn-primary btn-m">Adicionar cliente</router-link>
         </div>
     </div>
 

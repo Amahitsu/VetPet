@@ -1,5 +1,7 @@
 package com.vet.pets.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +30,7 @@ public class Animals {
     @Column (length = 255, unique = true, nullable = false)
     private String gender;
     @Column(nullable = false)
-    private Integer age;
+    private Date dateOfBirth;
     @Column(nullable = false)
     private Float weight;
     @ManyToOne

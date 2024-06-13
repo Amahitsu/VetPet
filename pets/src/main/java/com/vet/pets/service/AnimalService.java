@@ -37,7 +37,7 @@ public class AnimalService {
             Animals newAnimal = new Animals();
             newAnimal.setName(dto.name());
             newAnimal.setGender(dto.gender());
-            newAnimal.setAge(dto.age());
+            newAnimal.setDateOfBirth(dto.dateOfBirth());
             newAnimal.setWeight(dto.weight());
             newAnimal.setRace(races);
             newAnimal.setCustomer(customer);
@@ -107,8 +107,8 @@ public class AnimalService {
             if (dto.gender() != null) {
                 existingAnimal.setGender(dto.gender());
             }
-            if (dto.age() != null) {
-                existingAnimal.setAge(dto.age());
+            if (dto.dateOfBirth() != null) {
+                existingAnimal.setDateOfBirth(dto.dateOfBirth());
             }
             if (dto.weight() != null) {
                 existingAnimal.setWeight(dto.weight());

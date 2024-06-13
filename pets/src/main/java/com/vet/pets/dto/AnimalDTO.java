@@ -1,5 +1,7 @@
 package com.vet.pets.dto;
 
-public record AnimalDTO(String name, String gender, Integer age, Float weight, Long id_customers, Long id_races) {
+import java.sql.Date;
+
+public record AnimalDTO(String name, String gender, Date dateOfBirth, Float weight, Long id_customers, Long id_breeds) {
     
 }

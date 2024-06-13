@@ -1,5 +1,7 @@
 package com.vet.pets.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +25,12 @@ public class Animals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(length = 45, nullable = false)
     private String name;
-    @Column (length = 255, unique = true, nullable = false)
+    @Column (length = 255, nullable = false)
     private String gender;
     @Column(nullable = false)
-    private Integer age;
+    private Date dateOfBirth;
     @Column(nullable = false)
     private Float weight;
     @ManyToOne

@@ -8,20 +8,6 @@
                     <input type="text" class="form-control" placeholder="Digite Nome Completo"
                         aria-label="Nome Completo" v-model="customer.name" disabled>
                 </div>
-                <div class="col-md-6 d-flex align-items-center">
-                    <div class="form-check me-3">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Ativo
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Inativo
-                        </label>
-                    </div>
-                </div>
             </div>
 
             <div class="row mt-3">
@@ -37,9 +23,14 @@
                         <option value="Fêmea">Fêmea</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <label for="dateInput" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="dateInput" v-model="animalBirthdate">
+                    </div>
+
+                <div class="col-md-2">
+                    <label>Peso do Pet</label>
+                    <input class="form-control" v-model="animalWeight" id="inputWeight">
                 </div>
             </div>
 
@@ -63,8 +54,8 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-primary me-2" @click="addAnimal">Salvar</button>
-                    <button type="button" @click="$router.go(-1)" class="btn btn-secondary">Cancelar</button>
+                    <button type="button" @click="$router.go(-1)" class="btn btn-secondary me-2">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="addAnimal">Salvar</button>
                 </div>
             </div>
         </form>
@@ -85,6 +76,7 @@ export default {
             animalName: '',
             animalGender: '',
             animalBirthdate: '',
+            animalWeight: ''
         };
     },
     created() {
@@ -135,13 +127,15 @@ export default {
             axios.post("http://localhost:8080/api/v1/animals", {
                 name: this.animalName,
                 gender: this.animalGender,
+                age: this.animalBirthdate,
+                weight: this.animalWeight,
                 id_specie: this.selectedSpecieId,
                 id_race: this.selectedRaceId
 
             })
                 .then(response => {
                     this.closeModal();
-                    this.$emit('reloadBreeds');
+                
                     console.log('Animal criado com sucesso:', response.data);
                 })
                 .catch(error => {

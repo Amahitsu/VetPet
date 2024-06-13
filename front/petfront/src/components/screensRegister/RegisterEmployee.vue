@@ -308,7 +308,7 @@ export default {
                         </div>
                         <div class="row mt-3">
                             <div class="col-12 d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-primary me-2">Salvar</button>
+                                <button type="submit" class="btn btn-primary me-2" @click="saveWorker">Salvar</button>
                                 <a @click="$router.go(-1)" class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>

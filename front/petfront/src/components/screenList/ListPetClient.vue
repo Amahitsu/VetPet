@@ -16,7 +16,7 @@
                 <td>{{ customerPet.name }}</td>
                 <td>{{ customerPet.specie.name }}</td>
                 <td>{{ customerPet.race.name }}</td>
-                <td class="text-end">
+                <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(customerPet.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>

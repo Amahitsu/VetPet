@@ -1,6 +1,7 @@
 package com.vet.pets.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.vet.pets.dto.AnimalDTO;
 import com.vet.pets.entities.Animals;
-import com.vet.pets.entities.Customer;
 import com.vet.pets.entities.Breeds;
+import com.vet.pets.entities.Customer;
 import com.vet.pets.repository.AnimalRepository;
 import com.vet.pets.repository.CustomerRepository;
 import com.vet.pets.repository.RaceRepository;
@@ -29,8 +30,8 @@ public class AnimalService {
     @Transactional
     public Animals createAnimal(AnimalDTO dto) {
         try {
-            Breeds races = raceRepository.findById(dto.id_races())
-                    .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_races()));
+            Breeds breeds = raceRepository.findById(dto.id_breeds())
+                    .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_breeds()));
             Customer customer = customerRepository.findById(dto.id_customers())
                     .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + dto.id_customers()));
 
@@ -39,7 +40,7 @@ public class AnimalService {
             newAnimal.setGender(dto.gender());
             newAnimal.setDateOfBirth(dto.dateOfBirth());
             newAnimal.setWeight(dto.weight());
-            newAnimal.setRace(races);
+            newAnimal.setRace(breeds);
             newAnimal.setCustomer(customer);
 
             Animals savedAnimal = animalRepository.save(newAnimal);
@@ -113,9 +114,9 @@ public class AnimalService {
             if (dto.weight() != null) {
                 existingAnimal.setWeight(dto.weight());
             }
-            if (dto.id_races() != null) {
-                Breeds races = raceRepository.findById(dto.id_races())
-                        .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_races()));
+            if (dto.id_breeds() != null) {
+                Breeds races = raceRepository.findById(dto.id_breeds())
+                        .orElseThrow(() -> new RuntimeException("Raça não encontrada com o ID: " + dto.id_breeds()));
                 existingAnimal.setRace(races);
             }
             if (dto.id_customers() != null) {

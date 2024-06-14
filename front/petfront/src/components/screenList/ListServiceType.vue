@@ -24,7 +24,7 @@
                 <td>{{ service.id }}</td>
                 <td>{{ service.name }}</td>
                 <td>R$ {{ service.price }}</td>
-                <td class="text-end">
+                <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateService(service.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>

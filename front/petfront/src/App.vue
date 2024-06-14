@@ -7,3 +7,7 @@
 
 </template>
 
+<style scoped>
+
+</style>
+

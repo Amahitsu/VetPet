@@ -23,7 +23,7 @@
                 <td>{{ race.id }}</td>
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
-                <td class="text-end">
+                <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" data-toggle="tooltip" data-placement="top" title="Editar" @click="updateRace(race.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>

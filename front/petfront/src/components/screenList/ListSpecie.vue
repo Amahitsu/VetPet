@@ -21,7 +21,7 @@
             <tr v-for="specie in species" :key="specie.id">
                 <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
-                <td class="text-end">
+                <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateSpecie(specie.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>

@@ -23,7 +23,7 @@
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
-                <td class="text-end">
+                <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-success me-1" @click="addPet(customer.id)">
                         <span class="material-symbols-rounded">add_circle</span>
                         <span class="material-symbols-rounded">pets</span>

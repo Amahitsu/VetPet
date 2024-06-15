@@ -1,119 +1,123 @@
 <template>
-    <form>
-        <h2>Cadastro de Funcionário</h2>
-        <div class="row mt-3">
-            <div class="col-md-9">
-                <label for="inputName" class="form-label">Nome Completo</label>
-                <div class="d-flex">
-                    <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
-                        aria-label="Nome Completo" v-model="name" required>
-                    <div class="col-md-3 d-flex align-itens-center gap-3">
-                        <div class="form-check md-3">
-                            <input class="form-check-input single-checkbox" name="statusWorker" type="radio" value=""
-                                id="flexCheckDefault" checked>
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Ativo
-                            </label>
-                        </div>
-                        <div class="form-check md-3">
-                            <input class="form-check-input single-checkbox" name="statusWorker" type="radio" value=""
-                                id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                                Inativo
-                            </label>
+    <section>
+        <form>
+            <h2 v-if="!workerId">Cadastro de Funcionário</h2>
+            <h2 v-if="workerId">Edição de Funcionário</h2>
+
+            <div class="row mt-3">
+                <div class="col-md-9">
+                    <label for="inputName" class="form-label">Nome Completo</label>
+                    <div class="d-flex">
+                        <input type="text" class="form-control" placeholder="Digite Nome Completo" maxlength="45"
+                            aria-label="Nome Completo" v-model="name" required>
+                        <div class="col-md-3 d-flex align-itens-center gap-3">
+                            <div class="form-check md-3">
+                                <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
+                                    value="" id="flexCheckDefault" checked>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Ativo
+                                </label>
+                            </div>
+                            <div class="form-check md-3">
+                                <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
+                                    value="" id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Inativo
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-3  ">
-            <div class="col-md-4">
-                <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
-                    placeholder="xxx.xxx.xxx-xx" v-model="cpf">
+            <div class="row mt-3  ">
+                <div class="col-md-4">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" @input="formatCpf" maxlength="14" required
+                        placeholder="xxx.xxx.xxx-xx" v-model="cpf">
+                </div>
+                <div class="col-md-8">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
+                        placeholder="E-mail">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <label for="cel" class="form-label">Celular</label>
+                        <input type="tel" class="form-control" id="cel" maxlength="15" required
+                            placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
+                    </div>
+                    <div class="col-md-8">
+                        <label for="inputFunction"> Função </label>
+                        <input type="text" class="form-control" id="inputFuntion" v-model="functionn" required>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-8">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" maxlength="150" id="inputEmail4" v-model="email"
-                    placeholder="E-mail">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h4>Endereço</h4>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <label for="cel" class="form-label">Celular</label>
-                    <input type="tel" class="form-control" id="cel" maxlength="15" required
-                        placeholder="(xx) xxxxx-xxxx" v-model="phone" @input="formatPhone">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
+                        maxlength="9" @input="formatCep">
                 </div>
                 <div class="col-md-8">
-                    <label for="inputFunction"> Função </label>
-                    <input type="text" class="form-control" id="inputFuntion" v-model="functionWorker" required>
+                    <label for="street" class="form-label">Rua</label>
+                    <input type="text" class="form-control" id="inputStreet" v-model="street" required>
                 </div>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <h4>Endereço</h4>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+                </div>
+                <div class="col-md-8">
+                    <label for="inputZip" class="form-label">Complemento</label>
+                    <input type="text" class="form-control" id="inputZip" v-model="complement">
+                </div>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <label for="cep" class="form-label">CEP</label>
-                <input type="text" class="form-control" id="cep" required placeholder="xxxxx-xxx" v-model="cep"
-                    maxlength="9" @input="formatCep">
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputCity" class="form-label">Estado</label>
+                    <input type="text" class="form-control" id="inputCity" v-model="state" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputState" class="form-label">Cidade</label>
+                    <input type="text" class="form-control" id="inputState" v-model="city" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputZip" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
+                </div>
             </div>
-            <div class="col-md-8">
-                <label for="street" class="form-label">Rua</label>
-                <input type="text" class="form-control" id="inputStreet" v-model="street" required>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="inputUserName" class="form-label">Usuário</label>
+                    <input type="text" class="form-control" id="inputUserName" v-model="username" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputUserName" class="form-label">Senha</label>
+                    <input type="text" class="form-control" id="inputUserName" v-model="passwordd" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputZip" class="form-label">Nível de Usuário</label>
+                    <select id="optionsLevel" class="form-select" aria-label="Default select example" v-model="userLevel">
+                        <option selected>Escolha o Nível</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Funcionário</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">Número</label>
-                <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+            <div class="row mt-3">
+                <div class="col-12 d-flex justify-content-end mt-4">
+                    <button type="button" class="btn btn-secondary me-2" @click="goToList">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="saveWorker">Salvar</button>
+                </div>
             </div>
-            <div class="col-md-8">
-                <label for="inputZip" class="form-label">Complemento</label>
-                <input type="text" class="form-control" id="inputZip" v-model="complement">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <label for="inputCity" class="form-label">Estado</label>
-                <input type="text" class="form-control" id="inputCity" v-model="state" required>
-            </div>
-            <div class="col-md-6">
-                <label for="inputState" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="inputState" v-model="city" required>
-            </div>
-            <div class="col-md-2">
-                <label for="inputZip" class="form-label">Bairro</label>
-                <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <label for="inputUserName" class="form-label">Usuário</label>
-                <input type="text" class="form-control" id="inputUserName" v-model="userName" required>
-            </div>
-            <div class="col-md-4">
-                <label for="inputUserName" class="form-label">Senha</label>
-                <input type="text" class="form-control" id="inputUserName" v-model="password" required>
-            </div>
-            <div class="col-md-4">
-                <label for="inputZip" class="form-label">Nível de Usuário</label>
-                <select id="optionsLevel" class="form-select" aria-label="Default select example">
-                    <option selected>Escolha o Nível</option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Funcionário</option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12 d-flex justify-content-end mt-4">
-                <button type="button" class="btn btn-secondary me-2" @click="goToList">Cancelar</button>
-                <button type="submit" class="btn btn-primary" @click="saveWorker">Salvar</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </section>
     <!--<ModalWarning :modalText="modalMessage" id="modal" />-->
 </template>
 
@@ -143,9 +147,9 @@ export default {
             state: '',
             city: '',
             neighborhood: '',
-            functionWorker: '',
-            userName: '',
-            password: '',
+            functionn: '',
+            username: '',
+            passwordd: '',
             userLevel: '',
             modalMessage: ''
         };
@@ -218,20 +222,23 @@ export default {
                 phone: this.phone,
                 email: this.email,
                 address: address,
-                functionWorker: this.functionWorker,
-                userName: this.userName,
-                password: this.password,
+                functionn: this.functionn,
+                username: this.username,
+                passwordd: this.passwordd,
                 userLevel: this.userLevel,
+                active: true
             };
-
+            
             if (this.workerId)
                 this.editWorker(this.workerId, data)
             else
                 this.createWorker(data)
         },
         createWorker(data) {
+            debugger
             axios.post("http://localhost:8080/api/v1/worker", data)
                 .then(response => {
+                    debugger
                     this.goToList();
                 })
                 .catch(error => {
@@ -266,7 +273,8 @@ export default {
                     this.cpf = data.cpf;
                     this.email = data.email;
                     this.phone = data.phone;
-
+                    this.functionn = data.functionn;
+                    
                     this.cep = address.cep;
                     this.street = address.rua;
                     this.numberStreet = address.numero;

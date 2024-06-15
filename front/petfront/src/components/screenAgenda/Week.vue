@@ -1,14 +1,36 @@
 <script setup>
-import ptBrLocale from '@fullcalendar/core/locales/pt-br';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
 import FullCalendar from '@fullcalendar/vue3';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+import { useRouter } from 'vue-router';
+import { useScreens } from 'vue-screen-utils';
 
 const calendarOptions = {
     plugins: [timeGridPlugin, dayGridPlugin],
     initialView: 'timeGridWeek', // ou 'dayGridWeek'
     locale: ptBrLocale,
+    events: []
     // Outras opções de configuração, como eventos, editable, selectable, etc.
+};
+
+
+const { mapCurrent } = useScreens({
+    xs: '1000px',
+    sm: '640px',
+});
+
+const columns = mapCurrent({ lg: 2 }, 1);
+const expanded = mapCurrent({ lg: false }, true);
+
+const router = useRouter();
+
+const goToAppointment = () => {
+    router.push('/agenda/cadastro');
+};
+
+const addEventToCalendar = (event) => {
+  calendarOptions.value.events.push(event); // Adiciona o evento ao array de eventos
 };
 </script>
 
@@ -23,15 +45,7 @@ const calendarOptions = {
         <router-link to="/agenda/week" class="btn btn-primary mt-3 mb-2" active-class="active">Semana</router-link>
         <router-link to="/agenda/day" class="btn btn-primary mt-3 mb-2 mr-3 " active-class="active">Dia</router-link>
     </div>
-    <div class="full-calendar-container">
+    <div>
         <FullCalendar :options="calendarOptions" />
     </div>
-
 </template>
-
-<style scoped>
-/* Remover sublinhado dos links dentro do FullCalendar */
-.full-calendar-container .full-calendar a {
-  text-decoration: none; /* Não é necessário !important se a especificidade for suficiente */
-}
-</style>

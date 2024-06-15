@@ -66,14 +66,14 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('user') !== null;
-  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-    next('/');
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = localStorage.getItem('user') !== null;
+//   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+//     next('/');
+//   } else {
+//     next();
+//   }
+// });
 
 const app = createApp(App);
 app.use(router).use(VCalendar, {}).mount('#app');

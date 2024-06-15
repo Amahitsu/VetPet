@@ -14,6 +14,7 @@ const calendarOptions = {
   locale: ptBrLocale,
   editable: true,
   selectable: true,
+  events: []
 }
 
 const { mapCurrent } = useScreens({

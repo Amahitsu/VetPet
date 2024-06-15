@@ -1,5 +1,5 @@
 <template>
-    <RegisterServiceType ref="modalService" @reloadServices="loadServices"/>
+    <RegisterServiceType ref="modalService" @reloadServices="loadServices" />
     <div class="d-flex justify-content-between">
         <h2>Serviços</h2>
         <div class="d-flex align-items-center">
@@ -21,7 +21,7 @@
         <tbody>
             <tr v-for="service in services" :key="service.id">
                 <td>{{ service.name }}</td>
-                <td>R$ {{ service.price }}</td>
+                <td>{{ formatCurrency(service.price) }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateService(service.id)">
                         <span class="material-symbols-rounded">edit</span>
@@ -40,7 +40,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteServiceModalLabel">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeDeleteModal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="closeDeleteModal"></button>
                 </div>
                 <div class="modal-body">
                     Tem certeza que deseja excluir este serviço?
@@ -72,6 +73,10 @@ export default {
         this.loadServices();
     },
     methods: {
+        formatCurrency(value) {
+            if (!value) return '';
+            return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        },
         loadServices() {
             axios({
                 method: "GET",
@@ -93,7 +98,7 @@ export default {
         openModal(serviceId) {
             let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalService"))
 
-            if(serviceId) {
+            if (serviceId) {
                 this.$refs.modalService.loadService(serviceId);
                 this.$refs.modalService.serviceId = serviceId;
             }
@@ -124,5 +129,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

@@ -23,7 +23,7 @@ public class Breeds {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 45, unique = true, nullable = false)
+    @Column(length = 45, nullable = false)
     private String name;
     @ManyToOne
     @JoinColumn(name = "id_specie", nullable = false)

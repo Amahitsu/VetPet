@@ -225,8 +225,7 @@ export default {
                 functionn: this.functionn,
                 username: this.username,
                 passwordd: this.passwordd,
-                userLevel: this.userLevel,
-                active: true
+                userLevel: this.userLevel
             };
             
             if (this.workerId)
@@ -235,10 +234,8 @@ export default {
                 this.createWorker(data)
         },
         createWorker(data) {
-            debugger
             axios.post("http://localhost:8080/api/v1/worker", data)
                 .then(response => {
-                    debugger
                     this.goToList();
                 })
                 .catch(error => {

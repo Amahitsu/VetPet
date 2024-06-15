@@ -9,10 +9,9 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Raça</th>
                 <th>Espécie</th>
                 <th width="96">Ações</th>
@@ -20,7 +19,6 @@
         </thead>
         <tbody>
             <tr v-for="race in breeds" :key="race.id">
-                <td>{{ race.id }}</td>
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
                 <td class="btn-group text-end">

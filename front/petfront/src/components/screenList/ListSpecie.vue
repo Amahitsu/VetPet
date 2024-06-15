@@ -9,17 +9,15 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Espécie</th>
                 <th width="96">Ações</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="specie in species" :key="specie.id">
-                <td>{{ specie.id }}</td>
                 <td>{{ specie.name }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateSpecie(specie.id)">

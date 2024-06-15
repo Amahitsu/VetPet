@@ -3,7 +3,6 @@
     <table class="table my-4">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome pet</th>
                 <th>Espécie</th>
                 <th>Raça</th>
@@ -12,7 +11,6 @@
         </thead>
         <tbody>
             <tr v-for="customerPet in customerPets" :key="customerPet.id">
-                <td>{{ customerPet.id }}</td>
                 <td>{{ customerPet.name }}</td>
                 <td>{{ customerPet.specie.name }}</td>
                 <td>{{ customerPet.race.name }}</td>
@@ -30,8 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import RegisterRace from '../screensRegister/RegisterRace.vue';
 
 export default {
     data() {

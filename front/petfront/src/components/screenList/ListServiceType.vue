@@ -10,10 +10,9 @@
     </div>
 
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Serviço</th>
                 <th>Valor</th>
                 <th width="96">Ações</th>
@@ -21,7 +20,6 @@
         </thead>
         <tbody>
             <tr v-for="service in services" :key="service.id">
-                <td>{{ service.id }}</td>
                 <td>{{ service.name }}</td>
                 <td>R$ {{ service.price }}</td>
                 <td class="btn-group text-end">
@@ -58,7 +56,7 @@
 </template>
 
 <script>
-import axios from 'axios';  
+import axios from 'axios';
 import RegisterServiceType from '../screensRegister/RegisterServiceType.vue';
 
 export default {

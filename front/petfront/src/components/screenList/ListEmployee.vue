@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between">
             <h2>Funcionários</h2>
             <div class="d-flex align-items-center">
-                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-m">Adicionar Funcionário</router-link>
+                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-m">Adicionar funcionário</router-link>
             </div>
         </div>
 
@@ -17,15 +17,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="workers in workers" :key="workers.id">
-                    <td>{{ workers.name }}</td>
-                    <td>{{ formatPhoneNumber(workers.phone) }}</td>
-                    <td>{{ workers.active ? "Ativo" : "Inativo" }}</td>
+                <tr v-for="worker in workers" :key="workers.id">
+                    <td>{{ worker.name }}</td>
+                    <td>{{ formatPhoneNumber(worker.phone) }}</td>
+                    <td>{{ worker.active ? "Ativo" : "Inativo" }}</td>
                     <td>
-                        <button class="btn btn-icon btn-sm btn-primary me-1" @click="">
+                        <button class="btn btn-icon btn-sm btn-primary me-1" @click="editWorker(worker.id)">
                             <span class="material-symbols-rounded">edit</span>
                         </button>
-                        <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customer.id)">
+                        <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(worker.id)">
                             <span class="material-symbols-rounded">delete</span>
                         </button>
                     </td>
@@ -33,20 +33,19 @@
             </tbody>
         </table>
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteWorkerModal" tabindex="-1" role="dialog" aria-labelledby="deleteWorkerModallLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title" id="deleteWorkerModallLabel">Confirmar Exclusão</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="closeDeleteModal"></button>
                     </div>
                     <div class="modal-body">
                         Tem certeza que deseja excluir este funcionário?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
                         <button type="button" class="btn btn-danger" @click="confirmDeletion">Deletar</button>
                     </div>
                 </div>
@@ -93,23 +92,26 @@ export default {
                     console.error('Erro ao listar funcionários:', error);
                 });
         },
-        confirmDelete(id) {
-            this.workerIdToDelete = id;
-            $('#deleteModal').modal('show');
+        editWorker(workerId) {
+            this.$router.push({ path: `/funcionario/${workerId}` });
         },
-        confirmDeletion() {
-            this.deleteWorker(this.workerIdToDelete);
-            $('#deleteModal').modal('hide');
+        confirmDelete(workerId) {
+            this.workerIdToDelete = workerId;
+            $('#deleteWorkerModal').modal('show');
         },
-        deleteWorker(id) {
-            axios.delete(`http://localhost:8080/api/v1/worker/${id}`)
+        deleteWorker() {
+            let workerId = this.workerIdToDelete;
+            axios.delete(`http://localhost:8080/api/v1/worker/${workerId}`)
                 .then(response => {
-                    console.log('Cliente excluído com sucesso:', response.data);
+                    console.log('Funcionário excluído com sucesso:', response.data);
                     this.loadWorkers();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir funcionário:', error);
                 });
+        },
+        closeDeleteModal() {
+            $('#deleteWorkerModal').modal('hide');
         }
     }
 }

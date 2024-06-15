@@ -31,31 +31,32 @@ const routes = [
   {
     path: '/principal',
     component: PrincipalScreen,
+    meta: { requiresAuth: true },
     children: [
       // Novos cadastros
-      { path: '/cliente/cadastro', component: RegisterClient },
-      { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient },
-      { path: '/atividade/cadastro', component: RegisterActivity },
-      { path: '/agenda/cadastro', component: RegisterAgenda },
-      { path: '/petCliente/cadastro', component: RegisterPetClient },
-      { path: '/atendimento/cadastro', component: RegisterService },
-      { path: '/funcionario/cadastro', component: RegisterEmployee },
+      { path: '/cliente/cadastro', component: RegisterClient, meta: { requiresAuth: true } },
+      { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient, meta: { requiresAuth: true } },
+      { path: '/atividade/cadastro', component: RegisterActivity, meta: { requiresAuth: true } },
+      { path: '/agenda/cadastro', component: RegisterAgenda, meta: { requiresAuth: true } },
+      { path: '/petCliente/cadastro', component: RegisterPetClient, meta: { requiresAuth: true } },
+      { path: '/atendimento/cadastro', component: RegisterService, meta: { requiresAuth: true } },
+      { path: '/funcionario/cadastro', component: RegisterEmployee, meta: { requiresAuth: true } },
 
       // Edições cadastros
-      { path: '/cliente/:customerId', component: RegisterClient },
+      { path: '/cliente/:customerId', component: RegisterClient, meta: { requiresAuth: true } },
 
       // Listas
-      { path: '/clientes', component: ListClient },
-      { path: '/funcionarios', component: ListEmployee },
-      { path: '/petsClientes', component: ListPetClient },
-      { path: '/racas', component: ListRace },
-      { path: '/servicos', component: ListServiceType },
-      { path: '/especies', component: ListSpecie },
+      { path: '/clientes', component: ListClient, meta: { requiresAuth: true } },
+      { path: '/funcionarios', component: ListEmployee, meta: { requiresAuth: true } },
+      { path: '/petsClientes', component: ListPetClient, meta: { requiresAuth: true } },
+      { path: '/racas', component: ListRace, meta: { requiresAuth: true } },
+      { path: '/servicos', component: ListServiceType, meta: { requiresAuth: true } },
+      { path: '/especies', component: ListSpecie, meta: { requiresAuth: true } },
 
       // Rotas de agenda
-      { path: '/agenda/day', component: Day },
-      { path: '/agenda', component: Month },
-      { path: '/agenda/week', component: Week }
+      { path: '/agenda/day', component: Day, meta: { requiresAuth: true } },
+      { path: '/agenda', component: Month, meta: { requiresAuth: true } },
+      { path: '/agenda/week', component: Week, meta: { requiresAuth: true } }
     ]
   }
 ];
@@ -63,6 +64,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('user') !== null;
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 const app = createApp(App);

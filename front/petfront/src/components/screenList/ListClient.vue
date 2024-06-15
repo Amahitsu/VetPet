@@ -7,10 +7,9 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Status</th>
@@ -19,7 +18,6 @@
         </thead>
         <tbody>
             <tr v-for="customer in customers" :key="customer.id">
-                <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.phone }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>

@@ -44,6 +44,7 @@ const routes = [
 
       // Edições cadastros
       { path: '/cliente/:customerId', component: RegisterClient, meta: { requiresAuth: true } },
+      { path: '/funcionario/:workerId', component: RegisterEmployee, meta: { requiresAuth: true } },
 
       // Listas
       { path: '/clientes', component: ListClient, meta: { requiresAuth: true } },

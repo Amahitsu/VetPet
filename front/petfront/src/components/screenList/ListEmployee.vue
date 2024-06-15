@@ -7,25 +7,27 @@
             </div>
         </div>
 
-        <table class="table">
+        <table class="table mt-3">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>Status</th>
-                    <th width="200">Ações</th>
+                    <th width="96">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="workers in workers" :key="workers.id">
-                    <td>{{ workers.id }}</td>
                     <td>{{ workers.name }}</td>
-                    <td>{{ workers.phone }}</td>
+                    <td>{{ formatPhoneNumber(workers.phone) }}</td>
                     <td>{{ workers.active ? "Ativo" : "Inativo" }}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary" @click="">Editar</button>
-                        <button class="btn btn-sm btn-danger" @click="confirmDelete(customer.id)">Deletar</button>
+                        <button class="btn btn-icon btn-sm btn-primary me-1" @click="">
+                            <span class="material-symbols-rounded">edit</span>
+                        </button>
+                        <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customer.id)">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -68,10 +70,20 @@ export default {
         this.loadWorkers();
     },
     methods: {
+        formatPhoneNumber(phoneNumber) {
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+            if (phoneNumber.length === 9) {
+                return phoneNumber.replace(/(\d{5})(\d{4})/, '$1-$2');
+            } else if (phoneNumber.length === 11) {
+                return phoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else {
+                return phoneNumber;
+            }
+        },
         loadWorkers() {
             axios({
                 method: "GET",
-                url: "http://localhost:8080/api/v1/workers",
+                url: "http://localhost:8080/api/v1/worker",
             })
                 .then((response) => {
                     console.log(response.data.data)
@@ -90,7 +102,7 @@ export default {
             $('#deleteModal').modal('hide');
         },
         deleteWorker(id) {
-            axios.delete(`http://localhost:8080/api/v1/workers/${id}`)
+            axios.delete(`http://localhost:8080/api/v1/worker/${id}`)
                 .then(response => {
                     console.log('Cliente excluído com sucesso:', response.data);
                     this.loadWorkers();

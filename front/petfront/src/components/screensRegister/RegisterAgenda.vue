@@ -78,7 +78,7 @@ export default {
 </script>
 
 <template>
-    <div class="container mt-5">
+    <div>
         <h2>Agendamento</h2>
         <form @submit.prevent="createAppointments">
             <div class="mb-3 row">

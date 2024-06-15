@@ -7,10 +7,9 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Telefone</th>
                 <th>Status</th>
@@ -19,9 +18,8 @@
         </thead>
         <tbody>
             <tr v-for="customer in customers" :key="customer.id">
-                <td>{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
-                <td>{{ customer.phone }}</td>
+                <td>{{ formatPhoneNumber(customer.phone) }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-success me-1" @click="addPet(customer.id)">
@@ -39,8 +37,8 @@
         </tbody>
     </table>
 
-    <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog" aria-labelledby="deleteCustomerModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,6 +74,16 @@ export default {
         this.loadCustomers();
     },
     methods: {
+        formatPhoneNumber(phoneNumber) {
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+            if (phoneNumber.length === 9) {
+                return phoneNumber.replace(/(\d{5})(\d{4})/, '$1-$2');
+            } else if (phoneNumber.length === 11) {
+                return phoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else {
+                return phoneNumber;
+            }
+        },
         loadCustomers() {
             axios({
                 method: "GET",

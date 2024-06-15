@@ -14,14 +14,14 @@
                                     maxlength="45" aria-label="Nome Completo" v-model="name" required>
                                 <div class="col-md-3 d-flex align-itens-center gap-3">
                                     <div class="form-check md-3">
-                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                        <input class="form-check-input single-checkbox" name="statusClient" type="radio" value=""
                                             id="flexCheckDefault" checked>
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Ativo
                                         </label>
                                     </div>
                                     <div class="form-check md-3">
-                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                        <input class="form-check-input single-checkbox" name="statusClient" type="radio" value=""
                                             id="flexCheckChecked">
                                         <label class="form-check-label" for="flexCheckChecked">
                                             Inativo
@@ -108,26 +108,9 @@
 
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
 import { getAddressByCep } from '../../services/getAddressByCep.vue';
-import ModalWarning from '../screenMessage/ModalWarning.vue';
 import ListPetClient from '../screenList/ListPetClient.vue';
-
-const checkboxes = document.querySelectorAll('.single-checkbox')
-document.addEventListener('DOMContentLoaded', function () {
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function () {
-            if (this.checked) {
-                checkboxes.forEach((cb) => {
-                    if (cb !== this) {
-                        cb.checked = false;
-                    }
-                });
-            }
-        });
-    });
-});
+import ModalWarning from '../screenMessage/ModalWarning.vue';
 
 export default {
     components: {

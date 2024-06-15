@@ -1,3 +1,33 @@
+.main {
+    margin-top: 3.5rem;
+}
+
+.container {
+    margin: 1.5rem 1.5rem 1.5rem calc(210px + 1.5rem);
+}
+
+.bg-gray,
+.bg-gray .list-group-item {
+    background-color: #f4f4f4 !important;
+}
+
+.btn {
+    border: 0;
+    box-shadow: none !important;
+}
+
+.btn-primary {
+    background-color: #578EBE;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active, 
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    background-color: #42688A;
+}
+
 .material-symbols-rounded {
     font-size: 20px;
 }

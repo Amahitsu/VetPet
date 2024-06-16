@@ -1,39 +1,3 @@
-<script setup>
-import FullCalendar from '@fullcalendar/vue3';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import ptBrLocale from '@fullcalendar/core/locales/pt-br';
-import { useRouter } from 'vue-router';
-import { useScreens } from 'vue-screen-utils';
-
-const calendarOptions = {
-    plugins: [timeGridPlugin, dayGridPlugin],
-    initialView: 'dayGridWeek', // ou 'dayGridWeek'
-    locale: ptBrLocale,
-    events: []
-    // Outras opções de configuração, como eventos, editable, selectable, etc.
-};
-
-
-const { mapCurrent } = useScreens({
-    xs: '1000px',
-    sm: '640px',
-});
-
-const columns = mapCurrent({ lg: 2 }, 1);
-const expanded = mapCurrent({ lg: false }, true);
-
-const router = useRouter();
-
-const goToAppointment = () => {
-    router.push('/agenda/cadastro');
-};
-
-const addEventToCalendar = (event) => {
-  calendarOptions.value.events.push(event); // Adiciona o evento ao array de eventos
-};
-</script>
-
 <template>
     <div class="d-flex flex-row-reverse">
         <button @click="goToAppointment" class="btn btn-primary mx-3">Fazer agendamento</button>
@@ -50,6 +14,65 @@ const addEventToCalendar = (event) => {
     </div>
 </template>
 
-<style scoped>
+<script>
+import ptBrLocale from '@fullcalendar/core/locales/pt-br';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import FullCalendar from '@fullcalendar/vue3';
+import axios from 'axios';
 
-</style>
+/*const addEventToCalendar = (event) => {
+  calendarOptions.value.events.push(event); // Adiciona o evento ao array de eventos
+};*/
+
+export default {
+    components: {
+        FullCalendar
+    },
+    data() {
+        return {
+            calendarOptions: {
+                plugins: [timeGridPlugin, dayGridPlugin],
+                initialView: 'dayGridWeek',
+                locale: ptBrLocale,
+                events: []
+            }
+        }
+    },
+    created() {
+        this.buscarAgendamentos();
+    },
+    methods: {
+        buscarAgendamentos() {
+            axios.get('http://localhost:8080/api/v1/appointments')
+                .then(response => {
+                    let data = response.data.data;
+                    let events = this.convertData(data);
+                    
+                    this.calendarOptions.events = events;
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar eventos:', error);
+                });
+        },
+        convertData(data) {
+            return data.map(item => {
+                const date = new Date(item.date).toISOString().split('T')[0];
+                const startDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.start_time + ':00+00:00';
+                const endDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.finish_time + ':00+00:00';
+                
+                return {
+                    title: item.service.name,
+                    start: startDateTime,
+                    end: endDateTime,
+                    observation: item.observation
+                };
+            });
+        },
+        goToAppointment() {
+            this.$router.push({ path: `/agenda/cadastro` });
+        }
+    }
+}
+
+</script>

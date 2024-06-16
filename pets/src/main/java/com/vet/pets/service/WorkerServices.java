@@ -29,7 +29,7 @@ public class WorkerServices {
             newWorker.setCpf(dto.cpf());
             newWorker.setPhone(dto.phone());
             newWorker.setUsername(dto.username());
-            newWorker.setPasswordd(dto.passwordd());
+            newWorker.setPasswordd(passwordEncoder.encode(dto.passwordd()));
             newWorker.setUserLevel(dto.userLevel());
             newWorker.setActive(dto.active());
             newWorker.setEmail(dto.email());

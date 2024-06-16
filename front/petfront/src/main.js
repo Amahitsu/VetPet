@@ -67,7 +67,7 @@ const router = createRouter({
   routes
 });
 
-// router.beforeEach((to, from, next) => {
+// // router.beforeEach((to, from, next) => {
 //   const isAuthenticated = localStorage.getItem('user') !== null;
 //   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
 //     next('/');

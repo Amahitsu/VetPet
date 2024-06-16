@@ -3,19 +3,35 @@ import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/vue3';
+import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useScreens } from 'vue-screen-utils';
 
 FullCalendar; // make the <FullCalendar> tag available
 
-const calendarOptions = {
+const calendarOptions = ref({
   plugins: [dayGridPlugin, interactionPlugin],
   initialView: 'dayGridMonth',
   locale: ptBrLocale,
   editable: true,
   selectable: true,
   events: []
-}
+})
+
+const Eventos = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/appointment');
+    const events = response.data.map(event => ({
+      title: event.title,
+      start: event.start
+    }));
+    calendarOptions.value.events = events;
+  } catch (error) {
+    console.error('Erro ao buscar eventos:', error);
+  }
+};
+
+Eventos(); // Chamar a função para buscar eventos
 
 const { mapCurrent } = useScreens({
   xs: '1000px',

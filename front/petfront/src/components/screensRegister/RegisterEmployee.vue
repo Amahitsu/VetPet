@@ -13,14 +13,14 @@
                         <div class="col-md-3 d-flex align-itens-center gap-3">
                             <div class="form-check md-3">
                                 <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
-                                    value="" id="flexCheckDefault" checked>
+                                    value="1" id="flexCheckDefault" checked>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Ativo
                                 </label>
                             </div>
                             <div class="form-check md-3">
                                 <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
-                                    value="" id="flexCheckChecked">
+                                    value="2" id="flexCheckChecked">
                                 <label class="form-check-label" for="flexCheckChecked">
                                     Inativo
                                 </label>
@@ -118,7 +118,7 @@
             </div>
         </form>
     </section>
-    <!--<ModalWarning :modalText="modalMessage" id="modal" />-->
+    <ModalWarning :modalText="modalMessage" id="modal" />
 </template>
 
 <script>
@@ -219,6 +219,7 @@ export default {
             const data = {
                 name: this.name,
                 cpf: this.cpf,
+                active: this.active,
                 phone: this.phone,
                 email: this.email,
                 address: address,
@@ -267,6 +268,7 @@ export default {
                     let address = this.parseAddress(data.address);
 
                     this.name = data.name;
+                    this.active = data.active;
                     this.cpf = data.cpf;
                     this.email = data.email;
                     this.phone = data.phone;

@@ -38,7 +38,7 @@ public class Worker{
     @Column(length = 2, nullable = false)
     private int userLevel;
     @Column(length = 1, nullable = false)
-    private boolean active = true;
+    private boolean active;
     @Column(length = 150, nullable = false, unique = true)
     private String email;
 }

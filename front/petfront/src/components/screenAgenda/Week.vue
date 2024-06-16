@@ -8,7 +8,7 @@ import { useScreens } from 'vue-screen-utils';
 
 const calendarOptions = {
     plugins: [timeGridPlugin, dayGridPlugin],
-    initialView: 'timeGridWeek', // ou 'dayGridWeek'
+    initialView: 'dayGridWeek', // ou 'dayGridWeek'
     locale: ptBrLocale,
     events: []
     // Outras opções de configuração, como eventos, editable, selectable, etc.
@@ -49,3 +49,7 @@ const addEventToCalendar = (event) => {
         <FullCalendar :options="calendarOptions" />
     </div>
 </template>
+
+<style scoped>
+
+</style>

@@ -13,15 +13,15 @@
                         <div class="col-md-3 d-flex align-itens-center gap-3">
                             <div class="form-check md-3">
                                 <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
-                                    value="1" id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
+                                    value="1" id="statusWorkerActive" v-model="status">
+                                <label class="form-check-label" for="statusWorkerActive">
                                     Ativo
                                 </label>
                             </div>
                             <div class="form-check md-3">
                                 <input class="form-check-input single-checkbox" name="statusWorker" type="radio"
-                                    value="2" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
+                                    value="0" id="statusWorkerInactive" v-model="status">
+                                <label class="form-check-label" for="statusWorkerInactive">
                                     Inativo
                                 </label>
                             </div>
@@ -70,12 +70,12 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <label for="inputState" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="numberStreet">
+                    <label for="inputNumber" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="inputNumber" v-model="numberStreet">
                 </div>
                 <div class="col-md-8">
-                    <label for="inputZip" class="form-label">Complemento</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="complement">
+                    <label for="inputComplement" class="form-label">Complemento</label>
+                    <input type="text" class="form-control" id="inputComplement" v-model="complement">
                 </div>
             </div>
             <div class="row mt-3">
@@ -88,8 +88,8 @@
                     <input type="text" class="form-control" id="inputState" v-model="city" required>
                 </div>
                 <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
+                    <label for="inputNeighborhood" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="inputNeighborhood" v-model="neighborhood" required>
                 </div>
             </div>
             <div class="row mt-3">
@@ -98,12 +98,12 @@
                     <input type="text" class="form-control" id="inputUserName" v-model="username" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="inputUserName" class="form-label">Senha</label>
-                    <input type="text" class="form-control" id="inputUserName" v-model="passwordd" required>
+                    <label for="inputPassword" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="inputPassword" v-model="passwordd" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="inputZip" class="form-label">Nível de Usuário</label>
-                    <select id="optionsLevel" class="form-select" aria-label="Default select example" v-model="userLevel">
+                    <label for="inputUserLevel" class="form-label">Nível de Usuário</label>
+                    <select id="optionsLevel" class="form-select" aria-label="Núvel de usuário" v-model="userLevel">
                         <option selected>Escolha o Nível</option>
                         <option value="1">Administrador</option>
                         <option value="2">Funcionário</option>
@@ -136,6 +136,7 @@ export default {
     data() {
         return {
             workerId: null,
+            status: 1,
             name: '',
             cpf: '',
             email: '',
@@ -219,7 +220,7 @@ export default {
             const data = {
                 name: this.name,
                 cpf: this.cpf,
-                active: this.active,
+                active: this.status,
                 phone: this.phone,
                 email: this.email,
                 address: address,
@@ -228,7 +229,6 @@ export default {
                 passwordd: this.passwordd,
                 userLevel: this.userLevel
             };
-            
             if (this.workerId)
                 this.editWorker(this.workerId, data)
             else
@@ -244,6 +244,7 @@ export default {
                 });
         },
         editWorker(workerId, data) {
+            debugger
             if (!workerId)
                 return;
 
@@ -268,7 +269,7 @@ export default {
                     let address = this.parseAddress(data.address);
 
                     this.name = data.name;
-                    this.active = data.active;
+                    this.status = data.active ? 1 : 0;
                     this.cpf = data.cpf;
                     this.email = data.email;
                     this.phone = data.phone;

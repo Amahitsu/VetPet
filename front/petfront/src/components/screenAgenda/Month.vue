@@ -9,14 +9,14 @@ import { useScreens } from 'vue-screen-utils';
 
 FullCalendar; // make the <FullCalendar> tag available
 
-const calendarOptions = ref({
+const calendarOptions = {
   plugins: [dayGridPlugin, interactionPlugin],
   initialView: 'dayGridMonth',
   locale: ptBrLocale,
   editable: true,
   selectable: true,
   events: []
-})
+}
 
 const Eventos = async () => {
   try {

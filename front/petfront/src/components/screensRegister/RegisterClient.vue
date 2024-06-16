@@ -251,13 +251,13 @@ export default {
                     this.email = data.email;
                     this.phone = data.phone;
 
-                    this.cep = address.cep;
-                    this.street = address.rua;
-                    this.numberStreet = address.numero;
-                    this.complement = address.complemento;
-                    this.state = address.estado;
-                    this.city = address.cidade;
-                    this.neighborhood = address.bairro;
+                    this.cep = address.cep || '';
+                    this.street = address.rua || '';
+                    this.numberStreet = address.numero || '';
+                    this.complement = address.complemento || '';
+                    this.state = address.estado || '';
+                    this.city = address.cidade || '';
+                    this.neighborhood = address.bairro || '';
 
                     this.loadCustomerPets(this.customerId);
                 })

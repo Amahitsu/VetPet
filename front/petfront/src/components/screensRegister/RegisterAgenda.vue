@@ -1,82 +1,3 @@
-<script>
-export default {
-    data() {
-        return {
-            start_timeAppointments: '',
-            finish_timeAppointments: '',
-            medicinesAppointments: false,
-            vaccinesAppointments: false,
-            dateAppointments: '',
-            customerAppointments: '',
-            animalAppointments: '',
-            workerAppointments: '',
-            servicesAppointments: '',
-            observationAppointments: '',
-        };
-    },
-    created() {
-    },
-    methods: {
-        loadCustomers() {
-            axios.get("http://localhost:8080/api/v1/customers")
-                .then(response => {
-                    this.customersList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os clientes:', error);
-                });
-        },
-        loadAnimals() {
-            axios.get("http://localhost:8080/api/v1/animals")
-                .then(response => {
-                    this.animalsList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os animaiss:', error);
-                });
-        },
-        loadWorkers() {
-            axios.get("http://localhost:8080/api/v1/workers")
-                .then(response => {
-                    this.workersList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os funcionários:', error);
-                });
-        },
-        loadServices() {
-            axios.get("http://localhost:8080/api/v1/services")
-                .then(response => {
-                    this.servicesList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os serviços:', error);
-                });
-        },
-        createAppointments() {
-            axios.post("http://localhost:8080/api/v1/appointments", {
-                start_time: this.start_timeAppointments,
-                finish_time: this.finish_timeAppointments,
-                medicines: this.medicinesAppointments,
-                vaccines: this.vaccinesAppointments,
-                date: this.dateAppointments,
-                id_cusomer: this.customerAppointments,
-                id_animals: this.animalAppointments,
-                id_workers: this.workerAppointments,
-                id_services: this.servicesAppointments,
-                observation: this.observationAppointments
-            })
-                .then(response => {
-                    console.log('Agendamento realizado com sucesso:', response.data);
-                })
-                .catch(error => {
-                    console.error('Erro ao criar um agendamento:', error);
-                });
-        },
-    },
-}
-</script>
-
 <template>
     <div>
         <h2>Agendamento</h2>
@@ -167,13 +88,101 @@ export default {
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                    <button type="reset" class="btn btn-secondary me-2">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         </form>
     </div>
 </template>
 
-<style>
-</style>
+<script>
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            start_timeAppointments: '',
+            finish_timeAppointments: '',
+            medicinesAppointments: false,
+            vaccinesAppointments: false,
+            dateAppointments: '',
+            customerAppointments: '',
+            animalAppointments: '',
+            workerAppointments: '',
+            servicesAppointments: '',
+            observationAppointments: '',
+            animalsList: [],
+            workersList: [],
+            customersList: [],
+            servicesList: []
+        };
+    },
+    created() {
+        this.loadAnimals();
+        this.loadCustomers();
+        this.loadServices();
+        this.loadWorkers();
+    },
+    methods: {
+        loadCustomers() {
+            axios.get("http://localhost:8080/api/v1/customers")
+                .then(response => {
+                    this.customersList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os clientes:', error);
+                });
+        },
+        loadAnimals() {
+            axios.get("http://localhost:8080/api/v1/animals")
+                .then(response => {
+                    this.animalsList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os animaiss:', error);
+                });
+        },
+        loadWorkers() {
+            axios.get("http://localhost:8080/api/v1/worker")
+                .then(response => {
+                    this.workersList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os funcionários:', error);
+                });
+        },
+        loadServices() {
+            axios.get("http://localhost:8080/api/v1/services")
+                .then(response => {
+                    this.servicesList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os serviços:', error);
+                });
+        },
+        createAppointments() {
+            let data = {
+                start_time: this.start_timeAppointments,
+                finish_time: this.finish_timeAppointments,
+                medicines: this.medicinesAppointments,
+                vaccines: this.vaccinesAppointments,
+                date: this.dateAppointments,
+                id_cusomer: this.customerAppointments,
+                id_animals: this.animalAppointments,
+                id_workers: this.workerAppointments,
+                id_services: this.servicesAppointments,
+                observation: this.observationAppointments
+            }
+
+            axios.post("http://localhost:8080/api/v1/appointments", data)
+                .then(response => {
+                    console.log('Agendamento realizado com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar um agendamento:', error);
+                });
+        },
+    },
+}
+</script>

@@ -70,6 +70,7 @@ export default {
         return {
             speciesList: [],
             breedList: [],
+            selectedSpecie: '',
             selectedSpecieId: '',
             selectedRaceId: '',
             customer: {},

@@ -49,21 +49,34 @@ export default {
         }
     },
     created() {
-        //this.buscarAgendamentos();
+        this.buscarAgendamentos();
     },
     methods: {
         buscarAgendamentos() {
-            axios.get('http://localhost:8080/api/v1/appointment')
+            axios.get('http://localhost:8080/api/v1/appointments')
                 .then(response => {
-                    const events = response.data.map(event => ({
-                        title: event.title,
-                        start: event.start
-                    }));
-                    calendarOptions.value.events = events;
+                    let data = response.data.data;
+                    let events = this.convertData(data);
+                    
+                    this.calendarOptions.events = events;
                 })
                 .catch(error => {
                     console.error('Erro ao buscar eventos:', error);
                 });
+        },
+        convertData(data) {
+            return data.map(item => {
+                const date = new Date(item.date).toISOString().split('T')[0];
+                const startDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.start_time + ':00+00:00';
+                const endDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.finish_time + ':00+00:00';
+                
+                return {
+                    title: item.service.name,
+                    start: startDateTime,
+                    end: endDateTime,
+                    observation: item.observation
+                };
+            });
         },
         goToAppointment() {
             this.$router.push({ path: `/agenda/cadastro` });

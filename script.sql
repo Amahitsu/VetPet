@@ -75,14 +75,14 @@ INSERT INTO tb_services (name, price) VALUES
 ('Microchipagem', 60.0);
  
 INSERT INTO tb_appointments (start_time, finish_time, medicines, vaccines, date, id_customers, id_animals, id_workers, id_services, observation) VALUES
-('10:00', '10:30', true, true, '2024-05-21', 1, 1, 1, 1, 'Consulta de rotina'),
-('11:00', '11:30', false, true, '2024-05-21', 1, 2, 2, 1, 'Vacinação anual'),
-('14:00', '14:30', true, false, '2024-05-22', 1, 3, 3, 1, 'Exame de rotina'),
-('15:00', '15:30', false, true, '2024-05-22', 2, 4, 4, 1, 'Vacinação de filhote'),
-('16:00', '16:30', true, false, '2024-05-23', 2, 5, 5, 1, 'Aplicação de medicamentos'),
-('17:00', '17:30', false, true, '2024-05-23', 2, 6, 6, 1, 'Consulta inicial'),
-('09:00', '09:30', true, false, '2024-05-24', 3, 7, 7, 1, 'Exame pré-operatório'),
-('10:30', '11:00', false, true, '2024-05-24', 3, 8, 8, 1, 'Vacinação anual'),
-('11:30', '12:00', true, false, '2024-05-25', 3, 9, 9, 1, 'Consulta de retorno'),
-('14:30', '15:00', false, true, '2024-05-25', 3, 10, 10, 1, 'Aplicação de vacinas');
+('10:00', '10:30', true, true, '2024-06-21', 1, 1, 1, 1, 'Consulta de rotina'),
+('11:00', '11:30', false, true, '2024-06-21', 1, 2, 2, 1, 'Vacinação anual'),
+('14:00', '14:30', true, false, '2024-06-22', 1, 3, 3, 1, 'Exame de rotina'),
+('15:00', '15:30', false, true, '2024-06-22', 2, 4, 4, 1, 'Vacinação de filhote'),
+('16:00', '16:30', true, false, '2024-06-23', 2, 5, 5, 1, 'Aplicação de medicamentos'),
+('17:00', '17:30', false, true, '2024-06-23', 2, 6, 6, 1, 'Consulta inicial'),
+('09:00', '09:30', true, false, '2024-06-24', 3, 7, 7, 1, 'Exame pré-operatório'),
+('10:30', '11:00', false, true, '2024-06-24', 3, 8, 8, 1, 'Vacinação anual'),
+('11:30', '12:00', true, false, '2024-06-25', 3, 9, 9, 1, 'Consulta de retorno'),
+('14:30', '15:00', false, true, '2024-06-25', 3, 10, 10, 1, 'Aplicação de vacinas');
  

@@ -267,21 +267,24 @@ export default {
                 .then(response => {
                     let data = response.data.data;
                     let address = this.parseAddress(data.address);
-
+                    
                     this.name = data.name;
                     this.status = data.active ? 1 : 0;
                     this.cpf = data.cpf;
                     this.email = data.email;
                     this.phone = data.phone;
                     this.functionn = data.functionn;
+                    this.username = data.username;
+                    this.userLevel = data.userLevel;
+
                     
-                    this.cep = address.cep;
-                    this.street = address.rua;
-                    this.numberStreet = address.numero;
-                    this.complement = address.complemento;
-                    this.state = address.estado;
-                    this.city = address.cidade;
-                    this.neighborhood = address.bairro;
+                    this.cep = address.cep || '';
+                    this.street = address.rua || '';
+                    this.numberStreet = address.numero || '';
+                    this.complement = address.complemento || '';
+                    this.state = address.estado || '';
+                    this.city = address.cidade || '';
+                    this.neighborhood = address.bairro || '';
                 })
                 .catch(error => {
                     console.error('Erro ao criar funcionário:', error);

@@ -79,12 +79,12 @@
                             <label for="inputCity" class="form-label">Estado</label>
                             <input type="text" class="form-control" id="inputCity" v-model="state" required>
                         </div>
-                        <div class="col-md-6">
+                        <div :class="[customerId ? 'col-md-4' : 'col-md-6']">
                             <label for="inputState" class="form-label">Cidade</label>
                             <input type="text" class="form-control" id="inputZip" v-model="city" required>
                         </div>
 
-                        <div class="col-md-2">
+                        <div :class="[customerId ? 'col-md-4' : 'col-md-2']">
                             <label for="inputZip" class="form-label">Bairro</label>
                             <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
                         </div>

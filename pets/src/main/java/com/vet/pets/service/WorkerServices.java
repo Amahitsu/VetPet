@@ -24,9 +24,21 @@ public class WorkerServices {
     @Transactional
     public Worker createWorker(WorkerCreateDTO dto){
         try{
-            Worker newWorker = workerRepository.save(new Worker(null, dto.name(), dto.cpf(), dto.phone(),
-            dto.address(), dto.function(), dto.username(), passwordEncoder.encode(dto.password()), dto.userLevel(), dto.active()));
-            return newWorker;
+            Worker newWorker = new Worker();
+            newWorker.setName(dto.name());
+            newWorker.setCpf(dto.cpf());
+            newWorker.setPhone(dto.phone());
+            newWorker.setUsername(dto.username());
+            newWorker.setPasswordd(dto.passwordd());
+            newWorker.setUserLevel(dto.userLevel());
+            newWorker.setActive(dto.active());
+            newWorker.setEmail(dto.email());
+            newWorker.setAddress(dto.address());
+            newWorker.setFunctionn(dto.functionn());
+            
+            Worker savedWorker = workerRepository.save(newWorker);
+
+            return savedWorker;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
@@ -79,9 +91,22 @@ public class WorkerServices {
             if(worker.isEmpty()) {
                 return null;
             }
-            Worker newWorker = workerRepository.save(new Worker(id, dto.name(), dto.cpf(), dto.phone(),
-            dto.address(), dto.function(), dto.username(), passwordEncoder.encode(dto.password()), dto.userLevel(), dto.active()));
-            return newWorker;
+            Worker newWorker = new Worker();
+            newWorker.setId(id);
+            newWorker.setName(dto.name());
+            newWorker.setCpf(dto.cpf());
+            newWorker.setPhone(dto.phone());
+            newWorker.setUsername(dto.username());
+            newWorker.setPasswordd(passwordEncoder.encode(dto.passwordd()));
+            newWorker.setUserLevel(dto.userLevel());
+            newWorker.setActive(dto.active());
+            newWorker.setEmail(dto.email());
+            newWorker.setAddress(dto.address());
+            newWorker.setFunctionn(dto.functionn());
+            
+            Worker updatedWorker = workerRepository.save(newWorker);
+
+            return updatedWorker;
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

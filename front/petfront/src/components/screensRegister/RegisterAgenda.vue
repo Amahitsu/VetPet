@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Agendamento</h2>
-        <form @submit.prevent="createAppointments">
+        <form>
             <div class="mb-3 row">
                 <label for="dateInput" class="col-sm-2 col-form-label">Data</label>
                 <div class="col-sm-10">
@@ -11,18 +11,21 @@
             <div class="mb-3 row">
                 <label for="startTimeInput" class="col-sm-2 col-form-label">Hora de Início</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments" required>
+                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments"
+                        required>
                 </div>
                 <label for="finishTimeInput" class="col-sm-2 col-form-label">Hora de Término</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments" required>
+                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments"
+                        required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-sm-2">Medicamentos</div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="medicinesCheckbox" v-model="medicinesAppointments">
+                        <input class="form-check-input" type="checkbox" id="medicinesCheckbox"
+                            v-model="medicinesAppointments">
                         <label class="form-check-label" for="medicinesCheckbox">
                             Necessário
                         </label>
@@ -33,7 +36,8 @@
                 <div class="col-sm-2">Vacinas</div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="vaccinesCheckbox" v-model="vaccinesAppointments">
+                        <input class="form-check-input" type="checkbox" id="vaccinesCheckbox"
+                            v-model="vaccinesAppointments">
                         <label class="form-check-label" for="vaccinesCheckbox">
                             Necessário
                         </label>
@@ -53,7 +57,8 @@
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments" :disabled="!customerAppointments" required>
+                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
+                        :disabled="!customerAppointments" required>
                         <option value="" selected>Selecione</option>
                         <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
                         animals.name }}</option>
@@ -83,13 +88,14 @@
             <div class="mb-3 row">
                 <label for="observationInput" class="col-sm-2 col-form-label">Observações</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments" required></textarea>
+                    <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments"
+                        required></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="reset" class="btn btn-secondary me-2">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary me-2" @click="goToAgenda">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="saveAgenda">Salvar</button>
                 </div>
             </div>
         </form>
@@ -168,7 +174,7 @@ export default {
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
                 date: this.dateAppointments,
-                id_cusomer: this.customerAppointments,
+                id_customer: this.customerAppointments,
                 id_animals: this.animalAppointments,
                 id_workers: this.workerAppointments,
                 id_services: this.servicesAppointments,
@@ -183,6 +189,12 @@ export default {
                     console.error('Erro ao criar um agendamento:', error);
                 });
         },
-    },
+        saveAgenda() {
+            alert('não está salvando ainda');
+        },
+        goToAgenda() {
+            this.$router.push({ path: `/agenda` });
+        }
+    }
 }
 </script>

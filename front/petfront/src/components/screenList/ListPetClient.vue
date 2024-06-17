@@ -10,15 +10,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="customerPet in customerPets" :key="customerPet.id">
-                <td>{{ customerPet.name }}</td>
-                <td>{{ customerPet.specie.name }}</td>
-                <td>{{ customerPet.race.name }}</td>
+            <tr v-for="animals in animals" :key="animals.id">
+                <td>{{ animals.name }}</td>
+                <td>{{ animals.specie.name }}</td>
+                <td>{{ animals.race.name }}</td>
                 <td class="btn-group text-end">
-                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(customerPet.id)">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(customer.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>
-                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customerPet.id)">
+                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customer.id)">
                         <span class="material-symbols-rounded">delete</span>
                     </button>
                 </td>
@@ -32,24 +32,30 @@
 export default {
     data() {
         return {
-            customerPetId: null,
-            customerPets: []
+            customer: []
         };
     },
+    created() {
+        this.loadCustomerById(this.$route.params.customerId);
+    },
+
     methods: {
-        loadCustomerPets(customerId) {
-            this.customerPets = [{
-                id: 1,
-                name: 'Belinha',
-                specie: {
-                    id: 1,
-                    name: 'Cachorro'
-                },
-                race: {
-                    id: 1,
-                    name: 'Pitbull'
-                }
-            }]
+        loadCustomerById(id) {
+            axios({
+                method: "GET",
+                url: `http://localhost:8080/api/v1/customers/${id}`,
+            })
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.customer = response.data.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        alert('Cliente não encontrado');
+                    }
+                    console.error('Erro ao listar o cliente:', error);
+                });
+        },
 
             /*
             Faltou endpoint para buscar pets de um cliente
@@ -71,5 +77,5 @@ export default {
 
         }
     }
-}
+
 </script>

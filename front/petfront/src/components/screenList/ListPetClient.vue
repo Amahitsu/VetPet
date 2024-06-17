@@ -10,10 +10,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="animal in loadAnimals" :key="animal.id">
-                <td>{{ animal.name }}</td>
-                <td>{{ animal.specie.name }}</td>
-                <td>{{ animal.race.name }}</td>
+            <tr v-for="animals in animals" :key="animals.id">
+                <td>{{ animals.name }}</td>
+                <td>{{ animals.specie.name }}</td>
+                <td>{{ animals.race.name }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(customer.id)">
                         <span class="material-symbols-rounded">edit</span>
@@ -45,6 +45,7 @@ export default {
         this.loadAnimals();
         this.loadSpecies();
         this.loadCustomerById(this.$route.params.customerId);
+        };
     },
 
     methods: {

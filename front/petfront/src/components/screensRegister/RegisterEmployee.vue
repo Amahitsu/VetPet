@@ -244,18 +244,24 @@ export default {
                 });
         },
         editWorker(workerId, data) {
-            debugger
-            if (!workerId)
-                return;
+        if (!workerId) return;
+        
+        for (let key in data) {
+            if (data[key] === "0") {
+                data[key] = false;
+            } else if (data[key] === "1") {
+                data[key] = true;
+            }
+        }
 
-            axios.put(`http://localhost:8080/api/v1/worker/${workerId}`, data)
-                .then(response => {
-                    this.goToList();
-                })
-                .catch(error => {
-                    console.error('Erro ao editar funcionário:', error);
-                });
-        },
+        axios.put(`http://localhost:8080/api/v1/worker/${workerId}`, data)
+            .then(response => {
+                this.goToList();
+            })
+            .catch(error => {
+                console.error('Erro ao editar funcionário:', error);
+            });
+    },
         goToList() {
             this.$router.push({ path: `/funcionarios` });
         },

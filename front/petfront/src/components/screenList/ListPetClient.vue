@@ -32,14 +32,45 @@
 export default {
     data() {
         return {
-            customer: []
+            speciesList: [],
+            breedList: [],
+            animalsList: [],
+            selectedSpecie: '',
+            selectedSpecieId: '',
+            selectedRaceId: '',
+            customer: {},
         };
     },
     created() {
+        this.loadAnimals();
+        this.loadSpecies();
         this.loadCustomerById(this.$route.params.customerId);
+        };
     },
 
     methods: {
+        loadSpecies() {
+            fetch('http://localhost:8080/api/v1/species')
+                .then(response => response.json())
+                .then(({ data }) => {
+                    console.log(data)
+                    this.speciesList = data;
+                })
+                .catch(error => console.error('Erro ao carregar espécies:', error));
+        },
+        loadBreeds() {
+            if (this.selectedSpecie) {
+                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`)
+                    .then(response => response.json())
+                    .then(({ data }) => {
+                        console.log(data);
+                        this.breedList = data;
+                    })
+                    .catch(error => console.error('Erro ao carregar raças:', error));
+            } else {
+                this.breedList = [];
+            }
+        },
         loadCustomerById(id) {
             axios({
                 method: "GET",
@@ -55,6 +86,15 @@ export default {
                     }
                     console.error('Erro ao listar o cliente:', error);
                 });
+        },
+        loadAnimals() {
+            fetch('http://localhost:8080/api/v1/animals')
+                .then(response => response.json())
+                .then(({ data }) => {
+                    console.log(data)
+                    this.animalsList = data;
+                })
+                .catch(error => console.error('Erro ao carregar animais:', error));
         },
 
             /*

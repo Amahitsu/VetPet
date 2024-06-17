@@ -11,7 +11,9 @@
             <thead>
                 <tr>
                     <th>Nome</th>
+                    <th>Função</th>
                     <th>Telefone</th>
+                    <th>Nível</th>
                     <th>Status</th>
                     <th width="96">Ações</th>
                 </tr>
@@ -19,7 +21,9 @@
             <tbody>
                 <tr v-for="worker in workers" :key="workers.id">
                     <td>{{ worker.name }}</td>
+                    <td>{{ worker.functionn }}</td>
                     <td>{{ formatPhoneNumber(worker.phone) }}</td>
+                    <td>{{ worker.userLevel }}</td>
                     <td>{{ worker.active ? "Ativo" : "Inativo" }}</td>
                     <td>
                         <button class="btn btn-icon btn-sm btn-primary me-1" @click="editWorker(worker.id)">

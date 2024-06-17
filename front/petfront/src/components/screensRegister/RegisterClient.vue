@@ -14,14 +14,14 @@
                                     maxlength="45" aria-label="Nome Completo" v-model="name" required>
                                 <div class="col-md-3 d-flex align-itens-center gap-3">
                                     <div class="form-check md-3">
-                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                        <input class="form-check-input single-checkbox" name="statusClient" type="radio" value=""
                                             id="flexCheckDefault" checked>
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Ativo
                                         </label>
                                     </div>
                                     <div class="form-check md-3">
-                                        <input class="form-check-input single-checkbox" type="checkbox" value=""
+                                        <input class="form-check-input single-checkbox" name="statusClient" type="radio" value=""
                                             id="flexCheckChecked">
                                         <label class="form-check-label" for="flexCheckChecked">
                                             Inativo
@@ -79,12 +79,12 @@
                             <label for="inputCity" class="form-label">Estado</label>
                             <input type="text" class="form-control" id="inputCity" v-model="state" required>
                         </div>
-                        <div class="col-md-6">
+                        <div :class="[customerId ? 'col-md-4' : 'col-md-6']">
                             <label for="inputState" class="form-label">Cidade</label>
                             <input type="text" class="form-control" id="inputZip" v-model="city" required>
                         </div>
 
-                        <div class="col-md-2">
+                        <div :class="[customerId ? 'col-md-4' : 'col-md-2']">
                             <label for="inputZip" class="form-label">Bairro</label>
                             <input type="text" class="form-control" id="inputZip" v-model="neighborhood" required>
                         </div>
@@ -108,26 +108,9 @@
 
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
 import { getAddressByCep } from '../../services/getAddressByCep.vue';
-import ModalWarning from '../screenMessage/ModalWarning.vue';
 import ListPetClient from '../screenList/ListPetClient.vue';
-
-const checkboxes = document.querySelectorAll('.single-checkbox')
-document.addEventListener('DOMContentLoaded', function () {
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function () {
-            if (this.checked) {
-                checkboxes.forEach((cb) => {
-                    if (cb !== this) {
-                        cb.checked = false;
-                    }
-                });
-            }
-        });
-    });
-});
+import ModalWarning from '../screenMessage/ModalWarning.vue';
 
 export default {
     components: {
@@ -268,13 +251,13 @@ export default {
                     this.email = data.email;
                     this.phone = data.phone;
 
-                    this.cep = address.cep;
-                    this.street = address.rua;
-                    this.numberStreet = address.numero;
-                    this.complement = address.complemento;
-                    this.state = address.estado;
-                    this.city = address.cidade;
-                    this.neighborhood = address.bairro;
+                    this.cep = address.cep || '';
+                    this.street = address.rua || '';
+                    this.numberStreet = address.numero || '';
+                    this.complement = address.complemento || '';
+                    this.state = address.estado || '';
+                    this.city = address.cidade || '';
+                    this.neighborhood = address.bairro || '';
 
                     this.loadCustomerPets(this.customerId);
                 })

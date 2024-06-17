@@ -44,6 +44,7 @@ const routes = [
 
       // Edições cadastros
       { path: '/cliente/:customerId', component: RegisterClient, meta: { requiresAuth: true } },
+      { path: '/funcionario/:workerId', component: RegisterEmployee, meta: { requiresAuth: true } },
 
       // Listas
       { path: '/clientes', component: ListClient, meta: { requiresAuth: true } },
@@ -66,14 +67,14 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('user') !== null;
-  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-    next('/');
-  } else {
-    next();
-  }
-});
+// // router.beforeEach((to, from, next) => {
+//   const isAuthenticated = localStorage.getItem('user') !== null;
+//   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+//     next('/');
+//   } else {
+//     next();
+//   }
+// });
 
 const app = createApp(App);
 app.use(router).use(VCalendar, {}).mount('#app');

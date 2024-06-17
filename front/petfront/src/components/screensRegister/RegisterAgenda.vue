@@ -1,86 +1,7 @@
-<script>
-export default {
-    data() {
-        return {
-            start_timeAppointments: '',
-            finish_timeAppointments: '',
-            medicinesAppointments: false,
-            vaccinesAppointments: false,
-            dateAppointments: '',
-            customerAppointments: '',
-            animalAppointments: '',
-            workerAppointments: '',
-            servicesAppointments: '',
-            observationAppointments: '',
-        };
-    },
-    created() {
-    },
-    methods: {
-        loadCustomers() {
-            axios.get("http://localhost:8080/api/v1/customers")
-                .then(response => {
-                    this.customersList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os clientes:', error);
-                });
-        },
-        loadAnimals() {
-            axios.get("http://localhost:8080/api/v1/animals")
-                .then(response => {
-                    this.animalsList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os animaiss:', error);
-                });
-        },
-        loadWorkers() {
-            axios.get("http://localhost:8080/api/v1/workers")
-                .then(response => {
-                    this.workersList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os funcionários:', error);
-                });
-        },
-        loadServices() {
-            axios.get("http://localhost:8080/api/v1/services")
-                .then(response => {
-                    this.servicesList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os serviços:', error);
-                });
-        },
-        createAppointments() {
-            axios.post("http://localhost:8080/api/v1/appointments", {
-                start_time: this.start_timeAppointments,
-                finish_time: this.finish_timeAppointments,
-                medicines: this.medicinesAppointments,
-                vaccines: this.vaccinesAppointments,
-                date: this.dateAppointments,
-                id_cusomer: this.customerAppointments,
-                id_animals: this.animalAppointments,
-                id_workers: this.workerAppointments,
-                id_services: this.servicesAppointments,
-                observation: this.observationAppointments
-            })
-                .then(response => {
-                    console.log('Agendamento realizado com sucesso:', response.data);
-                })
-                .catch(error => {
-                    console.error('Erro ao criar um agendamento:', error);
-                });
-        },
-    },
-}
-</script>
-
 <template>
-    <div class="container mt-5">
+    <div>
         <h2>Agendamento</h2>
-        <form @submit.prevent="createAppointments">
+        <form>
             <div class="mb-3 row">
                 <label for="dateInput" class="col-sm-2 col-form-label">Data</label>
                 <div class="col-sm-10">
@@ -90,18 +11,21 @@ export default {
             <div class="mb-3 row">
                 <label for="startTimeInput" class="col-sm-2 col-form-label">Hora de Início</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments" required>
+                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments"
+                        required>
                 </div>
                 <label for="finishTimeInput" class="col-sm-2 col-form-label">Hora de Término</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments" required>
+                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments"
+                        required>
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-sm-2">Medicamentos</div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="medicinesCheckbox" v-model="medicinesAppointments">
+                        <input class="form-check-input" type="checkbox" id="medicinesCheckbox"
+                            v-model="medicinesAppointments">
                         <label class="form-check-label" for="medicinesCheckbox">
                             Necessário
                         </label>
@@ -112,7 +36,8 @@ export default {
                 <div class="col-sm-2">Vacinas</div>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="vaccinesCheckbox" v-model="vaccinesAppointments">
+                        <input class="form-check-input" type="checkbox" id="vaccinesCheckbox"
+                            v-model="vaccinesAppointments">
                         <label class="form-check-label" for="vaccinesCheckbox">
                             Necessário
                         </label>
@@ -132,7 +57,8 @@ export default {
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments" :disabled="!customerAppointments" required>
+                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
+                        :disabled="!customerAppointments" required>
                         <option value="" selected>Selecione</option>
                         <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
                         animals.name }}</option>
@@ -162,18 +88,113 @@ export default {
             <div class="mb-3 row">
                 <label for="observationInput" class="col-sm-2 col-form-label">Observações</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments" required></textarea>
+                    <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments"
+                        required></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary me-2">Salvar</button>
-                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                    <button type="button" class="btn btn-secondary me-2" @click="goToAgenda">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="saveAgenda">Salvar</button>
                 </div>
             </div>
         </form>
     </div>
 </template>
 
-<style>
-</style>
+<script>
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            start_timeAppointments: '',
+            finish_timeAppointments: '',
+            medicinesAppointments: false,
+            vaccinesAppointments: false,
+            dateAppointments: '',
+            customerAppointments: '',
+            animalAppointments: '',
+            workerAppointments: '',
+            servicesAppointments: '',
+            observationAppointments: '',
+            animalsList: [],
+            workersList: [],
+            customersList: [],
+            servicesList: []
+        };
+    },
+    created() {
+        this.loadAnimals();
+        this.loadCustomers();
+        this.loadServices();
+        this.loadWorkers();
+    },
+    methods: {
+        loadCustomers() {
+            axios.get("http://localhost:8080/api/v1/customers")
+                .then(response => {
+                    this.customersList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os clientes:', error);
+                });
+        },
+        loadAnimals() {
+            axios.get("http://localhost:8080/api/v1/animals")
+                .then(response => {
+                    this.animalsList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os animaiss:', error);
+                });
+        },
+        loadWorkers() {
+            axios.get("http://localhost:8080/api/v1/worker")
+                .then(response => {
+                    this.workersList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os funcionários:', error);
+                });
+        },
+        loadServices() {
+            axios.get("http://localhost:8080/api/v1/services")
+                .then(response => {
+                    this.servicesList = response.data.data;
+                })
+                .catch(error => {
+                    console.error('Erro ao listar os serviços:', error);
+                });
+        },
+        createAppointments() {
+            let data = {
+                start_time: this.start_timeAppointments,
+                finish_time: this.finish_timeAppointments,
+                medicines: this.medicinesAppointments,
+                vaccines: this.vaccinesAppointments,
+                date: this.dateAppointments,
+                id_customer: this.customerAppointments,
+                id_animals: this.animalAppointments,
+                id_workers: this.workerAppointments,
+                id_services: this.servicesAppointments,
+                observation: this.observationAppointments
+            }
+
+            axios.post("http://localhost:8080/api/v1/appointments", data)
+                .then(response => {
+                    console.log('Agendamento realizado com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar um agendamento:', error);
+                });
+        },
+        saveAgenda() {
+            alert('não está salvando ainda');
+        },
+        goToAgenda() {
+            this.$router.push({ path: `/agenda` });
+        }
+    }
+}
+</script>

@@ -1,53 +1,87 @@
-<script setup>
+<template>
+    <div class="d-flex flex-row-reverse">
+        <button @click="goToAppointment" class="btn btn-primary mx-3">Fazer agendamento</button>
+    </div>
+    <div class="btn-group d-flex s-3 justify-content-sm-center" role="group"
+        ria-label="Basic checkbox toggle button group">
+        <router-link to="/agenda" class="btn btn-primary btn-focus mt-3 mb-2 ml-3"
+            active-class="active">Mês</router-link>
+        <router-link to="/agenda/week" class="btn btn-primary mt-3 mb-2" active-class="active">Semana</router-link>
+        <router-link to="/agenda/day" class="btn btn-primary mt-3 mb-2 mr-3 " active-class="active">Dia</router-link>
+    </div>
+    <div>
+        <FullCalendar :options="calendarOptions" />
+    </div>
+</template>
+
+<script>
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/vue3';
-import { useRouter } from 'vue-router';
-import { useScreens } from 'vue-screen-utils';
+import axios from 'axios';
 
-FullCalendar; // make the <FullCalendar> tag available
-
-const calendarOptions = {
-  plugins: [dayGridPlugin, interactionPlugin],
-  initialView: 'dayGridMonth',
-  locale: ptBrLocale,
-  editable: true,
-  selectable: true,
-}
+/*import { useScreens } from 'vue-screen-utils';
 
 const { mapCurrent } = useScreens({
-  xs: '1000px',
-  sm: '640px',
+    xs: '1000px',
+    sm: '640px',
 });
 
 const columns = mapCurrent({ lg: 2 }, 1);
-const expanded = mapCurrent({ lg: false }, true);
+const expanded = mapCurrent({ lg: false }, true);*/
 
-const router = useRouter();
 
-const goToAppointment = () => {
-  router.push('/agenda/cadastro');
-};
+export default {
+    components: {
+        FullCalendar
+    },
+    data() {
+        return {
+            calendarOptions: {
+                plugins: [dayGridPlugin, interactionPlugin],
+                initialView: 'dayGridMonth',
+                locale: ptBrLocale,
+                editable: true,
+                selectable: true,
+                events: []
+            }
+        }
+    },
+    created() {
+        this.buscarAgendamentos();
+    },
+    methods: {
+        buscarAgendamentos() {
+            axios.get('http://localhost:8080/api/v1/appointments')
+                .then(response => {
+                    let data = response.data.data;
+                    let events = this.convertData(data);
+                    
+                    this.calendarOptions.events = events;
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar eventos:', error);
+                });
+        },
+        convertData(data) {
+            return data.map(item => {
+                const date = new Date(item.date).toISOString().split('T')[0];
+                const startDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.start_time + ':00+00:00';
+                const endDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.finish_time + ':00+00:00';
+                
+                return {
+                    title: item.service.name,
+                    start: startDateTime,
+                    end: endDateTime,
+                    observation: item.observation
+                };
+            });
+        },
+        goToAppointment() {
+            this.$router.push({ path: `/agenda/cadastro` });
+        }
+    }
+}
 
 </script>
-
-<template>
-  <div class="d-flex flex-row-reverse">
-    <button @click="goToAppointment" class="btn btn-primary mx-3">Fazer agendamento</button>
-  </div>
-  <div class="btn-group d-flex s-3 justify-content-sm-center" role="group"
-        ria-label="Basic checkbox toggle button group">
-        <router-link to="/agenda/day" class="btn btn-primary mt-3 mb-2 ml-3"
-            active-class="active">Dia</router-link>
-        <router-link to="/agenda/week" class="btn btn-primary mt-3 mb-2" active-class="active">Semana
-        </router-link>
-        <router-link to="/agenda" class="btn btn-primary btn-focus mt-3 mb-2 mr-3"
-            active-class="active">Mês</router-link>
-    </div>
-  <div>
-    <FullCalendar :options="calendarOptions" />
-  </div>
-</template>
-
-<style></style>

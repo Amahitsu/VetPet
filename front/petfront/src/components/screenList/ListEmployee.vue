@@ -3,49 +3,54 @@
         <div class="d-flex justify-content-between">
             <h2>Funcionários</h2>
             <div class="d-flex align-items-center">
-                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-m">Adicionar Funcionário</router-link>
+                <router-link to="/funcionario/cadastro" class="btn btn-primary btn-m">Adicionar funcionário</router-link>
             </div>
         </div>
 
-        <table class="table">
+        <table class="table mt-3">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
+                    <th>Função</th>
                     <th>Telefone</th>
+                    <th>Nível</th>
                     <th>Status</th>
-                    <th width="200">Ações</th>
+                    <th width="96">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="workers in workers" :key="workers.id">
-                    <td>{{ workers.id }}</td>
-                    <td>{{ workers.name }}</td>
-                    <td>{{ workers.phone }}</td>
-                    <td>{{ workers.active ? "Ativo" : "Inativo" }}</td>
+                <tr v-for="worker in workers" :key="workers.id">
+                    <td>{{ worker.name }}</td>
+                    <td>{{ worker.functionn }}</td>
+                    <td>{{ formatPhoneNumber(worker.phone) }}</td>
+                    <td>{{ worker.userLevel }}</td>
+                    <td>{{ worker.active ? "Ativo" : "Inativo" }}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary" @click="">Editar</button>
-                        <button class="btn btn-sm btn-danger" @click="confirmDelete(customer.id)">Deletar</button>
+                        <button class="btn btn-icon btn-sm btn-primary me-1" @click="editWorker(worker.id)">
+                            <span class="material-symbols-rounded">edit</span>
+                        </button>
+                        <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(worker.id)">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteWorkerModal" tabindex="-1" role="dialog" aria-labelledby="deleteWorkerModallLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title" id="deleteWorkerModallLabel">Confirmar Exclusão</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="closeDeleteModal"></button>
                     </div>
                     <div class="modal-body">
                         Tem certeza que deseja excluir este funcionário?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" @click="confirmDeletion">Deletar</button>
+                        <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" @click="deleteWorker">Deletar</button>
                     </div>
                 </div>
             </div>
@@ -68,10 +73,20 @@ export default {
         this.loadWorkers();
     },
     methods: {
+        formatPhoneNumber(phoneNumber) {
+            phoneNumber = phoneNumber.replace(/\D/g, '');
+            if (phoneNumber.length === 9) {
+                return phoneNumber.replace(/(\d{5})(\d{4})/, '$1-$2');
+            } else if (phoneNumber.length === 11) {
+                return phoneNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else {
+                return phoneNumber;
+            }
+        },
         loadWorkers() {
             axios({
                 method: "GET",
-                url: "http://localhost:8080/api/v1/workers",
+                url: "http://localhost:8080/api/v1/worker",
             })
                 .then((response) => {
                     console.log(response.data.data)
@@ -81,23 +96,27 @@ export default {
                     console.error('Erro ao listar funcionários:', error);
                 });
         },
-        confirmDelete(id) {
-            this.workerIdToDelete = id;
-            $('#deleteModal').modal('show');
+        editWorker(workerId) {
+            this.$router.push({ path: `/funcionario/${workerId}` });
         },
-        confirmDeletion() {
-            this.deleteWorker(this.workerIdToDelete);
-            $('#deleteModal').modal('hide');
+        confirmDelete(workerId) {
+            this.workerIdToDelete = workerId;
+            $('#deleteWorkerModal').modal('show');
         },
-        deleteWorker(id) {
-            axios.delete(`http://localhost:8080/api/v1/workers/${id}`)
+        deleteWorker() {
+            let workerId = this.workerIdToDelete;
+            axios.delete(`http://localhost:8080/api/v1/worker/${workerId}`)
                 .then(response => {
-                    console.log('Cliente excluído com sucesso:', response.data);
+                    console.log('Funcionário excluído com sucesso:', response.data);
+                    this.closeDeleteModal();
                     this.loadWorkers();
                 })
                 .catch(error => {
                     console.error('Erro ao excluir funcionário:', error);
                 });
+        },
+        closeDeleteModal() {
+            $('#deleteWorkerModal').modal('hide');
         }
     }
 }

@@ -25,9 +25,9 @@ public class Worker{
     private String name;
     @Column(length = 15, nullable = false, unique = true)
     private String cpf;
-    @Column(name="phone_number", length = 14, nullable = false, unique = true)
+    @Column(name="phone_number", length = 15, nullable = false, unique = true)
     private String phone;
-    @Column(length = 100, nullable = false)
+    @Column(length = 255, nullable = false)
     private String address;
     @Column(length = 30, nullable = false)
     private String functionn;
@@ -39,4 +39,6 @@ public class Worker{
     private int userLevel;
     @Column(length = 1, nullable = false)
     private boolean active;
+    @Column(length = 150, nullable = false, unique = true)
+    private String email;
 }

@@ -148,7 +148,7 @@ export default {
                     this.finish_timeAppointments = data.finish_time;
                     this.medicinesAppointments = data.medicines;
                     this.vaccinesAppointments = data.vaccines;
-                    this.dateAppointments = new Date(data.date); // "yyyy-MM-dd"
+                    this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
                     this.customerAppointments = data.customer.id;
                     this.animalAppointments = data.animal.id;
                     this.workerAppointments = data.worker.id;
@@ -197,19 +197,22 @@ export default {
                 });
         },
         saveAppointment() {
+            let dateAppointments = new Date(this.dateAppointments + 'T00:00:00')
+            let isoDateString = dateAppointments.toISOString();
+
             let data = {
                 start_time: this.start_timeAppointments,
                 finish_time: this.finish_timeAppointments,
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
-                date: this.dateAppointments,
+                date: isoDateString,
                 id_customer: this.customerAppointments,
                 id_animals: this.animalAppointments,
                 id_workers: this.workerAppointments,
                 id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             }
-
+            
             if (this.appointmentId)
                 this.editAppointment(this.appointmentId, data)
             else

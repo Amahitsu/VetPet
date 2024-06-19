@@ -32,6 +32,7 @@ export default {
     data() {
         return {
             calendarOptions: {
+                timeZone: 'UTC',
                 plugins: [timeGridPlugin, dayGridPlugin],
                 initialView: 'dayGridWeek',
                 locale: ptBrLocale,

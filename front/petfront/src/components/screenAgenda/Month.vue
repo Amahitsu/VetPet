@@ -44,15 +44,19 @@ export default {
                 locale: ptBrLocale,
                 editable: true,
                 selectable: true,
-                events: []
+                events: [],
+                eventClick: this.editAppointment
             }
         }
     },
     created() {
-        this.buscarAgendamentos();
+        this.loadAppointments();
     },
     methods: {
-        buscarAgendamentos() {
+        editAppointment(info) {
+            this.$router.push({ path: `/agenda/${info.event.id}` });
+        },
+        loadAppointments() {
             axios.get('http://localhost:8080/api/v1/appointments')
                 .then(response => {
                     let data = response.data.data;
@@ -67,10 +71,11 @@ export default {
         convertData(data) {
             return data.map(item => {
                 const date = new Date(item.date).toISOString().split('T')[0];
-                const startDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.start_time + ':00+00:00';
-                const endDateTime = new Date(item.date).toISOString().split('T')[0] + 'T' + item.finish_time + ':00+00:00';
+                const startDateTime = date + 'T' + item.start_time + ':00+00:00';
+                const endDateTime = date + 'T' + item.finish_time + ':00+00:00';
                 
                 return {
+                    id: item.id,
                     title: item.service.name,
                     start: startDateTime,
                     end: endDateTime,

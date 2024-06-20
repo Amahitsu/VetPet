@@ -17,8 +17,8 @@
                 <tbody>
                     <tr v-for="animal in customerAnimals" :key="animal.id">
                         <td>{{ animal.name }}</td>
-                        <td>{{ animal.specie }}</td>
-                        <td>{{ animal.race }}</td>
+                        <td>{{ animal.race.specie.name }}</td>
+                        <td>{{ animal.race.name }}</td>
                         <td class="btn-group text-end">
                             <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(animal.id)">
                                 <span class="material-symbols-rounded">edit</span>

@@ -11,6 +11,6 @@ import com.vet.pets.entities.Animals;
 public interface AnimalRepository extends JpaRepository<Animals, Long> {
     @Query("SELECT a FROM Animals a WHERE a.name = ?1")
     Optional<Animals> findByName(String name);
-
     List<Animals> deleteAnimalsByCustomerId(Long id_customers);
+    List<Animals> findByCustomerId(Long customerId);
 }

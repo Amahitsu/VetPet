@@ -83,6 +83,15 @@ public class AnimalService {
         }
     }
 
+    public List<Animals> listAnimalByCustomer(Long customerId) {
+        try {
+            List<Animals> animals = animalRepository.findByCustomerId(customerId);
+            return animals;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar animais do cliente com ID: " + customerId);
+        }
+    }
+
     public void deleteAnimal(Long id) {
         try {
             animalRepository.deleteById(id);

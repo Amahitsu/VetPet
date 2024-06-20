@@ -246,13 +246,7 @@ export default {
         editWorker(workerId, data) {
         if (!workerId) return;
         
-        for (let key in data) {
-            if (data[key] === "0") {
-                data[key] = false;
-            } else if (data[key] === "1") {
-                data[key] = true;
-            }
-        }
+        
 
         axios.put(`http://localhost:8080/api/v1/worker/${workerId}`, data)
             .then(response => {

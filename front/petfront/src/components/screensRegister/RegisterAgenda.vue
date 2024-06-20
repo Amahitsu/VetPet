@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary me-2" @click="goToAgenda">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="saveAgenda">Salvar</button>
+                    <button type="button" class="btn btn-primary" @click="saveAppointment">Salvar</button>
                 </div>
             </div>
         </form>
@@ -108,6 +108,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            appointmentId: null,
             start_timeAppointments: '',
             finish_timeAppointments: '',
             medicinesAppointments: false,
@@ -124,13 +125,41 @@ export default {
             servicesList: []
         };
     },
-    created() {
+    mounted() {
         this.loadAnimals();
         this.loadCustomers();
         this.loadServices();
         this.loadWorkers();
+
+        //edicao
+        this.appointmentId = this.$router.currentRoute.value.params.appointmentId;
+        this.loadAppointment(this.appointmentId);
     },
     methods: {
+        loadAppointment(appointmentId) {
+            if (!appointmentId)
+                return;
+
+            axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
+                .then(response => {
+                    let data = response.data.data;
+                    
+                    this.start_timeAppointments = data.start_time;
+                    this.finish_timeAppointments = data.finish_time;
+                    this.medicinesAppointments = data.medicines;
+                    this.vaccinesAppointments = data.vaccines;
+                    this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
+                    this.customerAppointments = data.customer.id;
+                    this.animalAppointments = data.animal.id;
+                    this.workerAppointments = data.worker.id;
+                    this.servicesAppointments = data.service.id;
+                    this.observationAppointments = data.observation;
+                })
+                .catch(error => {
+                    console.error('Erro ao criar cliente:', error);
+                });
+
+        },
         loadCustomers() {
             axios.get("http://localhost:8080/api/v1/customers")
                 .then(response => {
@@ -167,30 +196,49 @@ export default {
                     console.error('Erro ao listar os serviços:', error);
                 });
         },
-        createAppointments() {
+        saveAppointment() {
+            let dateAppointments = new Date(this.dateAppointments + 'T00:00:00')
+            let isoDateString = dateAppointments.toISOString();
+
             let data = {
                 start_time: this.start_timeAppointments,
                 finish_time: this.finish_timeAppointments,
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
-                date: this.dateAppointments,
+                date: isoDateString,
                 id_customer: this.customerAppointments,
                 id_animals: this.animalAppointments,
                 id_workers: this.workerAppointments,
                 id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             }
-
+            
+            if (this.appointmentId)
+                this.editAppointment(this.appointmentId, data)
+            else
+                this.createAppointment(data)
+        },
+        createAppointment(data) {
             axios.post("http://localhost:8080/api/v1/appointments", data)
                 .then(response => {
                     console.log('Agendamento realizado com sucesso:', response.data);
+                    this.goToAgenda();
                 })
                 .catch(error => {
                     console.error('Erro ao criar um agendamento:', error);
                 });
         },
-        saveAgenda() {
-            alert('não está salvando ainda');
+        editAppointment(appointmentId, data) {
+            if (!appointmentId)
+                return;
+
+            axios.put(`http://localhost:8080/api/v1/appointments/${appointmentId}`, data)
+                .then(response => {
+                    this.goToAgenda();
+                })
+                .catch(error => {
+                    console.error('Erro ao editar cliente:', error);
+                });
         },
         goToAgenda() {
             this.$router.push({ path: `/agenda` });

@@ -51,6 +51,22 @@
         </div>
     </div>
 
+    <div class="modal fade" id="errorDeleteSpecie" tabindex="-1" aria-labelledby="deleteSpecieModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteSpecieModalLabel">Erro</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Espécie não pode ser excluída pois está associada a uma raça.
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
@@ -118,7 +134,11 @@ export default {
                     this.loadSpecies();
                 })
                 .catch(error => {
-                    console.error('Erro ao excluir espécie:', error);
+                    $('#errorDeleteSpecie').modal('show');
+                    $('#deleteSpecieModal').modal('hide');
+                    setTimeout(function(){
+                $('#errorDeleteSpecie').modal('hide');
+            }, 3000);
                 });
         },
         closeDeleteModal() {

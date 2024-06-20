@@ -17,8 +17,8 @@
                 <tbody>
                     <tr v-for="animal in customerAnimals" :key="animal.id">
                         <td>{{ animal.name }}</td>
-                        <td>{{ animal.specie ? animal.specie.name : 'Carregando...' }}</td>
-                        <td>{{ animal.breed ? animal.breed.name : 'Carregando...' }}</td>
+                        <td>{{ animal.specie }}</td>
+                        <td>{{ animal.race }}</td>
                         <td class="btn-group text-end">
                             <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(animal.id)">
                                 <span class="material-symbols-rounded">edit</span>
@@ -44,7 +44,7 @@ export default {
         return {
             customer: {},
             customerAnimals: [],
-            loading: true, // Indicador de carregamento inicial
+            loading: true,
         };
     },
     created() {
@@ -56,11 +56,10 @@ export default {
         loadCustomerById(id) {
             axios.get(`http://localhost:8080/api/v1/customers/${id}`)
                 .then((response) => {
-                    console.log('Cliente carregado:', response.data.data);
                     this.customer = response.data.data;
                 })
                 .catch(error => {
-                    this.loading = false; // Parar o indicador de carregamento em caso de erro
+                    this.loading = false;
                     if (error.response && error.response.status === 404) {
                         alert('Cliente não encontrado');
                     }
@@ -69,13 +68,12 @@ export default {
         },
         loadCustomerAnimals(customerId) {
             axios.get(`http://localhost:8080/api/v1/animals?customerId=${customerId}`)
-                .then((response) => {
-                    console.log('Animais do cliente carregados:', response.data);
-                    this.customerAnimals = response.data; // Assumindo que a resposta é um array de animais
-                    this.loading = false; // Parar o indicador de carregamento após carregar os animais
+                .then((response) => {;
+                    this.customerAnimals = response.data.data;
+                    this.loading = false;
                 })
                 .catch(error => {
-                    this.loading = false; // Parar o indicador de carregamento em caso de erro
+                    this.loading = false;
                     console.error('Erro ao carregar animais do cliente:', error);
                 });
         },

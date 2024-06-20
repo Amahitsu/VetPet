@@ -259,14 +259,14 @@ export default {
                     this.city = address.cidade || '';
                     this.neighborhood = address.bairro || '';
 
-                    this.loadCustomerPets(this.customerId);
+                    this.loadCustomerAnimals(this.customerId);
                 })
                 .catch(error => {
                     console.error('Erro ao criar cliente:', error);
                 });
         },
-        loadCustomerPets(customerId) {
-            this.$refs.listPetClient.loadCustomerPets(customerId);
+        loadCustomerAnimals(customerId) {
+            this.$refs.listPetClient.loadCustomerAnimals(customerId);
         },
         parseAddress(addressString) {
             const parts = addressString.split(', ');

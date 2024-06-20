@@ -42,13 +42,13 @@ public class AnimalController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<Animals>>> listAnimals(HttpServletRequest request, @RequestParam(value = "customerId", required = false) Long customerId) {
         List<Animals> listAnimal;
- 
+
         if (customerId != null) {
             listAnimal = animalService.listAnimalByCustomer(customerId);
         } else {
             listAnimal = animalService.listAnimal();
         }
- 
+
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Ok", listAnimal));
     }
     

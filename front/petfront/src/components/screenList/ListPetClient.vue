@@ -1,121 +1,90 @@
 <template>
-    <h4>Pets</h4>
-    <table class="table my-4">
-        <thead>
-            <tr>
-                <th>Nome pet</th>
-                <th>Espécie</th>
-                <th>Raça</th>
-                <th width="96">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="animals in animals" :key="animals.id">
-                <td>{{ animals.name }}</td>
-                <td>{{ animals.specie.name }}</td>
-                <td>{{ animals.race.name }}</td>
-                <td class="btn-group text-end">
-                    <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(customer.id)">
-                        <span class="material-symbols-rounded">edit</span>
-                    </button>
-                    <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(customer.id)">
-                        <span class="material-symbols-rounded">delete</span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <section>
+        <h4>Pets do Cliente: {{ customer.name }}</h4>
+        <div v-if="loading">
+            Carregando...
+        </div>
+        <div v-else>
+            <table class="table my-4" v-if="customerAnimals.length > 0">
+                <thead>
+                    <tr>
+                        <th>Nome pet</th>
+                        <th>Espécie</th>
+                        <th>Raça</th>
+                        <th width="96">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="animal in customerAnimals" :key="animal.id">
+                        <td>{{ animal.name }}</td>
+                        <td>{{ animal.specie ? animal.specie.name : 'Carregando...' }}</td>
+                        <td>{{ animal.breed ? animal.breed.name : 'Carregando...' }}</td>
+                        <td class="btn-group text-end">
+                            <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(animal.id)">
+                                <span class="material-symbols-rounded">edit</span>
+                            </button>
+                            <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(animal.id)">
+                                <span class="material-symbols-rounded">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-else>
+                Não há animais cadastrados para este cliente.
+            </div>
+        </div>
+    </section>
 </template>
-
 <script>
+import axios from 'axios';
 
 export default {
     data() {
         return {
-            speciesList: [],
-            breedList: [],
-            animalsList: [],
-            selectedSpecie: '',
-            selectedSpecieId: '',
-            selectedRaceId: '',
             customer: {},
+            customerAnimals: [],
+            loading: true, // Indicador de carregamento inicial
         };
     },
     created() {
-        this.loadAnimals();
-        this.loadSpecies();
-        this.loadCustomerById(this.$route.params.customerId);
-        };
+        const customerId = this.$route.params.customerId;
+        this.loadCustomerById(customerId);
+        this.loadCustomerAnimals(customerId);
     },
-
     methods: {
-        loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species')
-                .then(response => response.json())
-                .then(({ data }) => {
-                    console.log(data)
-                    this.speciesList = data;
-                })
-                .catch(error => console.error('Erro ao carregar espécies:', error));
-        },
-        loadBreeds() {
-            if (this.selectedSpecie) {
-                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`)
-                    .then(response => response.json())
-                    .then(({ data }) => {
-                        console.log(data);
-                        this.breedList = data;
-                    })
-                    .catch(error => console.error('Erro ao carregar raças:', error));
-            } else {
-                this.breedList = [];
-            }
-        },
         loadCustomerById(id) {
-            axios({
-                method: "GET",
-                url: `http://localhost:8080/api/v1/customers/${id}`,
-            })
+            axios.get(`http://localhost:8080/api/v1/customers/${id}`)
                 .then((response) => {
-                    console.log(response.data.data);
+                    console.log('Cliente carregado:', response.data.data);
                     this.customer = response.data.data;
                 })
                 .catch(error => {
-                    if (error.response.status === 404) {
+                    this.loading = false; // Parar o indicador de carregamento em caso de erro
+                    if (error.response && error.response.status === 404) {
                         alert('Cliente não encontrado');
                     }
-                    console.error('Erro ao listar o cliente:', error);
+                    console.error('Erro ao carregar cliente:', error);
                 });
         },
-        loadAnimals() {
-            fetch('http://localhost:8080/api/v1/animals')
-                .then(response => response.json())
-                .then(({ data }) => {
-                    console.log(data)
-                    this.animalsList = data;
-                })
-                .catch(error => console.error('Erro ao carregar animais:', error));
-        },
-
-            /*
-            Faltou endpoint para buscar pets de um cliente
-            axios.get(`http://localhost:8080/api/v1/animals/${customerId}`)
-                .then(response => {
-                    console.error('Sucesso ao consultar pets do cliente:', error);
-                    let data = response.data.data;
-
-                    this.customerPets = data;
+        loadCustomerAnimals(customerId) {
+            axios.get(`http://localhost:8080/api/v1/animals?customerId=${customerId}`)
+                .then((response) => {
+                    console.log('Animais do cliente carregados:', response.data);
+                    this.customerAnimals = response.data; // Assumindo que a resposta é um array de animais
+                    this.loading = false; // Parar o indicador de carregamento após carregar os animais
                 })
                 .catch(error => {
-                    console.error('Erro ao consultar pets do cliente:', error);
-                })*/
+                    this.loading = false; // Parar o indicador de carregamento em caso de erro
+                    console.error('Erro ao carregar animais do cliente:', error);
+                });
         },
-        updatePetClient() {
-
+        updatePetClient(animalId) {
+            // Lógica para atualizar o animal do cliente
         },
-        confirmDelete() {
-
-        }
-    }
-
+        confirmDelete(animalId) {
+            // Lógica para confirmar a exclusão do animal do cliente
+        },
+    },
+};
 </script>

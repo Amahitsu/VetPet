@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vet.pets.dto.AnimalDTO;
 import com.vet.pets.entities.Animals;
 import com.vet.pets.service.AnimalService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/animals")
@@ -37,9 +40,16 @@ public class AnimalController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Animals>>> listAnimal() {
-        List<Animals> listAnimal = animalService.listAnimal();
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<List<Animals>>("Ok", listAnimal));
+    public ResponseEntity<ApiResponse<List<Animals>>> listAnimals(HttpServletRequest request, @RequestParam(value = "customerId", required = false) Long customerId) {
+        List<Animals> listAnimal;
+ 
+        if (customerId != null) {
+            listAnimal = animalService.listAnimalByCustomer(customerId);
+        } else {
+            listAnimal = animalService.listAnimal();
+        }
+ 
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Ok", listAnimal));
     }
     
     @GetMapping("/{id}")

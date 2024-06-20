@@ -45,8 +45,8 @@ export default {
         this.loadAnimals();
         this.loadSpecies();
         this.loadCustomerById(this.$route.params.customerId);
-        
-    },
+        };
+
 
     methods: {
         loadSpecies() {

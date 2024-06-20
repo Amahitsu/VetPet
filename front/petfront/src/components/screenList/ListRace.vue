@@ -53,6 +53,22 @@
         </div>
     </div>
 
+    <div class="modal fade" id="errorDeleteRace" tabindex="-1" aria-labelledby="deleteRaceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteRaceModalLabel">Erro</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Raça não pode ser excluída pois está associada a um animal.
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
@@ -119,7 +135,11 @@ export default {
                     this.loadBreeds();
                 })
                 .catch(error => {
-                    console.error('Erro ao excluir raça:', error);
+                    $('#errorDeleteRace').modal('show');
+                    $('#deleteRaceModal').modal('hide');
+                    setTimeout(function(){
+                $('#errorDeleteRace').modal('hide');
+            }, 3000);
                 });
         },
         closeDeleteModal() {

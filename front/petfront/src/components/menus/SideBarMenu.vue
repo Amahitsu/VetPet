@@ -9,6 +9,9 @@
 
         <img class="mx-3" src='../../assets/dog.png' alt="Logo VetPet" style="max-width: 150px;">
         <div class="list-group list-group-flush mx-3">
+            <router-link to="/painel-de-controle" class="list-group-item list-group-item-action py-2 ripple">
+                Painel de Controle
+            </router-link>
             <router-link to="/agenda" class="list-group-item list-group-item-action py-2 ripple">
                 Agenda
             </router-link>

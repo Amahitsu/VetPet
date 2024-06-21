@@ -15,6 +15,7 @@ import ListPetClient from './components/screenList/ListPetClient.vue';
 import ListRace from './components/screenList/ListRace.vue';
 import ListServiceType from './components/screenList/ListServiceType.vue';
 import ListSpecie from './components/screenList/ListSpecie.vue';
+import PainelDeControle from './components/screenList/PainelDeControle.vue';
 import RegisterActivity from './components/screensRegister/RegisterActivity.vue';
 import RegisterAgenda from './components/screensRegister/RegisterAgenda.vue';
 import RegisterClient from './components/screensRegister/RegisterClient.vue';
@@ -54,6 +55,7 @@ const routes = [
       { path: '/racas', component: ListRace, meta: { requiresAuth: true } },
       { path: '/servicos', component: ListServiceType, meta: { requiresAuth: true } },
       { path: '/especies', component: ListSpecie, meta: { requiresAuth: true } },
+      { path: '/painel-de-controle', component: PainelDeControle, meta: { requiresAuth: true } },
 
       // Rotas de agenda
       { path: '/agenda/day', component: Day, meta: { requiresAuth: true } },

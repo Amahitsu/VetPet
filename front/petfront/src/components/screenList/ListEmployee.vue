@@ -56,6 +56,23 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="errorDeleteWorker" tabindex="-1" aria-labelledby="deleteWorkerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteWorkerModalLabel">Erro</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Funcionário não pode ser excluído pois está associado a serviços.
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 
@@ -112,7 +129,11 @@ export default {
                     this.loadWorkers();
                 })
                 .catch(error => {
-                    console.error('Erro ao excluir funcionário:', error);
+                    $('#errorDeleteWorker').modal('show');
+                    $('#deleteWorkerModal').modal('hide');
+                    setTimeout(function(){
+                $('#errorDeleteWorker').modal('hide');
+            }, 3000);
                 });
         },
         closeDeleteModal() {

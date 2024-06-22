@@ -20,7 +20,7 @@
                         required>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <!--<div class="mb-3 row">
                 <div class="col-sm-2">Medicamentos</div>
                 <div class="col-sm-10">
                     <div class="form-check">
@@ -43,7 +43,7 @@
                         </label>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
@@ -94,11 +94,16 @@
                     </select>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <div class="mb-5 row">
                 <label for="observationInput" class="col-sm-2 col-form-label">Observações</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments"
                         required></textarea>
+                </div>
+            </div>
+            <div class="row mb-4" v-if="appointmentId">
+                <div class="col-md-12">
+                    <ListActivityPet ref="listActivityPet" />
                 </div>
             </div>
             <div class="row">
@@ -114,10 +119,12 @@
 <script>
 import axios from 'axios';
 import { findAnimalsByCustomer } from '../../services/animals.js';
+import ListActivityPet from '../screenList/ListActivityPet.vue';
 
 export default {
     components: {
-        vSelect: window["vue-select"]
+        vSelect: window["vue-select"],
+        ListActivityPet
     },
     data() {
         return {
@@ -236,7 +243,7 @@ export default {
                 id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             }
-            
+
             if (this.appointmentId)
                 this.editAppointment(this.appointmentId, data)
             else

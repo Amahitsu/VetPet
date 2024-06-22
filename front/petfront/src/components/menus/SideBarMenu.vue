@@ -5,7 +5,7 @@
 <template>
 
     <!-- Sidebar -->
-    <nav id="sidebarMenu" class="position-fixed collapse d-lg-block sidebar collapse bg-gray">
+    <nav id="sidebarMenu" class="position-fixed d-lg-block sidebar bg-gray">
 
         <img class="mx-3" src='../../assets/dog.png' alt="Logo VetPet" style="max-width: 150px;">
         <div class="list-group list-group-flush mx-3">

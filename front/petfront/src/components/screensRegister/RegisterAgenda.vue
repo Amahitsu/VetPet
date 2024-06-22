@@ -20,7 +20,7 @@
                         required>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <!--<div class="mb-3 row">
                 <div class="col-sm-2">Medicamentos</div>
                 <div class="col-sm-10">
                     <div class="form-check">
@@ -43,7 +43,7 @@
                         </label>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
@@ -75,7 +75,7 @@
                     </select>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <!--<div class="mb-3 row">
                 <label for="serviceSelect" class="col-sm-2 col-form-label">Serviços</label>
                 <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" v-model="servicesAppointments">
@@ -84,12 +84,17 @@
                         services.name }}</option>
                     </select>
                 </div>
-            </div>
-            <div class="mb-3 row">
+            </div>-->
+            <div class="mb-5 row">
                 <label for="observationInput" class="col-sm-2 col-form-label">Observações</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments"
                         required></textarea>
+                </div>
+            </div>
+            <div class="row mb-4" v-if="appointmentId">
+                <div class="col-md-12">
+                    <ListActivityPet ref="listActivityPet" />
                 </div>
             </div>
             <div class="row">
@@ -104,8 +109,12 @@
 
 <script>
 import axios from 'axios';
+import ListActivityPet from '../screenList/ListActivityPet.vue';
 
 export default {
+    components: {
+        ListActivityPet
+    },
     data() {
         return {
             appointmentId: null,
@@ -143,7 +152,7 @@ export default {
             axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
                 .then(response => {
                     let data = response.data.data;
-                    
+
                     this.start_timeAppointments = data.start_time;
                     this.finish_timeAppointments = data.finish_time;
                     this.medicinesAppointments = data.medicines;
@@ -212,7 +221,7 @@ export default {
                 id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             }
-            
+
             if (this.appointmentId)
                 this.editAppointment(this.appointmentId, data)
             else

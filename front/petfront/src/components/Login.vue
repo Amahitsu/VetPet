@@ -60,7 +60,7 @@ const login = () => {
         .then(response => {
             if (response.status === 202) {
                 saveDataInCache(response.data);
-                router.push('/principal');
+                router.push('/painel-de-controle');
             } else {
                 console.log(response);
             }

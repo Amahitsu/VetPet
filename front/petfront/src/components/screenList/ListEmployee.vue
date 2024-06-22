@@ -50,7 +50,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" @click="deleteWorker">Deletar</button>
+                        <button type="button" class="btn btn-danger" @click="deleteWorker">Confirmar</button>
                     </div>
                 </div>
             </div>

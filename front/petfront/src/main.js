@@ -42,7 +42,6 @@ const routes = [
       { path: '/cliente/:customerId/adicionar-pet', component: RegisterPetClient, meta: { requiresAuth: true } },
       { path: '/atividade/cadastro', component: RegisterActivity, meta: { requiresAuth: true } },
       { path: '/agenda/cadastro', component: RegisterAgenda, meta: { requiresAuth: true } },
-      { path: '/petCliente/cadastro', component: RegisterPetClient, meta: { requiresAuth: true } },
       { path: '/funcionario/cadastro', component: RegisterEmployee, meta: { requiresAuth: true } },
       { path: '/medicamento/cadastro', component: RegisterMedicines, meta: { requiresAuth: true } },
       { path: '/vacina/cadastro', component: RegisterVaccines, meta: { requiresAuth: true } },
@@ -51,6 +50,8 @@ const routes = [
       { path: '/cliente/:customerId', component: RegisterClient, meta: { requiresAuth: true } },
       { path: '/funcionario/:workerId', component: RegisterEmployee, meta: { requiresAuth: true } },
       { path: '/agenda/:appointmentId', component: RegisterAgenda, meta: { requiresAuth: true } },
+      { path: '/cliente/:animalId/editar-pet', component: RegisterPetClient, meta: { requiresAuth: true } },
+
 
       // Listas
       { path: '/clientes', component: ListClient, meta: { requiresAuth: true } },

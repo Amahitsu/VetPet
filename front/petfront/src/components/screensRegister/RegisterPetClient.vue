@@ -1,7 +1,8 @@
 <template>
     <section>
-        <form @submit.prevent="handleSubmit">
-            <h2>Cadastro de Pet</h2>
+        <form>
+            <h2 v-if="!animalId">Cadastro de Pet</h2>
+            <h2 v-if="animalId">Edição de Pet</h2>
             <div class="row mt-3">
                 <div class="col-md-6">
                     <label for="inputName" class="form-label">Nome do Tutor (Cliente)</label>
@@ -19,14 +20,14 @@
                     <label for="inputGender" class="form-label">Sexo</label>
                     <select class="form-select" v-model="animalGender" id="inputGender">
                         <option value="" disabled>Selecione</option>
-                        <option value="Macho">Macho</option>
-                        <option value="Fêmea">Fêmea</option>
+                        <option value="macho">Macho</option>
+                        <option value="fêmea">Fêmea</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <label for="dateInput" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="dateInput" v-model="animalBirthdate">
-                    </div>
+                </div>
 
                 <div class="col-md-2">
                     <label>Peso do Pet</label>
@@ -37,7 +38,7 @@
             <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="speciesSelect" class="form-label">Espécie</label>
-                    <select class="form-select" v-model="selectedSpecie" @change="loadBreeds" id="speciesSelect">
+                    <select class="form-select" v-model="selectedSpecieId" @change="loadBreeds" id="speciesSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}
                         </option>
@@ -46,7 +47,7 @@
 
                 <div class="col-md-3">
                     <label for="breedSelect" class="form-label">Raça</label>
-                    <select class="form-select" v-model="selectedRaceId" :disabled="!selectedSpecie" id="breedSelect">
+                    <select class="form-select" v-model="selectedRaceId" :disabled="!selectedSpecieId" id="breedSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
                     </select>
@@ -54,7 +55,7 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end mt-4">
-                    <button type="button" @click="$router.go(-1)" class="btn btn-secondary me-2">Cancelar</button>
+                    <button type="button" class="btn btn-secondary me-2" @click="$router.go(-1)">Cancelar</button>
                     <button type="button" class="btn btn-primary" @click="addAnimal">Salvar</button>
                 </div>
             </div>
@@ -68,9 +69,9 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            animalId: null,
             speciesList: [],
             breedList: [],
-            selectedSpecie: '',
             selectedSpecieId: '',
             selectedRaceId: '',
             customer: {},
@@ -81,10 +82,17 @@ export default {
         };
     },
     created() {
-        this.loadSpecies();
-        this.loadCustomerById(this.$route.params.customerId);
-    },
+        this.customerId = this.$route.params.customerId;
+        this.animalId = this.$route.params.animalId;
 
+        if (this.customerId)
+            this.loadCustomerById(this.customerId);
+
+        if (this.animalId)
+            this.loadAnimal(this.animalId);
+
+        this.loadSpecies();
+    },
     methods: {
         loadSpecies() {
             fetch('http://localhost:8080/api/v1/species')
@@ -96,8 +104,8 @@ export default {
                 .catch(error => console.error('Erro ao carregar espécies:', error));
         },
         loadBreeds() {
-            if (this.selectedSpecie) {
-                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecie}`)
+            if (this.selectedSpecieId) {
+                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecieId}`)
                     .then(response => response.json())
                     .then(({ data }) => {
                         console.log(data);
@@ -125,29 +133,63 @@ export default {
                 });
         },
         addAnimal() {
-    axios.post("http://localhost:8080/api/v1/animals", {
-        name: this.animalName,
-        gender: this.animalGender,
-        dateOfBirth: this.animalBirthdate,
-        weight: this.animalWeight,
-        id_specie: this.selectedSpecieId,
-        id_breeds: this.selectedRaceId,
-        id_customers: this.customer.id
-    })
-    .then(response => {
-        
-        console.log('Animal criado com sucesso:', response.data);
-    })
-    .catch(error => {
-        console.error('Erro ao criar animal:', error);
-    });
-},
-        handleSubmit() {
-            console.log('Formulário enviado');
-        }
+            axios.post("http://localhost:8080/api/v1/animals", {
+                name: this.animalName,
+                gender: this.animalGender,
+                dateOfBirth: this.animalBirthdate,
+                weight: this.animalWeight,
+                id_specie: this.selectedSpecieId,
+                id_breeds: this.selectedRaceId,
+                id_customers: this.customer.id
+            })
+                .then(response => {
+                    console.log('Animal criado com sucesso:', response.data);
+                    this.goToList();
+                })
+                .catch(error => {
+                    console.error('Erro ao criar animal:', error);
+                });
+        },
+        editAnimal(animalId, data) {
+            if (!animalId)
+                return;
+
+            axios.put(`http://localhost:8080/api/v1/animals/${animalId}`, data)
+                .then(response => {
+                    this.goToList();
+                })
+                .catch(error => {
+                    console.error('Erro ao editar animal:', error);
+                });
+        },
+        goToList() {
+            this.$router.push({ path: `/clientes` });
+        },
+        loadAnimal(animalId) {
+            if (!animalId)
+                return;
+
+            axios.get(`http://localhost:8080/api/v1/animals/${animalId}`)
+                .then(response => {
+                    let data = response.data.data;
+                    
+                    this.animalName = data.name;
+                    this.animalGender = data.gender;
+                    this.animalWeight = data.weight;
+                    this.animalBirthdate = new Date(data.dateOfBirth).toISOString().split('T')[0];
+                    this.customer.id = data.customer.id;
+                    this.selectedSpecieId = data.race.specie.id;
+                    this.selectedRaceId = data.race.id;
+
+                    this.loadBreeds();
+                    this.loadCustomerById(this.customer.id);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar cliente:', error);
+                });
+        },
     }
 };
 </script>
 
-<style>
-</style>
+<style></style>

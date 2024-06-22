@@ -1,67 +1,73 @@
 <template>
-    <section>
-        <div class="d-flex justify-content-between">
-            <h4>Pets do Cliente: {{ customer.name }}</h4>
-            <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-primary btn-m" @click="goToAddPet">Adicionar pet</button>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h4>Pets do Cliente: {{ customer.name }}</h4>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-icon btn-success btn-m" @click="goToAddPet">
+                        <span class="material-symbols-rounded">add_circle</span>
+                        <span class="material-symbols-rounded">pets</span>
+                    </button>
+                </div>
             </div>
-        </div>
 
 
-        <div v-if="loading">
-            Carregando...
-        </div>
-        <div v-else>
-            <table class="table my-4" v-if="customerAnimals.length > 0">
-                <thead>
-                    <tr>
-                        <th>Nome pet</th>
-                        <th>Espécie</th>
-                        <th>Raça</th>
-                        <th width="96">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="animal in customerAnimals" :key="animal.id">
-                        <td>{{ animal.name }}</td>
-                        <td>{{ animal.race.specie.name }}</td>
-                        <td>{{ animal.race.name }}</td>
-                        <td class="btn-group text-end">
-                            <button class="btn btn-icon btn-sm btn-primary me-1" @click="updatePetClient(animal.id)">
-                                <span class="material-symbols-rounded">edit</span>
-                            </button>
-                            <button class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(animal.id)">
-                                <span class="material-symbols-rounded">delete</span>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div v-if="loading">
+                Carregando...
+            </div>
             <div v-else>
-                Não há animais cadastrados para este cliente.
+                <table class="table my-4" v-if="customerAnimals.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Nome pet</th>
+                            <th>Espécie</th>
+                            <th>Raça</th>
+                            <th width="96">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="animal in customerAnimals" :key="animal.id">
+                            <td>{{ animal.name }}</td>
+                            <td>{{ animal.race.specie.name }}</td>
+                            <td>{{ animal.race.name }}</td>
+                            <td class="btn-group text-end">
+                                <button type="button" class="btn btn-icon btn-sm btn-primary me-1"
+                                    @click="updatePetClient(animal.id)">
+                                    <span class="material-symbols-rounded">edit</span>
+                                </button>
+                                <button type="button" class="btn btn-icon btn-sm btn-danger" @click="confirmDelete(animal.id)">
+                                    <span class="material-symbols-rounded">delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div v-else>
+                    Não há animais cadastrados para este cliente.
+                </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="deleteAnimalModal" tabindex="-1" role="dialog"
-            aria-labelledby="deleteAnimalModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                            @click="closeDeleteModal"></button>
-                    </div>
-                    <div class="modal-body">
-                        Tem certeza que deseja excluir este pet?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" @click="deleteAnimal">Confirmar</button>
+            <div class="modal fade" id="deleteAnimalModal" tabindex="-1" role="dialog"
+                aria-labelledby="deleteAnimalModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                @click="closeDeleteModal"></button>
+                        </div>
+                        <div class="modal-body">
+                            Tem certeza que deseja excluir este pet?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" @click="deleteAnimal">Confirmar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </template>
 <script>
 import axios from 'axios';

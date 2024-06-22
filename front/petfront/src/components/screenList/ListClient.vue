@@ -57,6 +57,23 @@
         </div>
     </div>
 
+    <div class="modal fade" id="errorDeleteCustomer" tabindex="-1" aria-labelledby="errorDeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorDeleteModalLabel">Erro</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Cliente não pode ser excluído pois está associado a agendamentos.
+                </div>
+            </div>
+        </div>
+    </div>
+
 </template>
 
 
@@ -117,6 +134,11 @@ export default {
                 })
                 .catch(error => {
                     console.error('Erro ao excluir cliente:', error);
+                    $('#deleteCustomerModal').modal('hide');
+                    $('#errorDeleteCustomer').modal('show');
+                    setTimeout(function () {
+                        $('#errorDeleteCustomer').modal('hide');
+                    }, 3000);
                 });
         },
         closeDeleteModal() {

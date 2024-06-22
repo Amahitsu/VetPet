@@ -135,8 +135,8 @@ export default {
         id_customers: this.customer.id
     })
     .then(response => {
-        
         console.log('Animal criado com sucesso:', response.data);
+        this.$router.go(-1);
     })
     .catch(error => {
         console.error('Erro ao criar animal:', error);

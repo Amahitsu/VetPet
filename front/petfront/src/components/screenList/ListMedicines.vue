@@ -59,6 +59,7 @@
 <script>
 import axios from 'axios';
 import RegisterMedicines from '../screensRegister/RegisterMedicines.vue';
+import * as bootstrap from 'bootstrap';
 
 export default {
     components: {
@@ -99,7 +100,7 @@ export default {
             let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalMedicine"))
 
             if (medicineId) {
-                this.$refs.modalMedicine.loadMedicines(medicineId);
+                this.$refs.modalMedicine.loadMedicine(medicineId);
                 this.$refs.modalMedicine.medicineId = medicineId;
             }
 

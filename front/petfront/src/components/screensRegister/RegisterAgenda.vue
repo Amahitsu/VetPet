@@ -47,7 +47,7 @@
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments" @change="loadAnimals">
+                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments" @change="loadAnimals" :disabled="animalName">
                         <option value="" selected>Selecione</option>
                         <option v-for="customers in customersList" :key="customers.id" :value="customers.id">{{
                         customers.name }}</option>
@@ -56,13 +56,16 @@
             </div>
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 d-flex align-items-center">
                     <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
-                        :disabled="!customerAppointments" required>
+                        :disabled="!customerAppointments" required v-if="!animalName">
                         <option value="" selected>Selecione</option>
                         <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
                         animals.name }}</option>
                     </select>
+                    <div v-if="animalName">
+                        {{ animalName }}
+                    </div>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -159,6 +162,7 @@ export default {
                     this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
                     this.customerAppointments = data.customer.id;
                     this.animalAppointments = data.animal.id;
+                    this.animalName = data.animal.name;
                     this.workerAppointments = data.worker.id;
                     this.servicesAppointments = data.service.id;
                     this.observationAppointments = data.observation;
@@ -177,7 +181,7 @@ export default {
                     console.error('Erro ao listar os clientes:', error);
                 });
         },
-        loadAnimals() {
+        loadAnimals(animalId) {
             if(!this.customerAppointments)
                 return
 

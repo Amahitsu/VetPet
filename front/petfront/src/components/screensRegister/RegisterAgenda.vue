@@ -47,7 +47,7 @@
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments">
+                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments" @change="loadAnimals">
                         <option value="" selected>Selecione</option>
                         <option v-for="customers in customersList" :key="customers.id" :value="customers.id">{{
                         customers.name }}</option>
@@ -135,7 +135,6 @@ export default {
         };
     },
     mounted() {
-        this.loadAnimals();
         this.loadCustomers();
         this.loadServices();
         this.loadWorkers();
@@ -179,12 +178,17 @@ export default {
                 });
         },
         loadAnimals() {
-            axios.get("http://localhost:8080/api/v1/animals")
-                .then(response => {
+            if(!this.customerAppointments)
+                return
+
+            let customerId = this.customerAppointments;
+
+            axios.get(`http://localhost:8080/api/v1/animals?customerId=${customerId}`)
+                .then((response) => {
                     this.animalsList = response.data.data;
                 })
                 .catch(error => {
-                    console.error('Erro ao listar os animaiss:', error);
+                    console.error('Erro ao carregar animais do cliente:', error);
                 });
         },
         loadWorkers() {

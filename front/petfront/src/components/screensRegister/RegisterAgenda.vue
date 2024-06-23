@@ -3,24 +3,22 @@
         <h2>Agendamento</h2>
         <form>
             <div class="mb-3 row">
-                <label for="dateInput" class="col-sm-2 col-form-label">Data</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" id="dateInput" v-model="dateAppointments" required>
+                <label for="dateInput" class="col-sm-2 col-form-label">Dia</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="dateInput" v-model="dateAppointments"  v-on:input="onChangeDateHandler" required>
+                </div>
+                <label for="selectedAppointmentSlot" class="col-sm-2 col-form-label">Horário</label>
+                <div class="col-sm-4">
+                    <v-select 
+                        label="title" 
+                        placeholder="Selecione"
+                        v-model="selectedAppointmentSlot"     
+                        :options="availableAppointmentsFromDate"
+                        :disabled="isLoading" 
+                    ></v-select>
                 </div>
             </div>
-            <div class="mb-3 row">
-                <label for="startTimeInput" class="col-sm-2 col-form-label">Hora de Início</label>
-                <div class="col-sm-4">
-                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments"
-                        required>
-                </div>
-                <label for="finishTimeInput" class="col-sm-2 col-form-label">Hora de Término</label>
-                <div class="col-sm-4">
-                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments"
-                        required>
-                </div>
-            </div>
-            <div class="mb-3 row">
+            <!--<div class="mb-3 row">
                 <div class="col-sm-2">Medicamentos</div>
                 <div class="col-sm-10">
                     <div class="form-check">
@@ -43,26 +41,30 @@
                         </label>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments">
-                        <option value="" selected>Selecione</option>
-                        <option v-for="customers in customersList" :key="customers.id" :value="customers.id">{{
-                        customers.name }}</option>
-                    </select>
+                    <v-select 
+                        label="title"  
+                        v-model="customerAppointments"     
+                        :options="customersList"
+                        :reduce="customer => customer.id" 
+                        @update:modelValue="onChangeCustomerHandler"
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
-                        :disabled="!customerAppointments" required>
-                        <option value="" selected>Selecione</option>
-                        <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
-                        animals.name }}</option>
-                    </select>
+                    <v-select 
+                        label="title" 
+                        placeholder="Selecione"
+                        v-model="animalAppointments"     
+                        :options="animalsList"
+                        :reduce="animal => animal.id" 
+                        :disabled="!customerAppointments || isLoading" 
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -85,11 +87,16 @@
                     </select>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <div class="mb-5 row">
                 <label for="observationInput" class="col-sm-2 col-form-label">Observações</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" id="observationInput" rows="3" v-model="observationAppointments"
                         required></textarea>
+                </div>
+            </div>
+            <div class="row mb-4" v-if="appointmentId">
+                <div class="col-md-12">
+                    <ListActivityPet ref="listActivityPet" />
                 </div>
             </div>
             <div class="row">
@@ -104,13 +111,19 @@
 
 <script>
 import axios from 'axios';
+import { format } from 'date-fns'
+import ListActivityPet from '../screenList/ListActivityPet.vue';
+import { findAnimalsByCustomer } from '../../services/animals';
+import { listAvailableSlotsByDate } from '../../services/appointments';
 
 export default {
+    components: {
+        vSelect: window["vue-select"],
+        ListActivityPet
+    },
     data() {
         return {
             appointmentId: null,
-            start_timeAppointments: '',
-            finish_timeAppointments: '',
             medicinesAppointments: false,
             vaccinesAppointments: false,
             dateAppointments: '',
@@ -122,11 +135,13 @@ export default {
             animalsList: [],
             workersList: [],
             customersList: [],
-            servicesList: []
+            servicesList: [],
+            isLoading: false,
+            availableAppointmentsFromDate: [],
+            selectedAppointmentSlot: null
         };
     },
     mounted() {
-        this.loadAnimals();
         this.loadCustomers();
         this.loadServices();
         this.loadWorkers();
@@ -136,47 +151,79 @@ export default {
         this.loadAppointment(this.appointmentId);
     },
     methods: {
-        loadAppointment(appointmentId) {
+        // função para quando alterar o cliente limpar e carregar os animais do cliente
+        onChangeCustomerHandler() {
+            this.animalAppointments = '';
+            this.loadAnimals();
+        },
+        onChangeDateHandler(){
+            this.selectedAppointmentSlot = null
+            this.loadAvailableAppointmentsByDate()
+        },
+
+        async loadAvailableAppointmentsByDate() {
+            if(!this.dateAppointments) return
+
+            const date = new Date(this.dateAppointments+ 'T00:00:00')
+            const dateFormatted = format(date, "yyyy-MM-dd");
+
+
+            const availableAppointmentsFromDate = await listAvailableSlotsByDate(dateFormatted)
+            console.log(availableAppointmentsFromDate);
+            this.availableAppointmentsFromDate = availableAppointmentsFromDate.map(appointment => ({
+                ...appointment,
+                title: `${appointment.start_time} - ${appointment.finish_time} `
+            }));
+        },
+        async loadAppointment(appointmentId) {
+
             if (!appointmentId)
                 return;
 
-            axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
-                .then(response => {
-                    let data = response.data.data;
-                    
-                    this.start_timeAppointments = data.start_time;
-                    this.finish_timeAppointments = data.finish_time;
-                    this.medicinesAppointments = data.medicines;
-                    this.vaccinesAppointments = data.vaccines;
-                    this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
-                    this.customerAppointments = data.customer.id;
-                    this.animalAppointments = data.animal.id;
-                    this.workerAppointments = data.worker.id;
-                    this.servicesAppointments = data.service.id;
-                    this.observationAppointments = data.observation;
-                })
-                .catch(error => {
-                    console.error('Erro ao criar cliente:', error);
-                });
-
+           const response = await axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
+            
+            const data = response.data.data
+            this.medicinesAppointments = data.medicines;
+            this.vaccinesAppointments = data.vaccines;
+            this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
+            this.customerAppointments = data.customer.id;
+            this.animalAppointments = data.animal.id;
+            this.workerAppointments = data.worker.id;
+            this.servicesAppointments = data.service.id;
+            this.observationAppointments = data.observation;
+            this.selectedAppointmentSlot = {
+                start_time: data.start_time,
+                finish_time: data.finish_time,
+                title: `${data.start_time} - ${data.finish_time}`
+            }
+            
+            this.loadAvailableAppointmentsByDate()
+            this.loadAnimals()
         },
         loadCustomers() {
             axios.get("http://localhost:8080/api/v1/customers")
                 .then(response => {
-                    this.customersList = response.data.data;
+                    this.customersList = response.data.data.map(this.transformToSelectItem);
                 })
                 .catch(error => {
                     console.error('Erro ao listar os clientes:', error);
                 });
         },
-        loadAnimals() {
-            axios.get("http://localhost:8080/api/v1/animals")
-                .then(response => {
-                    this.animalsList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os animaiss:', error);
-                });
+        // método para buscar os animais do cliente
+        async loadAnimals() {
+            //define o carregamento para bloquear o select enquanto está carregando
+            this.isLoading = true
+            
+            // this.customerAppointments chama o endpoint da api de animais, com o id do client
+            // this.customerAppointments = id do cliente
+            const animals = await findAnimalsByCustomer(this.customerAppointments);
+            console.log('animals', animals)
+
+            const animalsTransformed= animals.map(this.transformToSelectItem)
+            // passa por todos itens do array retornado e transforma para o formato que o select precisa
+            console.log('animalsTransformed', animalsTransformed);
+            this.animalsList = animalsTransformed
+            this.isLoading = false
         },
         loadWorkers() {
             axios.get("http://localhost:8080/api/v1/worker")
@@ -201,8 +248,8 @@ export default {
             let isoDateString = dateAppointments.toISOString();
 
             let data = {
-                start_time: this.start_timeAppointments,
-                finish_time: this.finish_timeAppointments,
+                start_time: this.selectedAppointmentSlot.start_time,
+                finish_time: this.selectedAppointmentSlot.finish_time,
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
                 date: isoDateString,
@@ -212,7 +259,7 @@ export default {
                 id_services: this.servicesAppointments,
                 observation: this.observationAppointments
             }
-            
+
             if (this.appointmentId)
                 this.editAppointment(this.appointmentId, data)
             else
@@ -242,7 +289,13 @@ export default {
         },
         goToAgenda() {
             this.$router.push({ path: `/agenda` });
-        }
+        },
+        transformToSelectItem(item) {
+            return {
+                id: item.id,
+                title: item.name
+            }
+        },    
     }
 }
 </script>

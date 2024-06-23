@@ -17,7 +17,7 @@ if (data) {
 <template>
     <nav id="main-navbar" class="navbar navbar-expand-lg fixed-top custom ">
         <div class="container-fluid custom-card-bg">
-            <router-link to="/principal" class="navbar-brand text-white font-weight-bold" href="#">VetPet</router-link>
+            <router-link to="/painel-de-controle" class="navbar-brand text-white font-weight-bold" href="#">VetPet</router-link>
             <ul class="navbar-nav ms-auto d-flex flex-row">
                 <li class="dropdown">
                     <button class="btn dropdown-toggle text-white custom-card-bg" type="button" id="dropdownMenuButton1"

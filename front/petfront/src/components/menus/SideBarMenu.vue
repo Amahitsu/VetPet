@@ -5,7 +5,7 @@
 <template>
 
     <!-- Sidebar -->
-    <nav id="sidebarMenu" class="position-fixed collapse d-lg-block sidebar collapse bg-gray">
+    <nav id="sidebarMenu" class="position-fixed d-lg-block sidebar bg-gray">
 
         <img class="mx-3" src='../../assets/dog.png' alt="Logo VetPet" style="max-width: 150px;">
         <div class="list-group list-group-flush mx-3">
@@ -27,10 +27,15 @@
             <router-link to="/servicos" class="list-group-item list-group-item-action py-2 ripple">
                 Serviços
             </router-link>
+            <router-link to="/medicamentos" class="list-group-item list-group-item-action py-2 ripple">
+                Medicamentos
+            </router-link>
+            <router-link to="/vacinas" class="list-group-item list-group-item-action py-2 ripple">
+                Vacinas
+            </router-link>
             <router-link to="/funcionarios" class="list-group-item list-group-item-action py-2 ripple">
                 Funcionários
             </router-link>
-
         </div>
     </nav>
 </template>

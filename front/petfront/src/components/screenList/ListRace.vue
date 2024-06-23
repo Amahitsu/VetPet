@@ -22,10 +22,12 @@
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
                 <td class="btn-group text-end">
-                    <button class="btn btn-icon btn-sm btn-primary me-1" data-toggle="tooltip" data-placement="top" title="Editar" @click="updateRace(race.id)">
+                    <button class="btn btn-icon btn-sm btn-primary me-1" data-toggle="tooltip" data-placement="top"
+                        title="Editar" @click="updateRace(race.id)">
                         <span class="material-symbols-rounded">edit</span>
                     </button>
-                    <button class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir" @click="confirmDelete(race.id)">
+                    <button class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip" data-placement="top"
+                        title="Excluir" @click="confirmDelete(race.id)">
                         <span class="material-symbols-rounded">delete</span>
                     </button>
                 </td>
@@ -53,7 +55,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="errorDeleteRace" tabindex="-1" aria-labelledby="deleteRaceModalLabel" aria-hidden="true">
+    <div class="modal fade" id="errorDeleteRace" tabindex="-1" aria-labelledby="deleteRaceModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
@@ -137,9 +140,9 @@ export default {
                 .catch(error => {
                     $('#errorDeleteRace').modal('show');
                     $('#deleteRaceModal').modal('hide');
-                    setTimeout(function(){
-                $('#errorDeleteRace').modal('hide');
-            }, 3000);
+                    setTimeout(function () {
+                        $('#errorDeleteRace').modal('hide');
+                    }, 3000);
                 });
         },
         closeDeleteModal() {

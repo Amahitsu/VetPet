@@ -118,6 +118,7 @@
 
 <script>
 import axios from 'axios';
+import ListActivityPet from '../screenList/ListActivityPet.vue';
 
 import { findAnimalsByCustomer } from '../../services/animals.js';
 import ListActivityPet from '../screenList/ListActivityPet.vue';
@@ -183,7 +184,6 @@ export default {
             this.observationAppointments = data.observation;
 
             await this.loadAnimals()
-
         },
         loadCustomers() {
             axios.get("http://localhost:8080/api/v1/customers")

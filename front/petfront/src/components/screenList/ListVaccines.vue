@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
         <h2>Vacinas</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modalVaccine">
+            <button type="button" class="btn btn-m btn-primary" @click="addVaccine">
                 Adicionar vacina
             </button>
         </div>
@@ -20,7 +20,7 @@
         <tbody>
             <tr v-for="vaccine in vaccines" :key="vaccine.id">
                 <td>{{ vaccine.name }}</td>
-                <td>{{ vaccine.price }}</td>
+                <td>{{ formatCurrency (vaccine.price) }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateVaccine(vaccine.id)">
                         <span class="material-symbols-rounded">edit</span>
@@ -43,7 +43,7 @@
                         @click="closeDeleteModal"></button>
                 </div>
                 <div class="modal-body">
-                    Tem certeza que deseja excluir está vacina?
+                    Tem certeza que deseja excluir esta vacina?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
@@ -94,6 +94,10 @@ export default {
         this.loadVaccines();
     },
     methods: {
+        formatCurrency(value) {
+            if (!value) return '';
+            return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        },
         loadVaccines() {
             axios({
                 method: "GET",

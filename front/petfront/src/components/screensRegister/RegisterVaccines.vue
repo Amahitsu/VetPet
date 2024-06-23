@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios';
+import * as bootstrap from 'bootstrap';
 
 export default {
     data() {

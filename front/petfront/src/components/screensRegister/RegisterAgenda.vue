@@ -47,25 +47,31 @@
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="customerAppointments" @change="loadAnimals" :disabled="animalName">
-                        <option value="" selected>Selecione</option>
-                        <option v-for="customers in customersList" :key="customers.id" :value="customers.id">{{
-                        customers.name }}</option>
-                    </select>
+                    <v-select 
+                        label="title"  
+                        v-model="customerAppointments"     
+                        :options="customersList"
+                        :reduce="customer => customer.id" 
+                        @update:modelValue="onChangeCustomerHandler"
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
-                <div class="col-sm-10 d-flex align-items-center">
-                    <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
-                        :disabled="!customerAppointments" required v-if="!animalName">
+                <div class="col-sm-10">
+                    <!-- <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
+                        :disabled="!customerAppointments || isLoading" required>
                         <option value="" selected>Selecione</option>
                         <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
                         animals.name }}</option>
-                    </select>
-                    <div v-if="animalName">
-                        {{ animalName }}
-                    </div>
+                    </select> -->
+                    <v-select 
+                        label="title"  
+                        v-model="animalAppointments"     
+                        :options="animalsList"
+                        :reduce="animal => animal.id" 
+                        :disabled="!customerAppointments || isLoading" 
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -114,8 +120,12 @@
 import axios from 'axios';
 import ListActivityPet from '../screenList/ListActivityPet.vue';
 
+import { findAnimalsByCustomer } from '../../services/animals.js';
+import ListActivityPet from '../screenList/ListActivityPet.vue';
+
 export default {
     components: {
+        vSelect: window["vue-select"],
         ListActivityPet
     },
     data() {
@@ -134,7 +144,8 @@ export default {
             animalsList: [],
             workersList: [],
             customersList: [],
-            servicesList: []
+            servicesList: [],
+            isLoading: false
         };
     },
     mounted() {
@@ -147,53 +158,57 @@ export default {
         this.loadAppointment(this.appointmentId);
     },
     methods: {
-        loadAppointment(appointmentId) {
+        // função para quando alterar o cliente limpar e carregar os animais do cliente
+        onChangeCustomerHandler() {
+            this.animalAppointments = '';
+            this.loadAnimals();
+        },
+        async loadAppointment(appointmentId) {
+            
             if (!appointmentId)
                 return;
 
-            axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
-                .then(response => {
-                    let data = response.data.data;
+           const response = await axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
+            
+            const data = response.data.data
 
-                    this.start_timeAppointments = data.start_time;
-                    this.finish_timeAppointments = data.finish_time;
-                    this.medicinesAppointments = data.medicines;
-                    this.vaccinesAppointments = data.vaccines;
-                    this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
-                    this.customerAppointments = data.customer.id;
-                    this.animalAppointments = data.animal.id;
-                    this.animalName = data.animal.name;
-                    this.workerAppointments = data.worker.id;
-                    this.servicesAppointments = data.service.id;
-                    this.observationAppointments = data.observation;
-                })
-                .catch(error => {
-                    console.error('Erro ao criar cliente:', error);
-                });
+            this.start_timeAppointments = data.start_time;
+            this.finish_timeAppointments = data.finish_time;
+            this.medicinesAppointments = data.medicines;
+            this.vaccinesAppointments = data.vaccines;
+            this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
+            this.customerAppointments = data.customer.id;
+            this.animalAppointments = data.animal.id;
+            this.workerAppointments = data.worker.id;
+            this.servicesAppointments = data.service.id;
+            this.observationAppointments = data.observation;
 
+            await this.loadAnimals()
         },
         loadCustomers() {
             axios.get("http://localhost:8080/api/v1/customers")
                 .then(response => {
-                    this.customersList = response.data.data;
+                    this.customersList = response.data.data.map(this.transformToSelectItem);
                 })
                 .catch(error => {
                     console.error('Erro ao listar os clientes:', error);
                 });
         },
-        loadAnimals(animalId) {
-            if(!this.customerAppointments)
-                return
+        // método para buscar os animais do cliente
+        async loadAnimals() {
+            //define o carregamento para bloquear o select enquanto está carregando
+            this.isLoading = true
+            
+            // this.customerAppointments chama o endpoint da api de animais, com o id do client
+            // this.customerAppointments = id do cliente
+            const animals = await findAnimalsByCustomer(this.customerAppointments);
+            console.log('animals', animals)
 
-            let customerId = this.customerAppointments;
-
-            axios.get(`http://localhost:8080/api/v1/animals?customerId=${customerId}`)
-                .then((response) => {
-                    this.animalsList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar animais do cliente:', error);
-                });
+            const animalsTransformed= animals.map(this.transformToSelectItem)
+            // passa por todos itens do array retornado e transforma para o formato que o select precisa
+            console.log('animalsTransformed', animalsTransformed);
+            this.animalsList = animalsTransformed
+            this.isLoading = false
         },
         loadWorkers() {
             axios.get("http://localhost:8080/api/v1/worker")
@@ -259,7 +274,13 @@ export default {
         },
         goToAgenda() {
             this.$router.push({ path: `/agenda` });
-        }
+        },
+        transformToSelectItem(item) {
+            return {
+                id: item.id,
+                title: item.name
+            }
+        },    
     }
 }
 </script>

@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios';
+import * as bootstrap from 'bootstrap';
 
 export default {
     emits: ['reloadMedicines'],
@@ -76,7 +77,7 @@ export default {
                     console.error('Erro ao criar medicamento:', error);
                 });
         },
-        editService(medicineId) {
+        editMedicine(medicineId) {
             axios.put(`http://localhost:8080/api/v1/medicines/${medicineId}`, {
                 id: medicineId,
                 name: this.medicineName,

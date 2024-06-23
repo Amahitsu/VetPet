@@ -3,21 +3,19 @@
         <h2>Agendamento</h2>
         <form>
             <div class="mb-3 row">
-                <label for="dateInput" class="col-sm-2 col-form-label">Data</label>
-                <div class="col-sm-10">
-                    <input type="date" class="form-control" id="dateInput" v-model="dateAppointments" required>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="startTimeInput" class="col-sm-2 col-form-label">Hora de Início</label>
+                <label for="dateInput" class="col-sm-2 col-form-label">Dia</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="startTimeInput" v-model="start_timeAppointments"
-                        required>
+                    <input type="date" class="form-control" id="dateInput" v-model="dateAppointments"  v-on:input="onChangeDateHandler" required>
                 </div>
-                <label for="finishTimeInput" class="col-sm-2 col-form-label">Hora de Término</label>
+                <label for="selectedAppointmentSlot" class="col-sm-2 col-form-label">Horário</label>
                 <div class="col-sm-4">
-                    <input type="time" class="form-control" id="finishTimeInput" v-model="finish_timeAppointments"
-                        required>
+                    <v-select 
+                        label="title" 
+                        placeholder="Selecione"
+                        v-model="selectedAppointmentSlot"     
+                        :options="availableAppointmentsFromDate"
+                        :disabled="isLoading" 
+                    ></v-select>
                 </div>
             </div>
             <!--<div class="mb-3 row">
@@ -59,14 +57,9 @@
             <div class="mb-3 row">
                 <label for="animalSelect" class="col-sm-2 col-form-label">Animal</label>
                 <div class="col-sm-10">
-                    <!-- <select class="form-select" aria-label="Default select example" v-model="animalAppointments"
-                        :disabled="!customerAppointments || isLoading" required>
-                        <option value="" selected>Selecione</option>
-                        <option v-for="animals in animalsList" :key="animals.id" :value="animals.id">{{
-                        animals.name }}</option>
-                    </select> -->
                     <v-select 
-                        label="title"  
+                        label="title" 
+                        placeholder="Selecione"
                         v-model="animalAppointments"     
                         :options="animalsList"
                         :reduce="animal => animal.id" 
@@ -118,10 +111,10 @@
 
 <script>
 import axios from 'axios';
+import { format } from 'date-fns'
 import ListActivityPet from '../screenList/ListActivityPet.vue';
-
-import { findAnimalsByCustomer } from '../../services/animals.js';
-import ListActivityPet from '../screenList/ListActivityPet.vue';
+import { findAnimalsByCustomer } from '../../services/animals';
+import { listAvailableSlotsByDate } from '../../services/appointments';
 
 export default {
     components: {
@@ -131,8 +124,6 @@ export default {
     data() {
         return {
             appointmentId: null,
-            start_timeAppointments: '',
-            finish_timeAppointments: '',
             medicinesAppointments: false,
             vaccinesAppointments: false,
             dateAppointments: '',
@@ -145,7 +136,9 @@ export default {
             workersList: [],
             customersList: [],
             servicesList: [],
-            isLoading: false
+            isLoading: false,
+            availableAppointmentsFromDate: [],
+            selectedAppointmentSlot: null
         };
     },
     mounted() {
@@ -163,17 +156,33 @@ export default {
             this.animalAppointments = '';
             this.loadAnimals();
         },
+        onChangeDateHandler(){
+            this.selectedAppointmentSlot = null
+            this.loadAvailableAppointmentsByDate()
+        },
+
+        async loadAvailableAppointmentsByDate() {
+            if(!this.dateAppointments) return
+
+            const date = new Date(this.dateAppointments+ 'T00:00:00')
+            const dateFormatted = format(date, "yyyy-MM-dd");
+
+
+            const availableAppointmentsFromDate = await listAvailableSlotsByDate(dateFormatted)
+            console.log(availableAppointmentsFromDate);
+            this.availableAppointmentsFromDate = availableAppointmentsFromDate.map(appointment => ({
+                ...appointment,
+                title: `${appointment.start_time} - ${appointment.finish_time} `
+            }));
+        },
         async loadAppointment(appointmentId) {
-            
+
             if (!appointmentId)
                 return;
 
            const response = await axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
             
             const data = response.data.data
-
-            this.start_timeAppointments = data.start_time;
-            this.finish_timeAppointments = data.finish_time;
             this.medicinesAppointments = data.medicines;
             this.vaccinesAppointments = data.vaccines;
             this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
@@ -182,8 +191,14 @@ export default {
             this.workerAppointments = data.worker.id;
             this.servicesAppointments = data.service.id;
             this.observationAppointments = data.observation;
-
-            await this.loadAnimals()
+            this.selectedAppointmentSlot = {
+                start_time: data.start_time,
+                finish_time: data.finish_time,
+                title: `${data.start_time} - ${data.finish_time}`
+            }
+            
+            this.loadAvailableAppointmentsByDate()
+            this.loadAnimals()
         },
         loadCustomers() {
             axios.get("http://localhost:8080/api/v1/customers")
@@ -233,8 +248,8 @@ export default {
             let isoDateString = dateAppointments.toISOString();
 
             let data = {
-                start_time: this.start_timeAppointments,
-                finish_time: this.finish_timeAppointments,
+                start_time: this.selectedAppointmentSlot.start_time,
+                finish_time: this.selectedAppointmentSlot.finish_time,
                 medicines: this.medicinesAppointments,
                 vaccines: this.vaccinesAppointments,
                 date: isoDateString,

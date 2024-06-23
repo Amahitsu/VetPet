@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
         <h2>Medicamentos</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modalMedicine">
+            <button type="button" class="btn btn-m btn-primary" @click="addMedicine">
                 Adicionar medicamento
             </button>
         </div>

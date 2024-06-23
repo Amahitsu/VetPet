@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalMedicine" v-if="!medicineId">Cadastro de Medicamento</h1>
-                    <h1 class="modal-title fs-5" id="modalMedicine" v-if="serviceId">Editar Medicamento</h1>
+                    <h1 class="modal-title fs-5" id="modalMedicine" v-if="medicineId">Editar Medicamento</h1>
                     <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">

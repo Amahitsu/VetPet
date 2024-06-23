@@ -27,16 +27,15 @@
             <router-link to="/servicos" class="list-group-item list-group-item-action py-2 ripple">
                 Serviços
             </router-link>
-            <router-link to="/funcionarios" class="list-group-item list-group-item-action py-2 ripple">
-                Funcionários
-            </router-link>
             <router-link to="/medicamentos" class="list-group-item list-group-item-action py-2 ripple">
                 Medicamentos
             </router-link>
             <router-link to="/vacinas" class="list-group-item list-group-item-action py-2 ripple">
                 Vacinas
             </router-link>
-
+            <router-link to="/funcionarios" class="list-group-item list-group-item-action py-2 ripple">
+                Funcionários
+            </router-link>
         </div>
     </nav>
 </template>

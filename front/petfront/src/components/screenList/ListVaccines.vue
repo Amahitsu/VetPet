@@ -1,9 +1,9 @@
 <template>
-    <RegisterVaccine ref="modalVaccine" @reloadVaccines="loadVaccines" />
+    <RegisterVaccines ref="modalVaccine" @reloadVaccines="loadVaccines" />
     <div class="d-flex justify-content-between">
         <h2>Vacinas</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modalVaccine">
+            <button type="button" class="btn btn-m btn-primary" @click="addVaccine">
                 Adicionar vacina
             </button>
         </div>
@@ -20,7 +20,7 @@
         <tbody>
             <tr v-for="vaccine in vaccines" :key="vaccine.id">
                 <td>{{ vaccine.name }}</td>
-                <td>{{ vaccine.price }}</td>
+                <td>{{ formatCurrency (vaccine.price) }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateVaccine(vaccine.id)">
                         <span class="material-symbols-rounded">edit</span>
@@ -43,7 +43,7 @@
                         @click="closeDeleteModal"></button>
                 </div>
                 <div class="modal-body">
-                    Tem certeza que deseja excluir está vacina?
+                    Tem certeza que deseja excluir esta vacina?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="closeDeleteModal">Cancelar</button>
@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Espécie não pode ser excluída pois está associada a uma raça.
+                    Vacina não pode ser excluída.
                 </div>
             </div>
         </div>
@@ -73,78 +73,84 @@
 
 <script>
 import axios from 'axios';
-import RegisterSpecie from '../screensRegister/RegisterSpecie.vue';
+import RegisterVaccines from '../screensRegister/RegisterVaccines.vue';
+import * as bootstrap from 'bootstrap';
 
 export default {
     components: {
-        RegisterSpecie
+        RegisterVaccines
     },
     data() {
         return {
-            species: [],
-            editedSpecie: {
+            vaccines: [],
+            editedVaccine: {
                 id: null,
-                name: ''
+                name: '',
+                price: ''
             }
         };
     },
     created() {
-        this.loadSpecies();
+        this.loadVaccines();
     },
     methods: {
-        loadSpecies() {
+        formatCurrency(value) {
+            if (!value) return '';
+            return parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        },
+        loadVaccines() {
             axios({
                 method: "GET",
-                url: "http://localhost:8080/api/v1/species",
+                url: "http://localhost:8080/api/v1/vaccines",
             })
                 .then((response) => {
-                    this.species = response.data.data;
+                    this.vaccines = response.data.data;
                 })
                 .catch(error => {
-                    console.error('Erro ao listar as espécies:', error);
+                    console.error('Erro ao listar as vacinas:', error);
                 });
         },
-        addSpecie() {
-            this.specieId = null;
+        addVaccine() {
+            this.vaccineId = null;
             this.openModal();
         },
-        updateSpecie(specieId) {
-            this.specieId = specieId;
-            this.openModal(specieId);
+        updateVaccine(vaccineId) {
+            this.vaccineId = vaccineId;
+            this.openModal(vaccineId);
         },
-        openModal(specieId) {
-            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalSpecie"))
+        openModal(vaccineId) {
+            let modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalVaccine"))
 
-            if (specieId) {
-                this.$refs.modalSpecie.loadSpecie(specieId);
-                this.$refs.modalSpecie.specieId = specieId;
+            if (vaccineId) {
+                this.$refs.modalVaccine.loadVaccine(vaccineId);
+                this.$refs.modalVaccine.vaccineId = vaccineId;
             }
 
             modal.show();
         },
-        confirmDelete(specieId) {
-            this.selectedSpecie = specieId;
-            $('#deleteSpecieModal').modal('show');
+        confirmDelete(vaccineId) {
+            this.selectedVaccine = vaccineId;
+            $('#deleteVaccineModal').modal('show');
         },
-        deleteSpecie() {
-            let specieId = this.selectedSpecie;
+        deleteVaccine() {
+            let vaccineId = this.selectedVaccine;
 
-            axios.delete(`http://localhost:8080/api/v1/species/${specieId}`)
+            axios.delete(`http://localhost:8080/api/v1/vaccines/${vaccineId}`)
                 .then(response => {
-                    console.log('Espécie excluída com sucesso:', response.data);
+                    console.log('Vacina excluída com sucesso:', response.data);
                     this.closeDeleteModal();
-                    this.loadSpecies();
+                    this.loadVaccines();
                 })
                 .catch(error => {
-                    $('#errorDeleteSpecie').modal('show');
-                    $('#deleteSpecieModal').modal('hide');
+                    $('#errorDeleteVaccine').modal('show');
+                    $('#deleteVaccineModal').modal('hide');
                     setTimeout(function(){
-                $('#errorDeleteSpecie').modal('hide');
+                $('#errorDeleteVaccine').modal('hide');
             }, 3000);
                 });
         },
         closeDeleteModal() {
-            $('#deleteSpecieModal').modal('hide');
+            $('#deleteVaccineModal').modal('hide');
         }
     }
 }

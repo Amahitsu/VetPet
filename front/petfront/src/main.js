@@ -1,6 +1,7 @@
 import './assets/main.css';
 
 import { createApp } from 'vue';
+
 import App from './App.vue';
 
 import { createRouter, createWebHistory } from 'vue-router';
@@ -28,6 +29,8 @@ import RegisterPetClient from './components/screensRegister/RegisterPetClient.vu
 
 import VCalendar from 'v-calendar';
 import 'v-calendar/style.css';
+
+import vSelect from "vue-select";
 
 const routes = [
   // Página inicial options | login
@@ -87,4 +90,9 @@ const router = createRouter({
 // });
 
 const app = createApp(App);
-app.use(router).use(VCalendar, {}).mount('#app');
+
+app
+.use(router)
+.use(VCalendar, {})
+.component("v-select", vSelect)
+.mount('#app');

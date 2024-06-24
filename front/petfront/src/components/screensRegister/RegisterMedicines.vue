@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modalMedicine" v-if="!medicineId">Cadastro de Medicamento</h1>
-                    <h1 class="modal-title fs-5" id="modalMedicine" v-if="serviceId">Editar Medicamento</h1>
+                    <h1 class="modal-title fs-5" id="modalMedicine" v-if="medicineId">Editar Medicamento</h1>
                     <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios';
+import * as bootstrap from 'bootstrap';
 
 export default {
     emits: ['reloadMedicines'],
@@ -76,7 +77,7 @@ export default {
                     console.error('Erro ao criar medicamento:', error);
                 });
         },
-        editService(medicineId) {
+        editMedicine(medicineId) {
             axios.put(`http://localhost:8080/api/v1/medicines/${medicineId}`, {
                 id: medicineId,
                 name: this.medicineName,

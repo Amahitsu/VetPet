@@ -9,9 +9,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <label for="inputName" class="form-label">Vacina</label>
                             <input type="text" class="form-control" v-model="vaccineName">
+                        </div>
+                        <div class="col-md-4">
                             <label for="inputPrice" class="form-label">Preço</label>
                             <input type="text" class="form-control" v-model="vaccinePrice">
                         </div>
@@ -28,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+import * as bootstrap from 'bootstrap';
 
 export default {
     data() {
@@ -39,7 +42,7 @@ export default {
     },
     methods: {
         loadVaccine(vaccineId) {
-            if(vaccineId == null) {
+            if (vaccineId == null) {
                 this.reset();
                 return;
             }
@@ -56,7 +59,7 @@ export default {
                 });
         },
         saveVaccine() {
-            if(this.vaccineId)
+            if (this.vaccineId)
                 this.editVaccine(this.vaccineId)
             else
                 this.addVaccine()
@@ -90,7 +93,7 @@ export default {
                     console.error('Erro ao editar vacina:', error);
                 });
         },
-        closeModal(){
+        closeModal() {
             let modal = bootstrap.Modal.getInstance(document.getElementById("modalVaccine"))
             modal.hide();
             this.reset();

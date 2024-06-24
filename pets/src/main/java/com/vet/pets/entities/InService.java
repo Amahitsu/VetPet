@@ -24,6 +24,12 @@ public class InService{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "id_services", nullable = false)
+    private Services service;
+    @ManyToOne
+    @JoinColumn(name = "id_appointments", nullable = false)
+    private Appointments appointment;
+    @ManyToOne
     @JoinColumn(name = "id_medicines", nullable = false)
     private Medicines medicine;
     @ManyToOne

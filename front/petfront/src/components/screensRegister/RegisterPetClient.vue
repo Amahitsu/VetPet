@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-secondary me-2" @click="$router.go(-1)">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="addAnimal">Salvar</button>
+                    <button type="button" class="btn btn-primary" @click="saveAnimal">Salvar</button>
                 </div>
             </div>
         </form>
@@ -132,7 +132,23 @@ export default {
                     console.error('Erro ao listar o cliente:', error);
                 });
         },
-        addAnimal() {
+        saveAnimal() {
+            const data = {
+                name: this.animalName,
+                gender: this.animalGender,
+                dateOfBirth: this.animalBirthdate,
+                weight: this.animalWeight,
+                id_specie: this.selectedSpecieId,
+                id_breeds: this.selectedRaceId,
+                id_customers: this.customer.id
+            };
+            if (this.animalId)
+                this.editAnimal(this.animalId, data)
+            else
+                this.addAnimal(data)
+        },
+
+        addAnimal(data) {
             axios.post("http://localhost:8080/api/v1/animals", {
                 name: this.animalName,
                 gender: this.animalGender,
@@ -156,6 +172,7 @@ export default {
 
             axios.put(`http://localhost:8080/api/v1/animals/${animalId}`, data)
                 .then(response => {
+                    console.log('Animal editado com sucesso');
                     this.goToList();
                 })
                 .catch(error => {
@@ -172,7 +189,7 @@ export default {
             axios.get(`http://localhost:8080/api/v1/animals/${animalId}`)
                 .then(response => {
                     let data = response.data.data;
-                    
+
                     this.animalName = data.name;
                     this.animalGender = data.gender;
                     this.animalWeight = data.weight;

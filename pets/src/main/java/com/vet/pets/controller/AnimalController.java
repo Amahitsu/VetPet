@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,7 +72,7 @@ public class AnimalController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Deleted"));
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateAnimal(@PathVariable Long id, @RequestBody AnimalDTO dto) {
         Animals animal = animalService.findAnimal(id);
         if (animal == null) {

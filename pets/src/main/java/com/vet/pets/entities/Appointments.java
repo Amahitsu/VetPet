@@ -30,10 +30,6 @@ public class Appointments {
     @Column(nullable = false)
     private String finish_time;
     @Column(nullable = false)
-    private boolean medicines;
-    @Column(nullable = false)
-    private boolean vaccines;
-    @Column(nullable = false)
     private Date date;
     @ManyToOne
     @JoinColumn(name = "id_customers", nullable = false)

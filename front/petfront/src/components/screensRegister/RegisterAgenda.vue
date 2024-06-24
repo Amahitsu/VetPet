@@ -18,30 +18,6 @@
                     ></v-select>
                 </div>
             </div>
-            <!--<div class="mb-3 row">
-                <div class="col-sm-2">Medicamentos</div>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="medicinesCheckbox"
-                            v-model="medicinesAppointments">
-                        <label class="form-check-label" for="medicinesCheckbox">
-                            Necessário
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-sm-2">Vacinas</div>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="vaccinesCheckbox"
-                            v-model="vaccinesAppointments">
-                        <label class="form-check-label" for="vaccinesCheckbox">
-                            Necessário
-                        </label>
-                    </div>
-                </div>
-            </div>-->
             <div class="mb-3 row">
                 <label for="customerSelect" class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-10">
@@ -70,11 +46,6 @@
             <div class="mb-3 row">
                 <label for="workerSelect" class="col-sm-2 col-form-label">Funcionário</label>
                 <div class="col-sm-10">
-                    <!-- <select class="form-select" aria-label="Default select example" v-model="workerAppointments">
-                        <option value="" selected>Selecione</option>
-                        <option v-for="workers in workersList" :key="workers.id" :value="workers.id">{{
-                        workers.name }}</option>
-                    </select> -->
                     <v-select 
                         label="title" 
                         placeholder="Selecione"
@@ -88,11 +59,6 @@
             <div class="mb-3 row">
                 <label for="serviceSelect" class="col-sm-2 col-form-label">Serviços</label>
                 <div class="col-sm-10">
-                    <!-- <select class="form-select" aria-label="Default select example" v-model="servicesAppointments">
-                        <option value="" selected>Selecione</option>
-                        <option v-for="services in servicesList" :key="services.id" :value="services.id">{{
-                        services.name }}</option>
-                    </select> -->
                     <v-select 
                         label="title" 
                         placeholder="Selecione"
@@ -142,8 +108,6 @@ export default {
     data() {
         return {
             appointmentId: null,
-            medicinesAppointments: false,
-            vaccinesAppointments: false,
             dateAppointments: '',
             customerAppointments: '',
             animalAppointments: '',
@@ -201,8 +165,6 @@ export default {
            const response = await axios.get(`http://localhost:8080/api/v1/appointments/${appointmentId}`)
             
             const data = response.data.data
-            this.medicinesAppointments = data.medicines;
-            this.vaccinesAppointments = data.vaccines;
             this.dateAppointments = new Date(data.date).toISOString().split('T')[0];
             this.customerAppointments = data.customer.id;
             this.animalAppointments = data.animal.id;
@@ -272,8 +234,6 @@ export default {
             let data = {
                 start_time: this.selectedAppointmentSlot.start_time,
                 finish_time: this.selectedAppointmentSlot.finish_time,
-                medicines: this.medicinesAppointments,
-                vaccines: this.vaccinesAppointments,
                 date: isoDateString,
                 id_customer: this.customerAppointments,
                 id_animals: this.animalAppointments,
@@ -303,6 +263,7 @@ export default {
 
             axios.put(`http://localhost:8080/api/v1/appointments/${appointmentId}`, data)
                 .then(response => {
+                    location.reload();
                     this.goToAgenda();
                 })
                 .catch(error => {

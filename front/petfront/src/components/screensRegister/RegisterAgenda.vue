@@ -70,21 +70,37 @@
             <div class="mb-3 row">
                 <label for="workerSelect" class="col-sm-2 col-form-label">Funcionário</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="workerAppointments">
+                    <!-- <select class="form-select" aria-label="Default select example" v-model="workerAppointments">
                         <option value="" selected>Selecione</option>
                         <option v-for="workers in workersList" :key="workers.id" :value="workers.id">{{
                         workers.name }}</option>
-                    </select>
+                    </select> -->
+                    <v-select 
+                        label="title" 
+                        placeholder="Selecione"
+                        v-model="workerAppointments"     
+                        :options="workersList"
+                        :reduce="worker => worker.id" 
+                        :disabled="!animalAppointments || isLoading" 
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="serviceSelect" class="col-sm-2 col-form-label">Serviços</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" v-model="servicesAppointments">
+                    <!-- <select class="form-select" aria-label="Default select example" v-model="servicesAppointments">
                         <option value="" selected>Selecione</option>
                         <option v-for="services in servicesList" :key="services.id" :value="services.id">{{
                         services.name }}</option>
-                    </select>
+                    </select> -->
+                    <v-select 
+                        label="title" 
+                        placeholder="Selecione"
+                        v-model="servicesAppointments"     
+                        :options="servicesList"
+                        :reduce="service => service.id" 
+                        :disabled="!workerAppointments || isLoading" 
+                    ></v-select>
                 </div>
             </div>
             <div class="mb-5 row">
@@ -115,6 +131,8 @@ import { format } from 'date-fns'
 import ListActivityPet from '../screenList/ListActivityPet.vue';
 import { findAnimalsByCustomer } from '../../services/animals';
 import { listAvailableSlotsByDate } from '../../services/appointments';
+import { listWorkers } from '@/services/workers';
+import { listServices } from '@/services/services';
 
 export default {
     components: {
@@ -221,27 +239,31 @@ export default {
 
             const animalsTransformed= animals.map(this.transformToSelectItem)
             // passa por todos itens do array retornado e transforma para o formato que o select precisa
-            console.log('animalsTransformed', animalsTransformed);
+            console.log('animalsTransformede', animalsTransformed);
             this.animalsList = animalsTransformed
             this.isLoading = false
         },
-        loadWorkers() {
-            axios.get("http://localhost:8080/api/v1/worker")
-                .then(response => {
-                    this.workersList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os funcionários:', error);
-                });
+        async loadWorkers() {
+            this.isLoading = true
+
+            const workers = await listWorkers(this.workerAppointments)
+            console.log('workers', workers)
+
+            const workersTransformed = workers.map(this.transformToSelectItem)
+            console.log('workersTransformed', workersTransformed)
+            this.workersList = workersTransformed
+            this.isLoading = false
         },
-        loadServices() {
-            axios.get("http://localhost:8080/api/v1/services")
-                .then(response => {
-                    this.servicesList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar os serviços:', error);
-                });
+        async loadServices() {
+            this.isLoading = true
+
+            const services = await listServices(this.servicesAppointments)
+            console.log('services', services)
+
+            const servicesTransformed = services.map(this.transformToSelectItem)
+            console.log('servicesTransformed', servicesTransformed)
+            this.servicesList = servicesTransformed
+            this.isLoading = false
         },
         saveAppointment() {
             let dateAppointments = new Date(this.dateAppointments + 'T00:00:00')

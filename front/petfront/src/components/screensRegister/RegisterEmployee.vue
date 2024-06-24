@@ -245,8 +245,6 @@ export default {
         },
         editWorker(workerId, data) {
         if (!workerId) return;
-        
-        
 
         axios.put(`http://localhost:8080/api/v1/worker/${workerId}`, data)
             .then(response => {

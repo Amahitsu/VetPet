@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vet.pets.dto.InServiceDTO;
+import com.vet.pets.entities.Appointments;
 import com.vet.pets.entities.InService;
 import com.vet.pets.entities.Medicines;
+import com.vet.pets.entities.Services;
 import com.vet.pets.entities.Vaccines;
+import com.vet.pets.repository.AppointmentRepository;
 import com.vet.pets.repository.InServiceRepository;
 import com.vet.pets.repository.MedicinesRepository;
+import com.vet.pets.repository.ServiceRepository;
 import com.vet.pets.repository.VaccinesRepository;
 
 import jakarta.transaction.Transactional;
@@ -22,6 +26,10 @@ public class InServiceServices {
     @Autowired
     private InServiceRepository inServiceRepository;
     @Autowired
+    private ServiceRepository serviceRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+    @Autowired
     private VaccinesRepository vaccinesRepository;
     @Autowired
     private MedicinesRepository medicinesRepository;
@@ -29,6 +37,12 @@ public class InServiceServices {
     @Transactional
     public InService createInService(InServiceDTO dto) {
         try {
+            Appointments appointment = appointmentRepository.findById(dto.id_appointment())
+                    .orElseThrow(
+                            () -> new RuntimeException("Agendamento não encontrado com o ID: " + dto.id_appointment()));
+            Services service = serviceRepository.findById(dto.id_service())
+                    .orElseThrow(
+                            () -> new RuntimeException("Serviço não encontrao com o ID: " + dto.id_service()));
             Medicines medicine = medicinesRepository.findById(dto.id_medicine())
                     .orElseThrow(
                             () -> new RuntimeException("Medicamento não encontrada com o ID: " + dto.id_medicine()));
@@ -36,7 +50,7 @@ public class InServiceServices {
                     .orElseThrow(() -> new RuntimeException("Vacina não encontrada com o ID: " + dto.id_vaccine()));
 
             InService newInService = inServiceRepository
-                    .save(new InService(null, medicine, vaccine, dto.observation()));
+                    .save(new InService(null, service, appointment, medicine, vaccine, dto.observation()));
             return newInService;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -85,6 +99,12 @@ public class InServiceServices {
 
     public InService updateInServiceById(Long id, InServiceDTO dto) {
 
+        Appointments appointment = appointmentRepository.findById(dto.id_appointment())
+                .orElseThrow(
+                        () -> new RuntimeException("Agendamento não encontrado com o ID: " + dto.id_appointment()));
+        Services service = serviceRepository.findById(dto.id_service())
+                .orElseThrow(
+                        () -> new RuntimeException("Serviço não encontrao com o ID: " + dto.id_service()));
         Medicines medicine = medicinesRepository.findById(dto.id_medicine())
                 .orElseThrow(
                         () -> new RuntimeException("Medicamento não encontrada com o ID: " + dto.id_medicine()));
@@ -97,7 +117,8 @@ public class InServiceServices {
                 return null;
             }
 
-            InService newInService = inServiceRepository.save(new InService(id, medicine, vaccine, dto.observation()));
+            InService newInService = inServiceRepository
+                    .save(new InService(id, service, appointment, medicine, vaccine, dto.observation()));
             return newInService;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

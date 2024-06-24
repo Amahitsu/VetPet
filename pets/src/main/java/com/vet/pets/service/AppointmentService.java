@@ -52,8 +52,6 @@ public class AppointmentService {
             Appointments newAppointment = new Appointments();
             newAppointment.setStart_time(dto.start_time());
             newAppointment.setFinish_time(dto.finish_time());
-            newAppointment.setMedicines(dto.medicines());
-            newAppointment.setVaccines(dto.vaccines());
             newAppointment.setDate(dto.date());
             newAppointment.setObservation(dto.observation());
             newAppointment.setCustomer(customer);
@@ -125,12 +123,6 @@ public class AppointmentService {
             }
             if (dto.finish_time() != null) {
                 existingAppointment.setFinish_time(dto.finish_time());
-            }
-            if (dto.medicines() != null) {
-                existingAppointment.setMedicines(dto.medicines());
-            }
-            if (dto.vaccines() != null) {
-                existingAppointment.setVaccines(dto.vaccines());
             }
             if (dto.date() != null) {
                 existingAppointment.setDate(dto.date());

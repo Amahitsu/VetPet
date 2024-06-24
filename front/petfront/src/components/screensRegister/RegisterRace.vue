@@ -16,11 +16,18 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputSpecies" class="form-label">Espécie</label>
-                            <select class="form-select" aria-label="Default select example" v-model="selectedSpecieId">
+                            <!-- <select class="form-select" aria-label="Default select example" v-model="selectedSpecieId">
                                 <option value="" selected>Selecione</option>
                                 <option v-for="species in speciesList" :key="species.id" :value="species.id">{{
                                 species.name }}</option>
-                            </select>
+                            </select> -->
+                            <v-select
+                        label="title"
+                        placeholder="Selecione"
+                        v-model="selectedSpecieId"
+                        :options="speciesList"
+                        :reduce="specie => specie.id"
+                    ></v-select>
                         </div>
                     </div>
                 </div>
@@ -35,6 +42,7 @@
 
 <script>
 import axios from 'axios';
+import { listSpecies } from '@/services/species';
 
 export default {
     emits: ['reloadBreeds'],
@@ -50,14 +58,20 @@ export default {
         this.loadSpecies();
     },
     methods: {
-        loadSpecies() {
-            axios.get("http://localhost:8080/api/v1/species")
-                .then(response => {
-                    this.speciesList = response.data.data;
-                })
-                .catch(error => {
-                    console.error('Erro ao listar as espécies:', error);
-                });
+        transformToSelectItem(item) {
+            return {
+                id: item.id,
+                title: item.name
+            }
+        },
+
+        async loadSpecies() {
+            const species = await listSpecies(this.selectedSpecieId)
+            console.log('species', species)
+
+            const speciesTransformed = species.map(this.transformToSelectItem)
+            console.log('speciesTransformed', speciesTransformed)
+            this.speciesList = speciesTransformed
         },
         loadRace(raceId) {
             if(raceId == null) {

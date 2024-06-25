@@ -95,7 +95,7 @@
                         <div class="row">
                             <label for="serviceSelect" class="col-sm-2 col-form-label">Serviço</label>
                             <div class="col-sm-10">
-                                <select class="form-select">
+                                <select class="form-select" v-model="selectedServiceId">
                                     <option value="" selected>Selecione</option>
                                     <option v-for="service in servicesList" :key="service.id" :value="service.id">{{
                         service.name }}</option>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary me-2" @click="">Confirmar</button>
+                        <button type="button" class="btn btn-primary me-2" @click="addService">Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -180,6 +180,7 @@ export default {
             medicinesList: [],
             activitieTotal: null,
             activities: []
+            
         };
     },
     mounted() {
@@ -202,33 +203,43 @@ export default {
             $('#modalMedicine').modal('show');
             this.loadMedicines();
         },
-        loadActivities() {
-            // adicionar chamada para lista de atendimentos
-            // precisa receber id do agendamento
-            this.loading = false;
-            this.activities = [{
-                id: 1,
-                type: 'Serviço',
-                name: 'Consulta',
-                value: 10.00,
-                observation: 'Teste'
-            }, {
-                id: 2,
-                type: 'Medicamento',
-                name: 'Aspirina',
-                value: 10.00,
-                observation: ''
-            }, {
-                id: 3,
-                type: 'Vacina',
-                name: 'Raiva',
-                value: 10.00,
-                observation: ''
-            }]
-            
-            for (let i = 0; i < this.activities.length; i++){
-                this.activitieTotal += this.activities[i].value;
-            }
+        saveInService() {
+            if(this.raceId)
+                this.editRace(this.raceId)
+            else
+                this.addRace()
+        },
+        loadAppointmentById(id) {
+            axios({
+                method: "GET",
+                url: `http://localhost:8080/api/v1/appointments/${id}`,
+            })
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.appointment = response.data.data;
+                })
+                .catch(error => {
+                    if (error.response.status === 404) {
+                        alert('Agendamento não encontrado');
+                    }
+                    console.error('Erro ao listar os agendamentos:', error);
+                });
+        },
+        addInService() {
+            axios.post("http://localhost:8080/api/v1/inservice", {
+                id_services: this.selectedServiceId,
+                id_appointments: this.appointments.id
+                // id_medicines: this.selectedMedicineId,
+                // id_vaccines: this.selectedVaccineId
+            })
+                .then(response => {
+                    this.closeModal();
+                    this.$emit('reloadBreeds');
+                    console.log('Raça criada com sucesso:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar raça:', error);
+                });
         },
         loadServices() {
             axios.get("http://localhost:8080/api/v1/services")

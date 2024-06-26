@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
         <h2>Espécies</h2>
         <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-m btn-primary" data-bs-toggle="modal" data-bs-target="#modalSpecie">
+            <button type="button" class="btn btn-m btn-primary" @click="addSpecie">
                 Adicionar espécie
             </button>
         </div>

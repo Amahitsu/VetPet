@@ -26,7 +26,6 @@
 
 <script>
 import axios from 'axios';
-import * as bootstrap from 'bootstrap';
 
 export default {
     data() {
@@ -68,6 +67,7 @@ export default {
                     console.log('Espécie criada com sucesso:', response.data);
                 })
                 .catch(error => {
+                    this.closeModal();
                     console.error('Erro ao criar espécie:', error);
                 });
         },

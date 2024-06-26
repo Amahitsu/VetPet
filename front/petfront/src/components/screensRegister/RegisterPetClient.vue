@@ -38,19 +38,35 @@
             <div class="row mt-3">
                 <div class="col-md-3">
                     <label for="speciesSelect" class="form-label">Espécie</label>
-                    <select class="form-select" v-model="selectedSpecieId" @change="loadBreeds" id="speciesSelect">
+                    <!-- <select class="form-select" v-model="selectedSpecieId" @change="loadBreeds" id="speciesSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="species in speciesList" :key="species.id" :value="species.id">{{ species.name }}
                         </option>
-                    </select>
+                    </select> -->
+                    <v-select
+                        label="title"
+                        placeholder="Selecione"
+                        v-model="selectedSpecieId"
+                        :options="speciesList"
+                        :reduce="specie => specie.id"
+                        @update:modelValue="onChangeBreedsHandler"
+                    ></v-select>
                 </div>
 
                 <div class="col-md-3">
                     <label for="breedSelect" class="form-label">Raça</label>
-                    <select class="form-select" v-model="selectedRaceId" :disabled="!selectedSpecieId" id="breedSelect">
+                    <!-- <select class="form-select" v-model="selectedRaceId" :disabled="!selectedSpecieId" id="breedSelect">
                         <option value="" disabled>Selecione</option>
                         <option v-for="breed in breedList" :key="breed.id" :value="breed.id">{{ breed.name }}</option>
-                    </select>
+                    </select> -->
+                    <v-select
+                        label="title"
+                        placeholder="Selecione"
+                        v-model="selectedRaceId"
+                        :options="breedList"
+                        :reduce="breeds => breeds.id"
+                        :disabled="!selectedSpecieId"
+                    ></v-select>
                 </div>
             </div>
             <div class="row">
@@ -65,8 +81,13 @@
 
 <script>
 import axios from 'axios';
+import { listSpecies } from '@/services/species';
+import { findBreedsBySpecies } from '@/services/breeds';
 
 export default {
+    components: {
+        vSelect: window["vue-select"],
+    },
     data() {
         return {
             animalId: null,
@@ -94,27 +115,24 @@ export default {
         this.loadSpecies();
     },
     methods: {
-        loadSpecies() {
-            fetch('http://localhost:8080/api/v1/species')
-                .then(response => response.json())
-                .then(({ data }) => {
-                    console.log(data)
-                    this.speciesList = data;
-                })
-                .catch(error => console.error('Erro ao carregar espécies:', error));
+        onChangeBreedsHandler() {
+            this.loadBreeds();
         },
-        loadBreeds() {
-            if (this.selectedSpecieId) {
-                fetch(`http://localhost:8080/api/v1/breeds?id_specie=${this.selectedSpecieId}`)
-                    .then(response => response.json())
-                    .then(({ data }) => {
-                        console.log(data);
-                        this.breedList = data;
-                    })
-                    .catch(error => console.error('Erro ao carregar raças:', error));
-            } else {
-                this.breedList = [];
-            }
+        async loadSpecies() {
+            const species = await listSpecies(this.selectedSpecieId)
+            console.log('species', species)
+
+            const speciesTransformed = species.map(this.transformToSelectItem)
+            console.log('speciesTransformed', speciesTransformed)
+            this.speciesList = speciesTransformed
+        },
+        async loadBreeds() {
+            const breeds = await findBreedsBySpecies(this.selectedSpecieId);
+            console.log('breeds', breeds)
+
+            const breedsTransformed= breeds.map(this.transformToSelectItem)
+            console.log('breedsTransformed', breedsTransformed);
+            this.breedList = breedsTransformed
         },
         loadCustomerById(id) {
             axios({
@@ -204,6 +222,12 @@ export default {
                 .catch(error => {
                     console.error('Erro ao criar cliente:', error);
                 });
+        },
+        transformToSelectItem(item) {
+            return {
+                id: item.id,
+                title: item.name
+            }
         },
     }
 };

@@ -92,13 +92,13 @@
 </template>
 
 <script>
+import { listServices } from '@/services/services';
+import { listWorkers } from '@/services/workers';
 import axios from 'axios';
-import { format } from 'date-fns'
-import ListActivityPet from '../screenList/ListActivityPet.vue';
+import { format } from 'date-fns';
 import { findAnimalsByCustomer } from '../../services/animals';
 import { listAvailableSlotsByDate } from '../../services/appointments';
-import { listWorkers } from '@/services/workers';
-import { listServices } from '@/services/services';
+import ListActivityPet from '../screenList/ListActivityPet.vue';
 
 export default {
     components: {
@@ -263,7 +263,7 @@ export default {
 
             axios.put(`http://localhost:8080/api/v1/appointments/${appointmentId}`, data)
                 .then(response => {
-                    location.reload();
+                    //location.reload();
                     this.goToAgenda();
                 })
                 .catch(error => {

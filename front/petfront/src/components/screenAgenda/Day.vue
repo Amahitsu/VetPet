@@ -70,8 +70,8 @@ export default {
         convertData(data) {
             return data.map(item => {
                 const date = new Date(item.date).toISOString().split('T')[0];
-                const startDateTime = date + 'T' + item.start_time + ':00+00:00';
-                const endDateTime = date + 'T' + item.finish_time + ':00+00:00';
+                const startDateTime = date + 'T' + this.formatTime(item.start_time) + ':00+00:00';
+                const endDateTime = date + 'T' + this.formatTime(item.finish_time) + ':00+00:00';
                 
                 return {
                     id: item.id,
@@ -81,6 +81,14 @@ export default {
                     observation: item.observation
                 };
             });
+        },
+        formatTime(str) {
+            let [hours, minutes] = str.split(':');
+
+            hours = hours.padStart(2, '0');
+            minutes = minutes.padStart(2, '0');
+
+            return `${hours}:${minutes}`;
         },
         goToAppointment() {
             this.$router.push({ path: `/agenda/cadastro` });

@@ -8,7 +8,12 @@
             </button>
         </div>
     </div>
-
+    
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por vacina" class="form-control input-with-icon" />
+       </div>
+    </div>
 
     <table class="table mt-3">
         <thead>
@@ -19,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="medicine in medicines" :key="medicine.id">
+            <tr v-for="medicine in filteredMedicines" :key="medicine.id">
                 <td>{{ medicine.name }}</td>
                 <td>{{ formatCurrency(medicine.price) }}</td>
                 <td class="btn-group text-end">
@@ -67,7 +72,10 @@ export default {
     },
     data() {
         return {
-            medicines: []
+            medicines: [],
+            filter: {
+                name: ''
+            },
         };
     },
     created() {
@@ -127,7 +135,21 @@ export default {
             $('#deleteMedicineModal').modal('hide');
         }
     },
+    computed: {
+        filteredMedicines() {
+            return this.medicines.filter(medicine => {
+                const matchesName = medicine.name.toLowerCase().includes(this.filter.name.toLowerCase());
+                return matchesName;
+            });
+        }
+    }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px;
+}
+</style>

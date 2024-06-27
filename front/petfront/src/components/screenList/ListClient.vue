@@ -7,6 +7,12 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por raça ou espécie" class="form-control input-with-icon" />
+       </div>
+    </div>
+
     <table class="table mt-3">
         <thead>
             <tr>
@@ -17,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="customer in customers" :key="customer.id">
+            <tr v-for="customer in filteredCustomers" :key="customer.id">
                 <td>{{ customer.name }}</td>
                 <td>{{ formatPhoneNumber(customer.phone) }}</td>
                 <td>{{ customer.active ? "Ativo" : "Inativo" }}</td>
@@ -85,6 +91,9 @@ export default {
         return {
             customers: [],
             customerIdToDelete: null,
+            filter: {
+                name: ''
+            },
         };
     },
     created() {
@@ -144,8 +153,29 @@ export default {
         closeDeleteModal() {
             $('#deleteCustomerModal').modal('hide');
         }
+    },
+    computed: {
+        filteredCustomers() {
+            return this.customers.filter(customer => {
+               const filterText = this.filter.name.toLowerCase();
+               const matchesName = customer.name.toLowerCase().includes(filterText);
+               //Retira os caracteres não numéricos do telefone
+               const sanitizedPhone = customer.phone.replace(/\D/g, '');
+               const matchesPhone = sanitizedPhone.includes(filterText);
+               //Responde somente true e false
+               const matchesActive = customer.active.toString().toLowerCase().includes(filterText);
+               
+               return matchesName || matchesPhone || matchesActive;
+            });
+        }
     }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px;
+}
+</style>

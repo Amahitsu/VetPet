@@ -9,6 +9,12 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por raça ou espécie" class="form-control input-with-icon" />
+       </div>
+    </div>
+
     <table class="table mt-3">
         <thead>
             <tr>
@@ -18,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="race in breeds" :key="race.id">
+            <tr v-for="race in filteredBreeds" :key="race.id">
                 <td>{{ race.name }}</td>
                 <td>{{ race.specie.name }}</td>
                 <td class="btn-group text-end">
@@ -86,6 +92,9 @@ export default {
         return {
             raceId: null,
             breeds: [],
+            filter: {
+                name: ''
+            },
             speciesList: [],
             raceIdToDelete: null,
         };
@@ -148,8 +157,24 @@ export default {
         closeDeleteModal() {
             $('#deleteRaceModal').modal('hide');
         }
-    }
+    },
+    computed: {
+        filteredBreeds() {
+           return this.breeds.filter(race => {
+               const filterText = this.filter.name.toLowerCase();
+               const matchesName = race.name.toLowerCase().includes(filterText);
+               const matchesSpecie = race.specie.name.toLowerCase().includes(filterText);
+              return matchesName || matchesSpecie;
+           });
+        }
+   }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px;
+}
+</style>

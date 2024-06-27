@@ -7,6 +7,12 @@
             </div>
         </div>
 
+        <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por espécie" class="form-control input-with-icon" />
+       </div>
+    </div>
+
         <table class="table mt-3">
             <thead>
                 <tr>
@@ -19,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="worker in workers" :key="workers.id">
+                <tr v-for="worker in filteredWorkers" :key="workers.id">
                     <td>{{ worker.name }}</td>
                     <td>{{ worker.functionn }}</td>
                     <td>{{ formatPhoneNumber(worker.phone) }}</td>
@@ -84,6 +90,9 @@ export default {
         return {
             workers: [],
             workerIdToDelete: null,
+            filter: {
+                name: ''
+            },
         };
     },
     created() {
@@ -139,8 +148,31 @@ export default {
         closeDeleteModal() {
             $('#deleteWorkerModal').modal('hide');
         }
+    },
+    computed: {
+        filteredWorkers() {
+            return this.workers.filter(worker => {
+                const filterText = this.filter.name.toLowerCase();
+                const matchesName = worker.name.toLowerCase().includes(filterText);
+                const matchesFunctionn = worker.functionn.toLowerCase().includes(filterText);
+                //Retira os caracteres não numéricos do telefone
+                const sanitizedPhone = worker.phone.replace(/\D/g, '');
+                const matchesPhone = sanitizedPhone.includes(filterText);
+                //Responde somente true e false
+                const matchesActive = worker.active.toString().toLowerCase().includes(filterText);
+
+
+                return matchesName || matchesFunctionn || matchesPhone || matchesActive;
+            });
+        }
     }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px; 
+}
+</style>

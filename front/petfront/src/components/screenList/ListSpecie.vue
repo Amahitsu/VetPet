@@ -9,6 +9,12 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por espécie" class="form-control input-with-icon" />
+       </div>
+    </div>
+
     <table class="table mt-3">
         <thead>
             <tr>
@@ -17,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="specie in species" :key="specie.id">
+            <tr v-for="specie in filteredSpecies" :key="specie.id">
                 <td>{{ specie.name }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateSpecie(specie.id)">
@@ -80,6 +86,9 @@ export default {
     data() {
         return {
             species: [],
+            filter: {
+                name: ''
+            },
             editedSpecie: {
                 id: null,
                 name: ''
@@ -144,8 +153,23 @@ export default {
         closeDeleteModal() {
             $('#deleteSpecieModal').modal('hide');
         }
+    },
+    computed: {
+        filteredSpecies() {
+            return this.species.filter(specie => {
+                const matchesName = specie.name.toLowerCase().includes(this.filter.name.toLowerCase());
+                return matchesName;
+            });
+        }
     }
+    
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px; 
+}
+</style>

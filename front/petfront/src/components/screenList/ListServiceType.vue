@@ -9,6 +9,11 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por serviço" class="form-control input-with-icon" />
+       </div>
+    </div>
 
     <table class="table mt-3">
         <thead>
@@ -19,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="service in services" :key="service.id">
+            <tr v-for="service in filteredServices" :key="service.id">
                 <td>{{ service.name }}</td>
                 <td>{{ formatCurrency(service.price) }}</td>
                 <td class="btn-group text-end">
@@ -83,7 +88,10 @@ export default {
     },
     data() {
         return {
-            services: []
+            services: [],
+            filter: {
+                name: ''
+            },
         };
     },
     created() {
@@ -148,7 +156,20 @@ export default {
             $('#deleteServiceModal').modal('hide');
         }
     },
+    computed: {
+        filteredServices() {
+            return this.services.filter(service => {
+                const matchesName = service.name.toLowerCase().includes(this.filter.name.toLowerCase());
+                return matchesName;
+            });
+        }
+    }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px; 
+}</style>

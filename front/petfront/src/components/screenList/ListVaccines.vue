@@ -9,6 +9,12 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between mt-3">
+       <div class="position-relative">
+           <input type="text" v-model="filter.name" placeholder="Filtrar por vacina" class="form-control input-with-icon" />
+       </div>
+    </div>
+
     <table class="table mt-3">
         <thead>
             <tr>
@@ -18,9 +24,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="vaccine in vaccines" :key="vaccine.id">
+            <tr v-for="vaccine in filteredVaccines" :key="vaccine.id">
                 <td>{{ vaccine.name }}</td>
-                <td>{{ formatCurrency (vaccine.price) }}</td>
+                <td>{{ formatCurrency(vaccine.price) }}</td>
                 <td class="btn-group text-end">
                     <button class="btn btn-icon btn-sm btn-primary me-1" @click="updateVaccine(vaccine.id)">
                         <span class="material-symbols-rounded">edit</span>
@@ -83,6 +89,9 @@ export default {
     data() {
         return {
             vaccines: [],
+            filter: {
+                name: ''
+            },
             editedVaccine: {
                 id: null,
                 name: '',
@@ -152,8 +161,22 @@ export default {
         closeDeleteModal() {
             $('#deleteVaccineModal').modal('hide');
         }
+    },
+    computed: {
+        filteredVaccines() {
+            return this.vaccines.filter(vaccine => {
+                const matchesName = vaccine.name.toLowerCase().includes(this.filter.name.toLowerCase());
+                return matchesName;
+            });
+        }
     }
 }
 </script>
 
-<style></style>
+<style>
+.input-with-icon {
+    padding-left: 30px; 
+    background: url('@/assets/lupa.png') no-repeat 8px center;
+    background-size: 16px 16px; 
+}
+</style>

@@ -11,7 +11,6 @@
                 </div>
             </div>
 
-
             <div v-if="loading">
                 Carregando...
             </div>

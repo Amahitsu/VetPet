@@ -13,12 +13,16 @@ import com.vet.pets.dto.SlotDTO;
 import com.vet.pets.entities.Animals;
 import com.vet.pets.entities.Appointments;
 import com.vet.pets.entities.Customer;
+import com.vet.pets.entities.Medicines;
 import com.vet.pets.entities.Services;
+import com.vet.pets.entities.Vaccines;
 import com.vet.pets.entities.Worker;
 import com.vet.pets.repository.AnimalRepository;
 import com.vet.pets.repository.AppointmentRepository;
 import com.vet.pets.repository.CustomerRepository;
+import com.vet.pets.repository.MedicinesRepository;
 import com.vet.pets.repository.ServiceRepository;
+import com.vet.pets.repository.VaccinesRepository;
 import com.vet.pets.repository.WorkerRepository;
 
 import jakarta.transaction.Transactional;
@@ -36,10 +40,14 @@ public class AppointmentService {
     private WorkerRepository workerRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private VaccinesRepository vaccineRepository;
+    @Autowired
+    private MedicinesRepository medicineRepository;
 
     @Transactional
-    public Appointments createAppointment(AppointmentDTO dto){
-        try{
+    public Appointments createAppointment(AppointmentDTO dto) {
+        try {
             Customer customer = customerRepository.findById(dto.id_customer())
                     .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o ID: " + dto.id_customer()));
             Animals animal = animalRepository.findById(dto.id_animals())
@@ -58,11 +66,13 @@ public class AppointmentService {
             newAppointment.setAnimal(animal);
             newAppointment.setWorker(worker);
             newAppointment.setService(service);
+            newAppointment.setVaccine(null);
+            newAppointment.setMedicine(null);
 
             Appointments savedAppointment = appointmentRepository.save(newAppointment);
-            
+
             return savedAppointment;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -150,6 +160,16 @@ public class AppointmentService {
                         .orElseThrow(() -> new RuntimeException("Serviço não encontrado com o ID: " + dto.id_services()));
                 existingAppointment.setService(service);
             }
+            if (dto.id_vaccines() != null ) {
+                Vaccines vaccine = vaccineRepository.findById(dto.id_vaccines())
+                        .orElseThrow(() -> new RuntimeException("Vacina não encontrado com o ID: " + dto.id_vaccines()));
+                existingAppointment.setVaccine(vaccine);
+            }
+            if (dto.id_medicines() != null) {
+                Medicines medicine = medicineRepository.findById(dto.id_medicines())
+                        .orElseThrow(() -> new RuntimeException("Medicamento não encontrado com o ID: " + dto.id_medicines()));
+                existingAppointment.setMedicine(medicine);
+            }
 
             Appointments updatedAppointment = appointmentRepository.save(existingAppointment);
 
@@ -159,45 +179,45 @@ public class AppointmentService {
         }
     }
 
-    public List<SlotDTO> availableSlots(Date date){
+    public List<SlotDTO> availableSlots(Date date) {
 
-         // Lista de slots disponíveis inicialmente
-    List<SlotDTO> availableSlots = new ArrayList<>();
-    for (int hour = 8; hour < 18; hour++) {
-        availableSlots.add(new SlotDTO(hour + ":00", hour + ":30"));
-        availableSlots.add(new SlotDTO(hour + ":30", (hour + 1) + ":00"));
-    }
+        // Lista de slots disponíveis inicialmente
+        List<SlotDTO> availableSlots = new ArrayList<>();
+        for (int hour = 8; hour < 18; hour++) {
+            availableSlots.add(new SlotDTO(hour + ":00", hour + ":30"));
+            availableSlots.add(new SlotDTO(hour + ":30", (hour + 1) + ":00"));
+        }
 
-    try {
-        // Busca no banco de dados por compromissos agendados para a data especificada
-        List<Appointments> appointments = appointmentRepository.findByDate(date);
-        
-        // Remove os slots ocupados da lista de slots disponíveis
-        for (Appointments appointment : appointments) {
-            String startTime = appointment.getStart_time();
-            String endTime = appointment.getFinish_time();
-            
-            // Cria um slot a partir do horário do compromisso para comparar e remover da lista
-            SlotDTO slot = new SlotDTO(startTime, endTime);
-            
-            // Itera sobre os slots disponíveis e remove o slot ocupado, se existir
-            for (int i = 0; i < availableSlots.size(); i++) {
-                SlotDTO availableSlot = availableSlots.get(i);
-                if (slot.equals(availableSlot)) {
-                    availableSlots.remove(i);
-                    break; // Interrompe o loop assim que o slot for removido
+        try {
+            // Busca no banco de dados por compromissos agendados para a data especificada
+            List<Appointments> appointments = appointmentRepository.findByDate(date);
+
+            // Remove os slots ocupados da lista de slots disponíveis
+            for (Appointments appointment : appointments) {
+                String startTime = appointment.getStart_time();
+                String endTime = appointment.getFinish_time();
+
+                // Cria um slot a partir do horário do compromisso para comparar e remover da lista
+                SlotDTO slot = new SlotDTO(startTime, endTime);
+
+                // Itera sobre os slots disponíveis e remove o slot ocupado, se existir
+                for (int i = 0; i < availableSlots.size(); i++) {
+                    SlotDTO availableSlot = availableSlots.get(i);
+                    if (slot.equals(availableSlot)) {
+                        availableSlots.remove(i);
+                        break; // Interrompe o loop assim que o slot for removido
+                    }
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
-    } catch (Exception e) {
-        throw new RuntimeException(e.getMessage());
+
+        return availableSlots;
     }
 
-    return availableSlots;
-}
-
-    public List<SlotDTO> listDate(Date date){
-        try{
+    public List<SlotDTO> listDate(Date date) {
+        try {
             List<Appointments> appointments = appointmentRepository.findAll();
             List<SlotDTO> slots = new ArrayList<>();
             for (Appointments appointment : appointments) {
@@ -205,9 +225,9 @@ public class AppointmentService {
                 slots.add(slot);
             }
             return slots;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
-    
+
 }

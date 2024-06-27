@@ -114,6 +114,8 @@ export default {
             workerAppointments: '',
             servicesAppointments: '',
             observationAppointments: '',
+            vaccineAppointments: '',
+            medicineAppointments: '',
             animalsList: [],
             workersList: [],
             customersList: [],
@@ -239,7 +241,9 @@ export default {
                 id_animals: this.animalAppointments,
                 id_workers: this.workerAppointments,
                 id_services: this.servicesAppointments,
-                observation: this.observationAppointments
+                observation: this.observationAppointments,
+                id_vaccines: this.vaccineAppointments,
+                id_medicines: this.medicineAppointments,
             }
 
             if (this.appointmentId)

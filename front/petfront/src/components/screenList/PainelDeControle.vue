@@ -112,7 +112,7 @@ export default {
                         this.chartData.datasets[0].data = data;
                         this.totalAppointments = response.data.length;
                     } else if (response.data.data && Array.isArray(response.data.data)) {
-                       
+     
                         let labels = [];
                         let data = [];
                         response.data.data.forEach(appointment => {

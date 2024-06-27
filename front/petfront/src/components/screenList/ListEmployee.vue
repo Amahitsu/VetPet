@@ -9,7 +9,7 @@
 
         <div class="d-flex justify-content-between mt-3">
        <div class="position-relative">
-           <input type="text" v-model="filter.name" placeholder="Filtrar por espécie" class="form-control input-with-icon" />
+           <input type="text" v-model="filter.name" placeholder="Buscar" class="form-control input-with-icon" />
        </div>
     </div>
 

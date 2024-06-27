@@ -76,7 +76,7 @@ export default {
                     {
                         label: 'Agendamentos Mensais',
                         backgroundColor: '#4CAF50',
-                        data: [40, 20, 30, 10, 50, 25, 45, 30, 20, 35, 40, 55], // Dados fictícios, substitua pelos seus dados reais
+                        data: [40, 20, 30, 10, 50, 25, 45, 30, 20, 35, 40, 55],
                     },
                 ],
             },
@@ -101,23 +101,23 @@ export default {
             axios.get('http://localhost:8080/api/v1/appointments')
                 .then(response => {
                     if (Array.isArray(response.data)) {
-                        // Caso a resposta seja uma matriz diretamente
+                        
                         let labels = [];
                         let data = [];
                         response.data.forEach(appointment => {
-                            labels.push(appointment.date); // Supondo que 'date' seja o campo de data
-                            data.push(appointment.count); // Supondo que 'count' seja o campo de contagem
+                            labels.push(appointment.date); 
+                            data.push(appointment.count); 
                         });
                         this.chartData.labels = labels;
                         this.chartData.datasets[0].data = data;
                         this.totalAppointments = response.data.length;
                     } else if (response.data.data && Array.isArray(response.data.data)) {
-                        // Caso a resposta tenha um objeto 'data' com a matriz dentro
+                       
                         let labels = [];
                         let data = [];
                         response.data.data.forEach(appointment => {
-                            labels.push(appointment.date); // Supondo que 'date' seja o campo de data
-                            data.push(appointment.count); // Supondo que 'count' seja o campo de contagem
+                            labels.push(appointment.date); 
+                            data.push(appointment.count); 
                         });
                         this.chartData.labels = labels;
                         this.chartData.datasets[0].data = data;
@@ -133,7 +133,7 @@ export default {
         fetchCustomers() {
     axios.get('http://localhost:8080/api/v1/customers')
         .then(response => {
-            console.log('Dados de clientes recebidos:', response.data.data); // Debugging
+            console.log('Dados de clientes recebidos:', response.data.data);
             if (Array.isArray(response.data.data)) {
                 this.totalCustomers = response.data.data.length;
             } else {
@@ -147,7 +147,7 @@ export default {
 fetchPets() {
     axios.get('http://localhost:8080/api/v1/animals')
         .then(response => {
-            console.log('Dados de pets recebidos:', response.data.data); // Debugging
+            console.log('Dados de pets recebidos:', response.data.data);
             if (Array.isArray(response.data.data)) {
                 this.totalPets = response.data.data.length;
             } else {

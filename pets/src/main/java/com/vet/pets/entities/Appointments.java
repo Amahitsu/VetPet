@@ -45,4 +45,10 @@ public class Appointments {
     private Services service;
     @Column(nullable = false)
     private String observation;
+    @ManyToOne
+    @JoinColumn(name = "id_vaccines", nullable = true)
+    private Vaccines vaccine;
+    @ManyToOne
+    @JoinColumn(name = "id_medicines", nullable = true)
+    private Medicines medicine;
 }

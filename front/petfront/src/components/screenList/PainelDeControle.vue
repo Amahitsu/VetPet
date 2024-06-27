@@ -22,7 +22,7 @@
                             </div>
                             <div>
                                 Total de Agendamentos
-                                <h1 class="mt-2 mb-0">125</h1>
+                                <h1 class="mt-2 mb-0">{{ totalAppointments }}</h1>
                             </div>
                         </div>
                     </div>
@@ -33,18 +33,18 @@
                             </div>
                             <div>
                                 Total de Clientes Cadastrados
-                                <h1 class="mt-2 mb-0">40</h1>
+                                <h1 class="mt-2 mb-0">{{ totalCustomers }}</h1>
                             </div>
                         </div>
                     </div>
                     <div class="card flex-fill">
                         <div class="card-body d-flex align-items-center">
                             <div class="circle mr-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#444"><path d="M157.58-489.17q-40.02 0-67.76-28.02-27.73-28.02-27.73-68.06 0-40.04 27.88-67.57 27.87-27.53 67.72-27.53 40.31 0 67.66 27.46 27.35 27.45 27.35 67.75 0 40.53-27.43 68.25t-67.69 27.72Zm192.26-176.09q-39.81 0-67.17-27.86-27.37-27.86-27.37-67.31 0-39.44 27.52-67.44t67.37-28q40.08 0 67.9 27.43 27.82 27.43 27.82 67.69 0 40.02-28.01 67.75-28.02 27.74-68.06 27.74Zm260 0q-39.75 0-67.75-27.88t-28-67.72q0-40.32 27.76-67.66 27.76-27.35 67.97-27.35 39.97 0 67.71 28.04 27.73 28.03 27.73 67.73 0 39.46-27.84 67.15-27.83 27.69-67.58 27.69Zm192.47 176.09q-40.31 0-67.66-27.79-27.35-27.78-27.35-68.01 0-40.71 27.43-68.05 27.43-27.33 67.69-27.33 40.02 0 67.76 27.65 27.73 27.65 27.73 67.69t-27.88 67.94q-27.87 27.9-67.72 27.9ZM261.17-62.74q-45.07 0-74.03-33.87-28.97-33.88-28.97-80 0-43.86 27.07-77.56 27.06-33.7 56.63-65.64 21-24.19 40.72-48.19 19.71-24 37.84-52.13 30.34-44.6 67.8-83.8 37.46-39.2 91.39-39.2 53.94 0 92.39 39.44 38.46 39.43 69.12 84.99 17.23 25.56 36.57 50.54 19.34 24.99 40.43 48.29 29.63 31.67 56.66 65.77 27.04 34.1 27.04 77.49 0 46.12-28.97 80-28.96 33.87-74.03 33.87-56.14 0-109.42-9.28T480-81.3q-56.13 0-109.41 9.28-53.28 9.28-109.42 9.28Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#444"><path d="M157.58-489.17q-40.02 0-67.76-28.02-27.73-28.02-27.73-68.06 0-40.04 27.88-67.57 27.87-27.53 67.72-27.53 40.31 0 67.66 27.46 27.35 27.45 27.35 67.75 0 40.53-27.43 68.25t-67.69 27.72Zm192.26-176.09q-39.81 0-67.17-27.86-27.37-27.86-27.37-67.31 0-39.44 27.52-67.44t67.37-28q-67.37 0-112.75-45.38-45.38-45.38-45.38-112.75 0-67.37 45.38-112.75 45.38-45.38 112.75-45.38 67.37 0 112.75 45.38 45.38 45.38 45.38 112.75 0 67.37-45.38 112.75-28.01 27.88-67.37 28Zm260 0q-39.75 0-67.75-27.88t-28-67.72q0-40.32 27.76-67.66 27.76-27.35 67.97-27.35 39.97 0 67.71 28.04 27.73 28.03 27.73 67.73 0 39.46-27.84 67.15-27.83 27.69-67.58 27.69Zm192.47 176.09q-40.31 0-67.66-27.79-27.35-27.78-27.35-68.01 0-40.71 27.43-68.05 27.43-27.33 67.69-27.33 40.02 0 67.76 27.65 27.73 27.65 27.73 67.69t-27.88 67.94q-27.87 27.9-67.72 27.9ZM261.17-62.5q-33.85 0-58.34-24.79-24.49-24.79-24.49-58.48 0-33.69 24.49-58.57 24.49-24.88 58.34-24.88 33.59 0 58.08 24.88 24.49 24.88 24.49 58.57 0 33.69-24.49 58.48-24.49 24.79-58.08 24.79Zm387.84 0q-33.85 0-58.34-24.79-24.49-24.79-24.49-58.48 0-33.69 24.49-58.57 24.49-24.88 58.34-24.88 33.59 0 58.08 24.88 24.49 24.88 24.49 58.57 0 33.69-24.49 58.48-24.49 24.79-58.08 24.79Z"/></svg>
                             </div>
                             <div>
                                 Total de Pets Cadastrados
-                                <h1 class="mt-2 mb-0">60</h1>
+                                <h1 class="mt-2 mb-0">{{ totalPets }}</h1>
                             </div>
                         </div>
                     </div>
@@ -57,6 +57,7 @@
 <script>
 import { defineComponent, ref, onMounted } from 'vue';
 import { Bar } from 'vue-chartjs';
+import axios from 'axios';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -64,56 +65,109 @@ Chart.register(...registerables);
 export default {
     components: {
         BarChart: defineComponent({
-            props: {
-                data: {
-                    type: Object,
-                    required: true
-                },
-                options: {
-                    type: Object,
-                    required: true
-                }
-            },
-            setup(props) {
-                const chartRef = ref(null);
-
-                onMounted(() => {
-                    if (chartRef.value) {
-                        new Chart(chartRef.value, {
-                            type: 'bar',
-                            data: props.data,
-                            options: props.options
-                        });
-                    }
-                });
-
-                return {
-                    chartRef
-                };
-            },
-            template: '<canvas ref="chartRef"></canvas>'
+            // Componente do gráfico
         })
     },
     data() {
         return {
             chartData: {
-                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                 datasets: [
                     {
-                        label: 'Agendamentos',
-                        backgroundColor: '#578EBE',
-                        data: [40, 20, 12, 39, 10, 40, 39]
-                    }
-                ]
+                        label: 'Agendamentos Mensais',
+                        backgroundColor: '#4CAF50',
+                        data: [40, 20, 30, 10, 50, 25, 45, 30, 20, 35, 40, 55], // Dados fictícios, substitua pelos seus dados reais
+                    },
+                ],
             },
             chartOptions: {
                 responsive: true,
-                maintainAspectRatio: false
-            }
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    }],
+                },
+            },
+            totalAppointments: 0,
+            totalCustomers: 0,
+            totalPets: 0
         };
+    },
+    methods: {
+        fetchAppointments() {
+            axios.get('http://localhost:8080/api/v1/appointments')
+                .then(response => {
+                    if (Array.isArray(response.data)) {
+                        // Caso a resposta seja uma matriz diretamente
+                        let labels = [];
+                        let data = [];
+                        response.data.forEach(appointment => {
+                            labels.push(appointment.date); // Supondo que 'date' seja o campo de data
+                            data.push(appointment.count); // Supondo que 'count' seja o campo de contagem
+                        });
+                        this.chartData.labels = labels;
+                        this.chartData.datasets[0].data = data;
+                        this.totalAppointments = response.data.length;
+                    } else if (response.data.data && Array.isArray(response.data.data)) {
+                        // Caso a resposta tenha um objeto 'data' com a matriz dentro
+                        let labels = [];
+                        let data = [];
+                        response.data.data.forEach(appointment => {
+                            labels.push(appointment.date); // Supondo que 'date' seja o campo de data
+                            data.push(appointment.count); // Supondo que 'count' seja o campo de contagem
+                        });
+                        this.chartData.labels = labels;
+                        this.chartData.datasets[0].data = data;
+                        this.totalAppointments = response.data.data.length;
+                    } else {
+                        console.error('Formato de dados de agendamentos não reconhecido:', response.data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar agendamentos:', error);
+                });
+        },
+        fetchCustomers() {
+    axios.get('http://localhost:8080/api/v1/customers')
+        .then(response => {
+            console.log('Dados de clientes recebidos:', response.data.data); // Debugging
+            if (Array.isArray(response.data.data)) {
+                this.totalCustomers = response.data.data.length;
+            } else {
+                console.error('Resposta inesperada ao buscar clientes:', response.data);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar clientes:', error);
+        });
+},
+fetchPets() {
+    axios.get('http://localhost:8080/api/v1/animals')
+        .then(response => {
+            console.log('Dados de pets recebidos:', response.data.data); // Debugging
+            if (Array.isArray(response.data.data)) {
+                this.totalPets = response.data.data.length;
+            } else {
+                console.error('Resposta inesperada ao buscar pets:', response.data);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar pets:', error);
+        });
+}
+
+    },
+    created() {
+        this.fetchAppointments();
+        this.fetchCustomers();
+        this.fetchPets();
     }
 };
 </script>
+
 
 <style scoped>
 .chart-container {
@@ -126,13 +180,11 @@ export default {
     width: 80px;
     height: 80px;
     background-color: #e0e0e0;
-    /* Cinza */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 48px;
     color: #555;
-    /* Cor do ícone */
 }
 </style>
